@@ -8,6 +8,14 @@ import SellerDeactivate from "./components/sellerdeactivate";
 import SellerRequestTable from "./components/sellerrequest";
 import ChatSeller from "./components/chatseller";
 import VendorLayout from "./layouts/VendorLayout";
+import AddProduct from "./components/vendor-component/addproduct";
+import AllProducts from "./components/vendor-component/allproduct";
+import DiscountProducts from "./components/vendor-component/discountproduct";
+import OrderList from "./components/vendor-component/orderlist";
+import SellerPayments from "./components/vendor-component/sellerpayment";
+import ChatDashboard from "./components/vendor-component/chatcustomer";
+import ChatSupport from "./components/vendor-component/chatsupport";
+import SellerProfile from "./components/vendor-component/sellerprofile";
 import CustomerLayout from "./layouts/CustomerLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import VendorDashboard from "./pages/vendor/VendorDashboard";
@@ -30,6 +38,14 @@ export default function App() {
 
       <Route path="/vendor/*" element={<VendorLayout />}>
         <Route path="dashboard" element={<VendorDashboard />} />
+        <Route path="addproduct" element={<AddProduct />} />
+        <Route path="allproduct" element={<AllProducts />} />
+        <Route path="discountproduct" element={<DiscountProducts />} />
+        <Route path="orderlist" element={<OrderList />} />
+        <Route path="sellerpayment" element={<SellerPayments />} />
+        <Route path="chatcustomer" element={<ChatDashboard />} />
+        <Route path="chatsupport" element={<ChatSupport />} />
+        <Route path="sellerprofile" element={<SellerProfile />} />
       </Route>
 
       <Route path="/customer/*" element={<CustomerLayout />}>
