@@ -1,11 +1,93 @@
-body { margin:0; font-family:sans-serif; }
-.layout { display:flex; min-height:100vh; }
-.sidebar { width:220px; background:#111; color:#fff; padding:20px; }
-.sidebar.vendor { background:#3730a3; }
-.sidebar.customer { background:#059669; }
-.sidebar a { display:flex; align-items:center; color:#fff; margin:10px 0; text-decoration:none; gap:8px; }
-.main-content { flex:1; background:#f0f0f0; }
-.header { display:flex; justify-content:space-between; padding:10px 20px; background:#fff; align-items:center; }
-.header-right { display:flex; align-items:center; gap:10px; }
-.profile { cursor:pointer; position:relative; }
-.dropdown { position:absolute; top:30px; right:0; background:#fff; border:1px solid #ccc; padding:5px 10px; }
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #0f3962;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background: #213247;
+  color: #cbdcea;
+  padding: 20px;
+}
+
+.sidebar.vendor {
+  background: #213247;
+}
+
+.sidebar.customer {
+  background: #213247;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  color: #cbdcea;
+  margin: 15px 0;
+  text-decoration: none;
+  gap: 8px;
+  font-size: 15px;
+  margin-top: 10px;
+}
+.sidebar a {
+  display: block;
+  padding: 7px;
+  text-decoration: none;
+  /* color: #333; */
+  border: 2px solid transparent; /* default transparent border */
+  border-radius: 5px; /* optional, jodi corner round chai */
+  transition: border-color 0.3s;
+}
+
+.sidebar a:hover {
+  border-color: #4A90E2; /* hover border color */
+}
+
+.main-content {
+  flex: 1;
+  background: #121E31;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin: 20px;
+  background: #213247;
+  align-items: center;
+  border-radius: 7px;
+  color: #cbdcea;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile {
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+}
+.dashboard-link1{
+  background: #3f5669;
+  padding:  10px 10px 10px 5px;
+}
+.card{
+  margin-left: 100px;
+}
+

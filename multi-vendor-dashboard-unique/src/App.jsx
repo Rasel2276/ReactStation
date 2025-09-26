@@ -1,6 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
+import OrdersTable from "./components/ordertable";
+import UserTable from "./components/seller";
+import PaymentRequestTable from "./components/paymentrequest";
+import SellerDeactivate from "./components/sellerdeactivate";
+import SellerRequestTable from "./components/sellerrequest";
+import ChatSeller from "./components/chatseller";
 import VendorLayout from "./layouts/VendorLayout";
 import CustomerLayout from "./layouts/CustomerLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -14,6 +20,12 @@ export default function App() {
 
       <Route path="/admin/*" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="orders" element={<OrdersTable />} />
+        <Route path="seller" element={<UserTable />} />
+        <Route path="paymentrequest" element={<PaymentRequestTable />} />
+        <Route path="sellerdeactivate" element={<SellerDeactivate />} />
+        <Route path="sellerrequest" element={<SellerRequestTable />} />
+        <Route path="chatseller" element={<ChatSeller />} />
       </Route>
 
       <Route path="/vendor/*" element={<VendorLayout />}>
