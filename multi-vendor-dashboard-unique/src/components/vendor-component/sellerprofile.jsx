@@ -42,7 +42,7 @@ function SellerProfile() {
         padding: "20px",
       }}
     >
-      <h2 style={{ marginBottom: "20px" }}>Seller Profile</h2>
+      <h2 style={{ marginBottom: "20px",textAlign: "center" }}>Seller Profile</h2>
 
       {/* Profile Image */}
       <div style={{ marginBottom: "15px", textAlign: "center" }}>

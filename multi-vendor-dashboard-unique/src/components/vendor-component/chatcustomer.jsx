@@ -22,6 +22,8 @@ function ChatDashboard() {
   };
 
   return (
+    <div>
+      <h2 style={{ marginLeft: "30px", color: "#cbdcea" }}>Talk to Customer</h2>
     <div style={{ display: "flex", height: "500px", border: "1px solid #444", backgroundColor: "#213247", color: "#cbdcea",margin:"20px" }}>
       
       {/* Left side - Customer list */}
@@ -135,6 +137,7 @@ function ChatDashboard() {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

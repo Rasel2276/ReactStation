@@ -28,7 +28,7 @@ function AddProduct() {
 
   return (
     <div style={{ backgroundColor: "#213247", color: "#cbdcea", padding: "20px", borderRadius: "8px", maxWidth: "600px", margin: "20px auto" }}>
-      <h2 style={{ marginBottom: "20px" }}>Add Product</h2>
+      <h2 style={{ marginBottom: "20px",textAlign: "center" }}>Add Product</h2>
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
         <input
           type="text"

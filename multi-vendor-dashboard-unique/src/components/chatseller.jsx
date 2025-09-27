@@ -20,8 +20,10 @@ function ChatSeller() {
       setNewMessage("");
     }
   };
-
+  
   return (
+  <div>
+      <h2 style={{ marginLeft: "30px", color: "#cbdcea" }}>Talk to Seller</h2>
     <div style={{ display: "flex", height: "75vh", backgroundColor: "#213247", color: "#cbdcea", borderRadius: "8px", overflow: "hidden",margin:"20px" }}>
       
       {/* Left Side: Seller List */}
@@ -82,7 +84,7 @@ function ChatSeller() {
           </button>
         </div>
       </div>
-
+          </div>
       {/* Green pulse animation */}
       <style>
         {`

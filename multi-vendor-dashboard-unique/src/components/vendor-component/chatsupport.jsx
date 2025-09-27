@@ -15,7 +15,9 @@ function ChatSupport() {
   };
 
   return (
-    <div style={{ maxWidth: "800px", margin: "20px auto", border: "1px solid #444", borderRadius: "8px", backgroundColor: "#213247", color: "#cbdcea", display: "flex", flexDirection: "column", height: "500px" }}>
+    <div>
+    <h2 style={{ marginLeft: "30px", color: "#cbdcea",textAlign: "center" }}>Talk to Supporter</h2>
+    <div style={{ maxWidth: "800px", margin: "20px auto", border: "1px solid #444", backgroundColor: "#213247", color: "#cbdcea", display: "flex", flexDirection: "column", height: "500px" }}>
       
       {/* Header */}
       <div style={{ padding: "12px", borderBottom: "1px solid #444", backgroundColor: "#1f2a3d" }}>
@@ -79,6 +81,7 @@ function ChatSupport() {
           Send
         </button>
       </div>
+    </div>
     </div>
   );
 }

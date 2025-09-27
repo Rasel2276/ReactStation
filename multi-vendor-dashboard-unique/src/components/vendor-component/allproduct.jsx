@@ -19,6 +19,7 @@ function AllProducts() {
 
   return (
     <div style={{ overflowX: "auto" }}>
+      <h2 style={{ marginLeft: "30px", color: "#cbdcea",textAlign: "center" }}>All added product</h2>
       <table style={{ width: "95%", borderCollapse: "collapse", backgroundColor: "#213247", color: "#cbdcea",margin:"20px" }}>
         <thead>
           <tr>

@@ -38,6 +38,8 @@ function DiscountProductManager() {
   };
 
   return (
+    <div>
+      <h2 style={{ marginLeft: "20px", color: "#cbdcea",textAlign: "center" }}>Discount Zone</h2>
     <div style={{ backgroundColor: "#213247", color: "#cbdcea", padding: "20px", borderRadius: "8px",margin:"20px" }}>
       
       {/* Apply Discount Section */}
@@ -97,6 +99,7 @@ function DiscountProductManager() {
         </table>
       </div>
 
+    </div>
     </div>
   );
 }

@@ -2,12 +2,14 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { FaTachometerAlt,FaShoppingCart,FaThLarge,FaUsers,FaCreditCard,FaUserSlash,FaUserPlus,FaComment,FaSignOutAlt } from "react-icons/fa";
 import Header from "../components/Header";
+import RM from '../image/RM.png';
 
 export default function AdminLayout() {
   return (
     <div className="layout">
       <aside className="sidebar">
-        <h2>Admin Panel</h2>
+        <img src={RM} alt="logo" style={{ width: '150px', height: 'auto',display: 'block', margin: '0 auto' }} />
+        <h2 style={{textAlign: "center" }}>Admin Panel</h2>
         <nav>
           <Link to="/admin/dashboard" className="dashboard-link1"><FaTachometerAlt /> Dashboard</Link>
           <Link to="/admin/orders"><FaShoppingCart /> Orders</Link>
