@@ -9,7 +9,7 @@ export default function VendorLayout() {
     <div className="layout">
       <aside className="sidebar vendor">
         <img src={RM} alt="logo" style={{ width: '150px', height: 'auto',display: 'block', margin: '0 auto' }} />
-        <h2 style={{textAlign: "center" }}>Vendor Panel</h2>
+        <h2 style={{textAlign: "center",color:"#Fff" }}>Vendor Panel</h2>
         <nav className="navlink">
           <Link to="/vendor/dashboard" className="dashboard-link1"><FaTachometerAlt /> Dashboard</Link>
           <Link to="/vendor/addproduct"><FaPlusCircle /> Add Product</Link>

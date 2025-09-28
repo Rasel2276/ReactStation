@@ -111,3 +111,33 @@ body {
   font-weight: bold;
   border-color: #4ade80;
 }
+
+/* dashboard assets area */
+.card-section{
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-around;
+  
+}
+.main-card{
+  width: 250px;
+  height: 100px;
+  color: white;
+  background: #213247;
+  margin-right: 10px;
+  padding: 10px 0px 15px 0px;
+  text-align: center;
+  border-radius: 10px;
+}
+.main-card h2{
+  line-height: 0px;
+}
+.card-icon{
+  color: #009c82;
+  font-size: 20px;
+}
+.icon{
+  background: #60cfbd2d;
+  padding: 10px;
+  border-radius: 50%;
+}
