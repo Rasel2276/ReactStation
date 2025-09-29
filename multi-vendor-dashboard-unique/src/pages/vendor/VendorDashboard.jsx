@@ -7,8 +7,8 @@ export default function VendorDashboard() {
     <div className="card-section">
         <Card title="Total Sales" value="$25,000" icon={FaDollarSign} />
         <Card title="Products" value="320" icon={FaBoxOpen} />
-        <Card title="Sellers" value="58" icon={FaUserTie} />
-        <Card title="Orders" value="1,204" icon={FaShoppingCart} />
+        <Card title="Orders" value="58" icon={FaUserTie} />
+        <Card title="Pending Orders" value="1,204" icon={FaShoppingCart} />
       </div>
   );
 }

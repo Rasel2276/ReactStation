@@ -57,7 +57,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 0px 20px;
-  margin: 20px;
+  margin: 25px;
   background: #213247;
   align-items: center;
   border-radius: 7px;
@@ -114,7 +114,7 @@ body {
 
 /* dashboard assets area */
 .card-section{
-  margin-left: 40px;
+  margin-left: 20px;
   display: flex;
   justify-content: space-around;
   
