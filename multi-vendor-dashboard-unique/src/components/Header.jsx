@@ -6,7 +6,7 @@ export default function Header({ title }) {
   const [search, setSearch] = useState("");
 
   return (
-    <header className="header">
+    <header className="admin-header">
       <div className="header-left">
         {/* <h1>{title}</h1> */}
         {/* Search Input */}

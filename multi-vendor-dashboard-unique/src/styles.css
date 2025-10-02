@@ -53,7 +53,7 @@ body {
   background: #121E31;
 }
 
-.header {
+.admin-header {
   display: flex;
   justify-content: space-between;
   padding: 0px 20px;
@@ -141,3 +141,316 @@ body {
   padding: 10px;
   border-radius: 50%;
 }
+
+/* ui heder and navbar css start */
+body{
+  margin: 0;
+  padding: 0;
+}
+.header {
+  background: #ffcc00;
+  padding: 10px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+.logo span {
+  color: #6666ff;
+}
+
+.search-bar {
+  display: flex;
+  border: none;
+  border-radius: 5px;
+  height: 42px;
+  margin-left: 150px;
+  
+}
+.search-bar select,
+.search-bar input {
+  padding: 8px;
+  border: none;
+  outline: none;
+}
+.search-bar select{
+  width: 60px;
+  
+  
+}
+.search-bar input{
+  width: 300px;
+}
+.search-bar button {
+  background: black;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+ 
+}
+.icon-1 {
+  position: relative;
+  font-size: 20px;
+  cursor: pointer;
+}
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: black;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+}
+
+.nav-bar {
+  margin-top: 10px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-weight: 500;
+}
+.nav-links li {
+  cursor: pointer;
+  padding: 0px 15px;
+}
+
+.dropdown {
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  list-style: none;
+  padding: 10px;
+  min-width: 150px;
+  z-index: 999;
+}
+.dropdown-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.dropdown-menu li:hover {
+  background: #f4f4f4;
+}
+
+
+/* Registration form css  start*/
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Light background for the page */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.registration-card {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px; /* Adjust max-width as needed */
+}
+
+.registration-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.registration-header .header-icon {
+  font-size: 40px;
+  color: #ffc107; /* Yellow icon color */
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.registration-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.registration-header p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  background-color: #fff;
+}
+
+.input-with-icon span {
+  margin-right: 10px;
+  color: #888;
+}
+
+.input-with-icon input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 5px 0;
+}
+
+.input-with-icon input::placeholder {
+  color: #aaa;
+}
+
+.password-toggle {
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 20px;
+  font-weight: normal;
+  color: #555;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #ffc107; /* Yellow accent for radio buttons */
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  font-weight: normal;
+  color: #555;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 3px; /* Adjust alignment */
+  margin-right: 10px;
+  accent-color: #ffc107; /* Yellow accent for checkbox */
+}
+
+.checkbox-group a {
+  color: #007bff; /* Blue link color */
+  text-decoration: none;
+}
+
+.checkbox-group a:hover {
+  text-decoration: underline;
+}
+
+.register-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #ffc107; /* Yellow button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-button:hover {
+  background-color: #e0a800; /* Darker yellow on hover */
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 15px;
+  color: #555;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .registration-card {
+    padding: 25px;
+    margin: 10px;
+  }
+  .registration-header h2 {
+    font-size: 24px;
+  }
+  .registration-header p {
+    font-size: 13px;
+  }
+}
+
+/* Registration form css  End */
+
+.FaUser-log-Reg{
+  font-size: 30px;
+}
+.user-auth{
+  line-height: 0;
+  padding: 3px;
+}
+
+/* ui heder and navbar css end */
