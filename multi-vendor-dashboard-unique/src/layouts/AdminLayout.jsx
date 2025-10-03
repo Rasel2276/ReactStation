@@ -13,7 +13,7 @@ export default function AdminLayout() {
         <nav>
           <Link to="/admin/dashboard" className="dashboard-link1"><FaTachometerAlt /> Dashboard</Link>
           <Link to="/admin/orders"><FaShoppingCart /> Orders</Link>
-          <Link to="/admin/category"><FaThLarge /> Category</Link>
+          <Link to="/admin/sellerpaymentlist"><FaThLarge /> Payment</Link>
           <Link to="/admin/seller"><FaUsers /> Sellers</Link>
           <Link to="/admin/paymentrequest"><FaCreditCard /> Payment Request</Link>
           <Link to="/admin/sellerdeactivate"><FaUserSlash /> Deactive Sellers</Link>

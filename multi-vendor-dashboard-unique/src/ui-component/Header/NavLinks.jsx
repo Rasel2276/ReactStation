@@ -1,16 +1,17 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function NavLinks() {
   const [openPages, setOpenPages] = useState(false);
 
   return (
     <ul className="nav-links">
-      <li>Home</li>
-      <li>Shop</li>
-      <li>Contact</li>
-      <li>About Us</li>
-      <li>Blog</li>
-      <li>Track your order</li>
+      <Link to="/">Home</Link>
+      <Link to="/shop">Shop</Link>
+      <Link to="/aboutus">About Us</Link>
+      <Link to="/blog">Blog</Link>
+      <Link to="/contact">Contact</Link>
+      <Link to="/traconorder">Track On Order</Link>
     </ul>
   );
 }

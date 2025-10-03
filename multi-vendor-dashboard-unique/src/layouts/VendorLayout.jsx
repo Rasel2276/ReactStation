@@ -17,6 +17,7 @@ export default function VendorLayout() {
           <Link to="/vendor/discountproduct"><FaTags /> Discount Product</Link>
           <Link to="/vendor/orderlist"><FaClipboardList /> Orders</Link>
           <Link to="/vendor/sellerpayment"><FaCreditCard /> Payments</Link>
+          <Link to="/vendor/paymentrequest"><FaCreditCard /> Payments Request</Link>
           <Link to="/vendor/chatcustomer"><FaComment /> Chat Customer</Link>
           <Link to="/vendor/chatsupport"><FaRegComment /> Chat Support</Link>
           <Link to="/vendor/sellerprofile"><FaUser /> Profile</Link>

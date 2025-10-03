@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function AddProduct() {
   const [product, setProduct] = useState({
     name: "",
+    code: "",        // ✅ নতুন ফিল্ড (Product Code)
     category: "",
     price: "",
     stock: "",
@@ -23,13 +24,25 @@ function AddProduct() {
     e.preventDefault();
     console.log("Product Data:", product);
     alert("Product submitted (Check console)");
-    // Backend integration: send product to PHP API here
+    // Backend integration: send product to Laravel API here
   };
 
   return (
-    <div style={{ backgroundColor: "#213247", color: "#cbdcea", padding: "20px", borderRadius: "8px", maxWidth: "600px", margin: "20px auto" }}>
-      <h2 style={{ marginBottom: "20px",textAlign: "center" }}>Add Product</h2>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        backgroundColor: "#213247",
+        color: "#cbdcea",
+        padding: "20px",
+        borderRadius: "8px",
+        maxWidth: "600px",
+        margin: "20px auto",
+      }}
+    >
+      <h2 style={{ marginBottom: "20px", textAlign: "center" }}>Add Product</h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <input
           type="text"
           name="name"
@@ -39,6 +52,18 @@ function AddProduct() {
           style={inputStyle}
           required
         />
+
+        {/* ✅ Product Code Field */}
+        <input
+          type="text"
+          name="code"
+          placeholder="Product Code"
+          value={product.code}
+          onChange={handleChange}
+          style={inputStyle}
+          required
+        />
+
         <input
           type="text"
           name="category"
@@ -81,7 +106,9 @@ function AddProduct() {
           style={{ marginBottom: "15px" }}
           required
         />
-        <button type="submit" style={buttonStyle}>Add Product</button>
+        <button type="submit" style={buttonStyle}>
+          Add Product
+        </button>
       </form>
     </div>
   );
