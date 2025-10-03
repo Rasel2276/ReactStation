@@ -32,13 +32,15 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import VendorDashboard from "./pages/vendor/VendorDashboard";
 import CustomerDashboard from "./pages/customer/CustomerDashboard";
 
-// ✅ HomePage (ঠিক path)
+//  HomePage 
 import HomePage from "./ui-component/ui-pages/Homepage";
 import Shop from "./ui-component/ui-pages/shop";
 
-// ✅ Authentication forms (ঠিক path)
+//  Authentication forms 
 import RegistrationForm from "./ui-component/authentication/RegistrationForm";
 import LoginForm from "./ui-component/authentication/LoginForm";
+//  Footer
+import Footer from "./ui-component/Header/footer";
 
 export default function App() {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -46,6 +48,8 @@ export default function App() {
 
   return (
     <>
+    <div className="app">
+      <main className="content">
       <Routes>
         {/* Default homepage */}
         <Route
@@ -58,6 +62,7 @@ export default function App() {
           }
         />
         <Route path="/shop" element={<Shop/>} />
+          
 
         {/* Admin routes */}
         <Route path="/admin/*" element={<AdminLayout />}>
@@ -106,6 +111,9 @@ export default function App() {
       {showLoginForm && (
         <LoginForm onClose={() => setShowLoginForm(false)} />
       )}
+      </main>
+      <Footer></Footer>
+      </div>
     </>
   );
 }

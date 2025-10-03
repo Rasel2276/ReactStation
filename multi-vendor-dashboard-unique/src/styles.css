@@ -1,12 +1,13 @@
 body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #0f3962;
+
 }
 
 .layout {
   display: flex;
   min-height: 100vh;
+  margin: 0;
+  font-family: sans-serif;
+  background: #0f3962;
 }
 
 .sidebar {
@@ -230,40 +231,38 @@ body{
   border-top: 1px solid #e0e0e0;
   padding-top: 10px;
 }
-.nav-links {
+/* .nav-links {
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
   font-weight: 500;
+} */
+a{
+  text-decoration: none;
+  color: inherit;
 }
-.nav-links li {
-  cursor: pointer;
-  padding: 0px 15px;
+.navbar{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.navbar ul{
+  padding: 10px 30px;
+  border-radius: 30px;
+  box-shadow: 0 0 30px 0 rgba(0,0,0,0.1);
+}
+.navbar ul li{
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 0 10px;
+  color: #000;
 }
 
-.dropdown {
-  position: relative;
-}
-.dropdown-menu {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  background: white;
-  border: 1px solid #ddd;
-  list-style: none;
-  padding: 10px;
-  min-width: 150px;
-  z-index: 999;
-}
-.dropdown-menu li {
-  padding: 5px 10px;
-  cursor: pointer;
-}
-.dropdown-menu li:hover {
-  background: #f4f4f4;
-}
+
 
 
 /* Registration form css  start*/
@@ -454,3 +453,4 @@ body{
 }
 
 /* ui heder and navbar css end */
+

@@ -10,6 +10,7 @@ export default function UiHeader({ onRegisterClick, onLoginClick }) {
     <header className="header">
       <div className="top-bar">
         <Logo />
+        
         <SearchBar />
         <Icons />
         <UserMenu 
