@@ -9,18 +9,27 @@ export default function UiHeader({ onRegisterClick, onLoginClick }) {
   return (
     <header className="header">
       <div className="top-bar">
-        <Logo />
-        
-        <SearchBar />
-        <Icons />
-        <UserMenu 
-          onRegisterClick={onRegisterClick} 
-          onLoginClick={onLoginClick}
-        />
+        <div className="top-section-customize">
+        <div className="logo-customize">
+          <Logo />
+        </div>
+        <div className="navbar-customize">
+          <NavLinks />
+        </div>
+          <div className="icon-customize">
+            <Icons />
+          </div>
+          <div className="usermenu-customize">
+            <UserMenu
+              onRegisterClick={onRegisterClick}
+              onLoginClick={onLoginClick}
+            />
+          </div>
+        </div>
       </div>
-      <nav className="nav-bar">
-        <NavLinks />
-      </nav>
+      {/* <nav className="nav-bar">
+        <SearchBar />
+      </nav> */}
     </header>
   );
 }
