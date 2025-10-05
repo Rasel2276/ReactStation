@@ -1,58 +1,147 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Local images import
+// Local images
 import fashion1 from "./carousel-image/fashion1.jpg";
 import fashion2 from "./carousel-image/fashion2.jpg";
 import fashion3 from "./carousel-image/fashion3.jpg";
 
+
 const slides = [
-  { id: 1, title: "Discover Your Style", text: "Explore the latest trends.", button: "Shop Now", link: "/shop", image: fashion1 },
-  { id: 2, title: "Luxury Meets Comfort", text: "Experience elegance in every outfit.", button: "Explore Collection", link: "/collection", image: fashion2 },
-  { id: 3, title: "Be Bold. Be You.", text: "Unleash your confidence.", button: "Get Started", link: "/start", image: fashion3 },
+  {
+    id: 1,
+    title: "Discover Your Style",
+    text: "Explore the latest trends.",
+    button: "Shop Now",
+    link: "/shop",
+    image: fashion1,
+  },
+  {
+    id: 2,
+    title: "Luxury Meets Comfort",
+    text: "Experience elegance in every outfit.",
+    button: "Explore Collection",
+    link: "/collection",
+    image: fashion2,
+  },
+  {
+    id: 3,
+    title: "Be Bold. Be You.",
+    text: "Unleash your confidence.",
+    button: "Get Started",
+    link: "/start",
+    image: fashion3,
+  },
 ];
 
 function DarkCarousel() {
-  const [current, setCurrent] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const nextSlide = () => {
+    setDirection(1);
+    setIndex((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setDirection(-1);
+    setIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 2000); // Slide duration 2 sec
-    return () => clearInterval(interval);
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
   }, []);
 
-  const slide = slides[current];
+  const variants = {
+    enter: (dir) => ({
+      x: dir > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir) => ({
+      x: dir > 0 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  };
 
   return (
     <div className="carousel-container">
-      <AnimatePresence exitBeforeEnter>
-        {/* Left Text */}
+      <AnimatePresence mode="wait" custom={direction}>
         <motion.div
-          key={slide.id}
-          className="carousel-text"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          key={slides[index].id}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="carousel-slide"
         >
-          <h2>{slide.title}</h2>
-          <p>{slide.text}</p>
-          <a href={slide.link} className="carousel-btn">{slide.button}</a>
-        </motion.div>
+          {/* Background Image */}
+          <img
+            src={slides[index].image}
+            alt={slides[index].title}
+            className="carousel-image"
+          />
 
-        {/* Right Image */}
-        <motion.div
-          key={slide.image}
-          className="carousel-image"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <img src={slide.image} alt={slide.title} />
+          {/* Overlay */}
+          <div className="carousel-overlay"></div>
+
+          {/* Text */}
+          <div className="carousel-content">
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              {slides[index].title}
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              {slides[index].text}
+            </motion.p>
+
+            <motion.a
+              href={slides[index].link}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="carousel-btn"
+            >
+              {slides[index].button}
+            </motion.a>
+          </div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Arrows */}
+      <button onClick={prevSlide} className="carousel-arrow left">
+        <ChevronLeft size={30} />
+      </button>
+
+      <button onClick={nextSlide} className="carousel-arrow right">
+        <ChevronRight size={30} />
+      </button>
+
+      {/* Dots */}
+      <div className="carousel-dots">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`dot ${i === index ? "active" : ""}`}
+          ></button>
+        ))}
+      </div>
     </div>
   );
 }
