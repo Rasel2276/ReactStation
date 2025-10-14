@@ -1,7 +1,7 @@
 @extends('admin.layouts.layout')
 @section('admin_page_title')
-Dashboard - Admin Panel
+Category - Admin Panel
 @endsection
 @section('admin_layout')
-    <h3>Admin Dashboard</h3>
+    <h3>create category  page</h3>
 @endsection
