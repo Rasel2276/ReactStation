@@ -15,8 +15,12 @@ use App\Http\Controllers\Customer\CustomerMainController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('front_end.home.website');
 });
 
 // admin routes //
