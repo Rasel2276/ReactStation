@@ -25,7 +25,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="index.html">
-          <span class="align-middle">AdminKit</span>
+          <span class="align-middle">Admin Dashboard</span>
         </a>
 
 				<ul class="sidebar-nav">
@@ -105,6 +105,12 @@
 
 						<li class="sidebar-header">
 						Product
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('product.add_product')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.add_product')}}">
+              <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Add Product</span>
+            </a>
 					</li>
 
 					<li class="sidebar-item {{request()->routeIs('product.manage_product')?'active':''}}">
