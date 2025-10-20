@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductDiscountController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PaymentController;
 // seller routes link//
 use App\Http\Controllers\Seller\SellerMainController;
 use App\Http\Controllers\Seller\SellerProductController;
@@ -54,6 +55,14 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::controller(ProductDiscountController::class)->group(function(){
         Route::get('/discount/create_discount','index')->name('discount.create_discount');
         Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');
+        });
+
+        Route::controller(PaymentController::class)->group(function(){
+        Route::get('/payment/vendor_payouts_request','index')->name('payment.vendor_payouts_request');
+        Route::get('/payment/approve_payouts','approve_payouts')->name('payment.approve_payouts');
+        Route::get('/payment/payment_method','payment_method')->name('payment.payment_method');
+        Route::get('/payment/transecton','transecton')->name('payment.transecton');
+        Route::get('/payment/report','report')->name('payment.report');
         });
     });
 });

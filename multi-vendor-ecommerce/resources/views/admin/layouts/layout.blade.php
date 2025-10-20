@@ -124,6 +124,42 @@
               <i class="align-middle" data-feather="star"></i> <span class="align-middle">Manage Reviews</span>
             </a>
 					</li>
+
+						<li class="sidebar-header">
+						Payment
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('payment.vendor_payouts_request')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.vendor_payouts_request')}}">
+              <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Vendor Payouts Request</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('payment.approve_payouts')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.approve_payouts')}}">
+              <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Approve Payouts</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('payment.payment_method')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.payment_method')}}">
+              <i class="align-middle" data-feather="star"></i> <span class="align-middle">Payment Method</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('payment.transecton')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.transecton')}}">
+              <i class="align-middle" data-feather="star"></i> <span class="align-middle">Transection</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('payment.report')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.report')}}">
+              <i class="align-middle" data-feather="star"></i> <span class="align-middle">Report</span>
+            </a>
+					</li>
+					
+
 					
 
 						<li class="sidebar-header">

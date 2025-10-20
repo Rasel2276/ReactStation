@@ -3,5 +3,5 @@
 Payment - Admin Panel
 @endsection
 @section('admin_layout')
-    <h3>add payment page</h3>
+    <h3>vendor_payouts_request page</h3>
 @endsection
