@@ -119,6 +119,12 @@
             </a>
 					</li>
 
+					<li class="sidebar-item {{request()->routeIs('product.return_product')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.return_product')}}">
+              <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Return Product</span>
+            </a>
+					</li>
+
 					<li class="sidebar-item {{request()->routeIs('product.manage_product_reviews')?'active':''}}">
 						<a class="sidebar-link" href="{{route('product.manage_product_reviews')}}">
               <i class="align-middle" data-feather="star"></i> <span class="align-middle">Manage Reviews</span>
@@ -159,8 +165,15 @@
             </a>
 					</li>
 					
+						<li class="sidebar-header">
+						Manage User
+					</li>
 
-					
+					<li class="sidebar-item {{request()->routeIs('admin.manage.user')?'active':''}}">
+						<a class="sidebar-link" href="{{route('admin.manage.user')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">User Management</span>
+            </a>
+					</li>
 
 						<li class="sidebar-header">
 						History

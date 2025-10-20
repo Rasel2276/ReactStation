@@ -39,11 +39,38 @@
             </a>
 					</li>
 
+					<li class="sidebar-header">
+						Product
+					</li>
+
 					<li class="sidebar-item {{request()->routeIs('vendor.order.history')?'active':''}}">
 						<a class="sidebar-link" href="{{route('vendor.order.history')}}">
-              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Ordre History</span>
+              <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Add product</span>
             </a>
 					</li>
+
+					<li class="sidebar-item {{request()->routeIs('vendor.order.history')?'active':''}}">
+						<a class="sidebar-link" href="{{route('vendor.order.history')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Manage product</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('vendor.order.history')?'active':''}}">
+						<a class="sidebar-link" href="{{route('vendor.order.history')}}">
+              <i class="align-middle" data-feather="repeat"></i> <span class="align-middle">Return product</span>
+            </a>
+					</li>
+
+					<li class="sidebar-header">
+						Order
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('vendor.order.history')?'active':''}}">
+						<a class="sidebar-link" href="{{route('vendor.order.history')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Order</span>
+            </a>
+					</li>
+					
 
 					<li class="sidebar-header">
 						Store
@@ -61,27 +88,87 @@
             </a>
 					</li>
 
+					<li class="sidebar-item {{request()->routeIs('store.manage')?'active':''}}">
+						<a class="sidebar-link" href="{{route('store.manage')}}">
+              <i class="align-middle" data-feather="eye"></i> <span class="align-middle">Manage Stock</span>
+            </a>
+					</li>
+
 					<li class="sidebar-header">
-						Product
+						Payment
 					</li>
 
 					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
 						<a class="sidebar-link" href="{{route('Product.create')}}">
-              <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Create Product</span>
+              <i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Payout Request</span>
             </a>
 					</li>
 
 					<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
 						<a class="sidebar-link" href="{{route('product.manage')}}">
-              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Manage Product</span>
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Payout Paid List</span>
             </a>
 					</li>
 
+						<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.manage')}}">
+              <i class="align-middle" data-feather="loader"></i> <span class="align-middle">Payout Pending List</span>
+            </a>
+					</li>
 
+					<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.manage')}}">
+              <i class="align-middle" data-feather="send"></i> <span class="align-middle">Refund</span>
+            </a>
+					</li>
+
+					<li class="sidebar-header">
+						Contact
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Chat With Customer</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="inbox"></i> <span class="align-middle">Chat With Admin</span>
+            </a>
+					</li>
+
+					<li class="sidebar-header">
+						History
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Total Income</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Transection</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Sales Report</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('Product.create')?'active':''}}">
+						<a class="sidebar-link" href="{{route('Product.create')}}">
+              <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Account Setting</span>
+            </a>
+					</li>
 
 				</ul>
 
-				{{-- <div class="sidebar-cta">
+				<div class="sidebar-cta">
 					<div class="sidebar-cta-content">
 						<strong class="d-inline-block mb-2">Upgrade to Pro</strong>
 						<div class="mb-3 text-sm">
@@ -91,7 +178,7 @@
 							<a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
 						</div>
 					</div>
-				</div> --}}
+				</div>
 			</div>
 		</nav>
 

@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/product/manage_product_reviews','index')->name('product.manage_product_reviews');
         Route::get('/product/add_product','add_product')->name('product.add_product');
         Route::get('/product/manage_product','manage_product')->name('product.manage_product');
+        Route::get('/product/return_product','return_product')->name('product.return_product');
         });
         Route::controller(ProductAttributeController::class)->group(function(){
         Route::get('/product_attribute/create_attribute','index')->name('product_attribute.create_attribute');
