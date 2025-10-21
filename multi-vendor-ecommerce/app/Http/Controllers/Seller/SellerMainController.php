@@ -12,6 +12,6 @@ class SellerMainController extends Controller
     }
 
      public function orderhistory(){
-        return view('seller.orderhistory');
+        return view('seller.order.order_list');
     }
 }

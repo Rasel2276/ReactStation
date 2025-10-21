@@ -1,7 +1,7 @@
 @extends('seller.layouts.layout')
 @section('seller_page_title')
-     Manage product
+     Manage store
 @endsection
 @section('seller_layout')
-    Manage productsssss
+    Manage store
 @endsection

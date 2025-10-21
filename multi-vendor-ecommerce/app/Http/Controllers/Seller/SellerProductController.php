@@ -15,4 +15,8 @@ class SellerProductController extends Controller
         return view('seller.product.manage');
     }
 
+    public function return_product(){
+        return view('seller.product.return_product');
+    }
+
 }

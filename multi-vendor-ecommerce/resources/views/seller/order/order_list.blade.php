@@ -1,7 +1,7 @@
 @extends('seller.layouts.layout')
 @section('seller_page_title')
-     Manage product
+    Order History
 @endsection
 @section('seller_layout')
-    Manage productsssss
+    Order List
 @endsection

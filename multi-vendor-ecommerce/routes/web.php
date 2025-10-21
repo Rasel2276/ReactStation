@@ -73,17 +73,19 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
     Route::prefix('vendor')->group(function(){
         Route::controller(SellerMainController::class)->group(function(){
         Route::get('/dashboard','index')->name('vendor');
-        Route::get('/orderhistory','orderhistory')->name('vendor.order.history');
+        Route::get('/orderhistory','orderhistory')->name('vendor.order.order_list');
         });
 
         Route::controller(SellerProductController::class)->group(function(){
-        Route::get('/product/create','index')->name('Product.create');
+        Route::get('/product/create','index')->name('product.create');
         Route::get('/product/manage','manage')->name('product.manage');
+        Route::get('/product/return_product','return_product')->name('product.return_product');
         });
 
         Route::controller(SellerStoreController::class)->group(function(){
         Route::get('/store/create','index')->name('store.create');
         Route::get('/store/manage','manage')->name('store.manage');
+        Route::get('/store/stock','stock')->name('store.stock');
         });
     });
 });

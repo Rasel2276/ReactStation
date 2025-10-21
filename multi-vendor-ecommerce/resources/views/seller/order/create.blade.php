@@ -1,7 +1,7 @@
 @extends('seller.layouts.layout')
 @section('seller_page_title')
-    Order History
+     create store
 @endsection
 @section('seller_layout')
-    Order History
+    create store
 @endsection

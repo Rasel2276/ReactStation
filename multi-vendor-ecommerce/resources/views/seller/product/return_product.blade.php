@@ -3,5 +3,5 @@
      Manage product
 @endsection
 @section('seller_layout')
-    Manage productsssss
+    Return product
 @endsection
