@@ -11,6 +11,11 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Seller\SellerMainController;
 use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerStoreController;
+use App\Http\Controllers\Seller\SellerPaymentController;
+use App\Http\Controllers\Seller\SellerContactController;
+use App\Http\Controllers\Seller\SellerHistoryController;
+
+
 use App\Http\Controllers\Customer\CustomerMainController;
 
 use App\Http\Controllers\ProfileController;
@@ -73,7 +78,7 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
     Route::prefix('vendor')->group(function(){
         Route::controller(SellerMainController::class)->group(function(){
         Route::get('/dashboard','index')->name('vendor');
-        Route::get('/orderhistory','orderhistory')->name('vendor.order.order_list');
+        Route::get('/order_list','order_list')->name('order.order_list');
         });
 
         Route::controller(SellerProductController::class)->group(function(){
@@ -86,6 +91,25 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::get('/store/create','index')->name('store.create');
         Route::get('/store/manage','manage')->name('store.manage');
         Route::get('/store/stock','stock')->name('store.stock');
+        });
+
+        Route::controller(SellerPaymentController::class)->group(function(){
+        Route::get('/payment/payout_request','index')->name('payment.payout_request');
+        Route::get('/payment/payout_paid_list','payout_paid_list')->name('payment.payout_paid_list');
+        Route::get('/payment/payout_pending_list','payout_pending_list')->name('payment.payout_pending_list');
+        Route::get('/payment/refund','refund')->name('payment.refund');
+        });
+
+        Route::controller(SellerContactController::class)->group(function(){
+        Route::get('/contact/chat_with_customer','index')->name('contact.chat_with_customer');
+        Route::get('/contact/chat_with_admin','chat_with_admin')->name('contact.chat_with_admin');
+        });
+
+        Route::controller(SellerHistoryController::class)->group(function(){
+        Route::get('/history/total_income','index')->name('history.total_income');
+        Route::get('/history/sales_report','sales_report')->name('history.sales_report');
+        Route::get('/history/transection','transection')->name('history.transection');
+        Route::get('/history/account_setting','account_setting')->name('history.account_setting');
         });
     });
 });

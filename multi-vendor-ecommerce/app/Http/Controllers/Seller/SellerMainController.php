@@ -11,7 +11,7 @@ class SellerMainController extends Controller
         return view('seller.dashboard');
     }
 
-     public function orderhistory(){
+     public function order_list(){
         return view('seller.order.order_list');
     }
 }

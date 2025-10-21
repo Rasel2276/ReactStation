@@ -66,8 +66,8 @@
 						Order
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('vendor.order.order_list')?'active':''}}">
-						<a class="sidebar-link" href="{{route('vendor.order.order_list')}}">
+					<li class="sidebar-item {{request()->routeIs('order.order_list')?'active':''}}">
+						<a class="sidebar-link" href="{{route('order.order_list')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Order</span>
             </a>
 					</li>
@@ -99,26 +99,26 @@
 						Payment
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('payment.payout_request')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.payout_request')}}">
               <i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Payout Request</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.manage')}}">
+					<li class="sidebar-item {{request()->routeIs('payment.payout_paid_list')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.payout_paid_list')}}">
               <i class="align-middle" data-feather="list"></i> <span class="align-middle">Payout Paid List</span>
             </a>
 					</li>
 
-						<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.manage')}}">
+						<li class="sidebar-item {{request()->routeIs('payment.payout_pending_list')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.payout_pending_list')}}">
               <i class="align-middle" data-feather="loader"></i> <span class="align-middle">Payout Pending List</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.manage')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.manage')}}">
+					<li class="sidebar-item {{request()->routeIs('payment.refund')?'active':''}}">
+						<a class="sidebar-link" href="{{route('payment.refund')}}">
               <i class="align-middle" data-feather="send"></i> <span class="align-middle">Refund</span>
             </a>
 					</li>
@@ -127,14 +127,14 @@
 						Contact
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('contact.chat_with_customer')?'active':''}}">
+						<a class="sidebar-link" href="{{route('contact.chat_with_customer')}}">
               <i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Chat With Customer</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('contact.chat_with_admin')?'active':''}}">
+						<a class="sidebar-link" href="{{route('contact.chat_with_admin')}}">
               <i class="align-middle" data-feather="inbox"></i> <span class="align-middle">Chat With Admin</span>
             </a>
 					</li>
@@ -143,26 +143,26 @@
 						History
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('history.total_income')?'active':''}}">
+						<a class="sidebar-link" href="{{route('history.total_income')}}">
               <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Total Income</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('history.transection')?'active':''}}">
+						<a class="sidebar-link" href="{{route('history.transection')}}">
               <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Transection</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('history.sales_report')?'active':''}}">
+						<a class="sidebar-link" href="{{route('history.sales_report')}}">
               <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Sales Report</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.create')}}">
+					<li class="sidebar-item {{request()->routeIs('history.account_setting')?'active':''}}">
+						<a class="sidebar-link" href="{{route('history.account_setting')}}">
               <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Account Setting</span>
             </a>
 					</li>
