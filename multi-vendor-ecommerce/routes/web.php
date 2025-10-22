@@ -29,6 +29,8 @@ Route::get('/', function () {
     return view('front_end.home.website');
 });
 
+
+
 // admin routes //
 Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
     Route::prefix('admin')->group(function(){
@@ -40,20 +42,24 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/cart/cart_history','cart_history')->name('admin.cart.cart_history');
         Route::get('/order/order_history','order_history')->name('admin.order.order_history');
         });
-        Route::controller(CategoryController::class)->group(function(){
-        Route::get('/category/create_category','index')->name('category.create_category');
-        Route::get('/category/manage_category','manage_category')->name('category.manage_category');
-        });
+        Route::resource('categories', CategoryController::class);
+        // Route::controller(CategoryController::class)->group(function(){
+        // Route::get('/category/create_category','index')->name('category.create_category');
+        // Route::get('/category/manage_category','manage_category')->name('category.manage_category');
+        // });
         Route::controller(SubCategoryController::class)->group(function(){
         Route::get('/sub_category/create_sub_category','index')->name('sub_category.create_sub_category');
         Route::get('/sub_category/manage_sub_category','manage_sub_category')->name('sub_category.manage_sub_category');
         });
+
+
         Route::controller(ProductController::class)->group(function(){
         Route::get('/product/manage_product_reviews','index')->name('product.manage_product_reviews');
         Route::get('/product/add_product','add_product')->name('product.add_product');
         Route::get('/product/manage_product','manage_product')->name('product.manage_product');
         Route::get('/product/return_product','return_product')->name('product.return_product');
         });
+
         Route::controller(ProductAttributeController::class)->group(function(){
         Route::get('/product_attribute/create_attribute','index')->name('product_attribute.create_attribute');
         Route::get('/product_attribute/manage_attribute','manage_attribute')->name('product_attribute.manage_attribute');
