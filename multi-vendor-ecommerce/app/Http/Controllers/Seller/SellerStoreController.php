@@ -15,7 +15,4 @@ class SellerStoreController extends Controller
         return view('seller.store.manage');
     }
 
-    public function stock(){
-        return view('seller.store.stock');
-    }
 }

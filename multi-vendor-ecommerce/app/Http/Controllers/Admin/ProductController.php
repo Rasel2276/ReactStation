@@ -21,4 +21,8 @@ class ProductController extends Controller
     public function return_product(){
         return view('admin.product.return_product');
     }
+
+     public function purchase_request(){
+        return view('admin.product.purchase_request');
+    }
 }

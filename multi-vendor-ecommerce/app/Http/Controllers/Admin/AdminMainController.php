@@ -24,5 +24,12 @@ class AdminMainController extends Controller
     } 
     public function order_history(){
         return view('admin.order.order_history');
+    }
+    public function sales(){
+        return view('admin.order.sales');
+    }
+    public function total_income(){
+        return view('admin.order.total_income');
     } 
 }
+

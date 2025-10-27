@@ -125,9 +125,9 @@
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('product.manage_product_reviews')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.manage_product_reviews')}}">
-              <i class="align-middle" data-feather="star"></i> <span class="align-middle">Manage Reviews</span>
+					<li class="sidebar-item {{request()->routeIs('product.purchase_request')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.purchase_request')}}">
+              <i class="align-middle" data-feather="star"></i> <span class="align-middle">Purchase Request</span>
             </a>
 					</li>
 
@@ -182,6 +182,18 @@
 					<li class="sidebar-item {{request()->routeIs('admin.cart.cart_history')?'active':''}}">
 						<a class="sidebar-link" href="{{route('admin.cart.cart_history')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Cart</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('admin.order.sales')?'active':''}}">
+						<a class="sidebar-link" href="{{route('admin.order.sales')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Sales</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('admin.order.total_income')?'active':''}}">
+						<a class="sidebar-link" href="{{route('admin.order.total_income')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Total Income</span>
             </a>
 					</li>
 

@@ -71,6 +71,34 @@
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Order</span>
             </a>
 					</li>
+
+					<li class="sidebar-header">
+						Inventory Management
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.purchase')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.purchase')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Purchase</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.manage_stock')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.manage_stock')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Stock</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.purchase_return')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.purchase_return')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Purchase Return</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.admin_product_list')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.admin_product_list')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Admin Product List</span>
+            </a>
+					</li>
 					
 
 					<li class="sidebar-header">
@@ -89,11 +117,22 @@
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('store.stock')?'active':''}}">
-						<a class="sidebar-link" href="{{route('store.stock')}}">
-              <i class="align-middle" data-feather="eye"></i> <span class="align-middle">Manage Stock</span>
+					<li class="sidebar-header">
+						Product Discount
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('discount.create_discount')?'active':''}}">
+						<a class="sidebar-link" href="{{route('discount.create_discount')}}">
+              <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Create Discount</span>
             </a>
 					</li>
+
+					<li class="sidebar-item {{request()->routeIs('discount.manage_discount')?'active':''}}">
+						<a class="sidebar-link" href="{{route('discount.manage_discount')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Manage Discount</span>
+            </a>
+					</li>
+
 
 					<li class="sidebar-header">
 						Payment

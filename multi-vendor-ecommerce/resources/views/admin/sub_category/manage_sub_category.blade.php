@@ -101,7 +101,7 @@ Manage Sub-Categories - Admin Panel
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>Id</th>
                 <th>Sub-Category Name</th>
                 <th>Parent Category</th>
                 <th>Slug</th>

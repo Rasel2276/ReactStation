@@ -14,6 +14,8 @@ use App\Http\Controllers\Seller\SellerStoreController;
 use App\Http\Controllers\Seller\SellerPaymentController;
 use App\Http\Controllers\Seller\SellerContactController;
 use App\Http\Controllers\Seller\SellerHistoryController;
+use App\Http\Controllers\Seller\InventoryController;
+use App\Http\Controllers\Seller\SellerDiscountController;
 
 
 use App\Http\Controllers\Customer\CustomerMainController;
@@ -44,6 +46,8 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/manage/store','manage_store')->name('admin.manage.store');
         Route::get('/cart/cart_history','cart_history')->name('admin.cart.cart_history');
         Route::get('/order/order_history','order_history')->name('admin.order.order_history');
+        Route::get('/order/sales','sales')->name('admin.order.sales');
+        Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
         Route::resource('categories', CategoryController::class);
         // Route::controller(CategoryController::class)->group(function(){
@@ -61,6 +65,7 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/product/add_product','add_product')->name('product.add_product');
         Route::get('/product/manage_product','manage_product')->name('product.manage_product');
         Route::get('/product/return_product','return_product')->name('product.return_product');
+        Route::get('/product/purchase_request','purchase_request')->name('product.purchase_request');
         });
 
         Route::controller(ProductAttributeController::class)->group(function(){
@@ -90,6 +95,13 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::get('/order_list','order_list')->name('order.order_list');
         });
 
+        Route::controller(InventoryController::class)->group(function(){
+        Route::get('/inventory/purchase','index')->name('inventory.purchase');
+        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
+        Route::get('/inventory/manage_stock','manage_stock')->name('inventory.manage_stock');
+        Route::get('/inventory/admin_product_list','admin_product_list')->name('inventory.admin_product_list');
+        });
+
         Route::controller(SellerProductController::class)->group(function(){
         Route::get('/product/create','index')->name('product.create');
         Route::get('/product/manage','manage')->name('product.manage');
@@ -99,7 +111,11 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::controller(SellerStoreController::class)->group(function(){
         Route::get('/store/create','index')->name('store.create');
         Route::get('/store/manage','manage')->name('store.manage');
-        Route::get('/store/stock','stock')->name('store.stock');
+        });
+
+        Route::controller(SellerDiscountController::class)->group(function(){
+        Route::get('/discount/create_discount','index')->name('discount.create_discount');
+        Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');
         });
 
         Route::controller(SellerPaymentController::class)->group(function(){
