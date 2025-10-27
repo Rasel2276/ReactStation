@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('front_end.home.website');
 });
+Route::get('/category', function () {
+    return view('front_end.home.category.category');
+});
 
 
 
