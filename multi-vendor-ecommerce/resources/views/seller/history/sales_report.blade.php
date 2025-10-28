@@ -115,7 +115,7 @@
     <table id="salesTable">
       <thead>
         <tr>
-          <th>#</th>
+          <th>Id</th>
           <th>Product Name</th>
           <th>Date</th>
           <th>Quantity</th>

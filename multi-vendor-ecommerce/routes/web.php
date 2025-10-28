@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::controller(SellerProductController::class)->group(function(){
         Route::get('/product/create','index')->name('product.create');
         Route::get('/product/manage','manage')->name('product.manage');
-        Route::get('/product/return_product','return_product')->name('product.return_product');
+        Route::get('/product/return_product','return_product')->name('product.return_product_customer');
         });
 
         Route::controller(SellerStoreController::class)->group(function(){
@@ -114,8 +114,8 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         });
 
         Route::controller(SellerDiscountController::class)->group(function(){
-        Route::get('/discount/create_discount','index')->name('discount.create_discount');
-        Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');
+        Route::get('/discount/create_discount','index')->name('discount.create_discount_vendor');
+        Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount_vendor');
         });
 
         Route::controller(SellerPaymentController::class)->group(function(){
@@ -146,6 +146,7 @@ Route::middleware(['auth', 'verified','rolemanager:customer'])->group(function (
         Route::get('/order/history','history')->name('customer.history');
         Route::get('/setting/payment','payment')->name('customer.payment');
         Route::get('/affiliate','affiliate')->name('customer.affiliate');
+        Route::get('/profile','profile')->name('customer.profile');
         });
     });
 });

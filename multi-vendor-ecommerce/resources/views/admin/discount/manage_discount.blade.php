@@ -104,7 +104,7 @@ Manage Product Discounts - Admin Panel
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>Id</th>
                 <th>Product</th>
                 <th>Type</th>
                 <th>Value</th>

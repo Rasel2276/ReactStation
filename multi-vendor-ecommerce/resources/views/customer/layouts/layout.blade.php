@@ -57,7 +57,11 @@
             </a>
 					</li>
 
-					
+					<li class="sidebar-item {{request()->routeIs('customer.profile')?'active':''}}">
+						<a class="sidebar-link" href="{{route('customer.profile')}}">
+              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Profile</span>
+            </a>
+					</li>
 
 				</ul>
 

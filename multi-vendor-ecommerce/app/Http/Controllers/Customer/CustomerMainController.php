@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CustomerMainController extends Controller
 {
     public function index(){
-        return view('customer.profile');
+        return view('customer.dashboard');
     }
 
     public function history(){
@@ -21,5 +21,8 @@ class CustomerMainController extends Controller
 
     public function affiliate(){
         return view('customer.affiliate');
+    }
+    public function profile(){
+        return view('customer.profile');
     }
 }

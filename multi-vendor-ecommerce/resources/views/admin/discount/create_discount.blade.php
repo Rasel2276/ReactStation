@@ -6,8 +6,14 @@ Add Product Discount - Admin Panel
 
 @section('admin_layout')
 
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Poppins', sans-serif;
+    }
 
     .form-wrapper {
         background: #fff;
@@ -16,8 +22,7 @@ Add Product Discount - Admin Panel
         border-radius: 16px;
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         padding: 30px 40px;
-        margin: 10px auto;
-        font-family: 'Poppins', sans-serif;
+        margin: 50px auto;
         animation: fadeIn 0.6s ease;
     }
 
@@ -102,12 +107,23 @@ Add Product Discount - Admin Panel
         }
     }
 </style>
+</head>
+<body>
 
 <div class="form-wrapper">
     <h2>Add Product Discount</h2>
 
     <form action="" method="POST">
-        <!-- @csrf -->
+        <div class="form-row">
+            <label for="product">Select Product:</label>
+            <select id="product" name="product" required>
+                <option value="">-- Select Product --</option>
+                <option value="1">Product 1</option>
+                <option value="2">Product 2</option>
+                <option value="3">Product 3</option>
+                <!-- Pore Laravel e loop kore dynamic products show korbe -->
+            </select>
+        </div>
 
         <div class="form-row">
             <label for="discount_type">Discount Type:</label>
@@ -144,5 +160,10 @@ Add Product Discount - Admin Panel
         <button type="submit" class="submit-btn">Add Discount</button>
     </form>
 </div>
+
+</body>
+
+
+
 
 @endsection

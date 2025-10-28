@@ -106,7 +106,7 @@ Manage Categories - Admin Panel
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>Id</th>
                 <th>Category Name</th>
                 <th>Slug</th>
                 <th>Status</th>

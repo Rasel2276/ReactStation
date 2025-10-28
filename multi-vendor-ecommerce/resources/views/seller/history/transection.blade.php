@@ -140,7 +140,7 @@
     <table id="transactionTable">
       <thead>
         <tr>
-          <th>#</th>
+          <th>Id</th>
           <th>Transaction ID</th>
           <th>Date</th>
           <th>Amount (৳)</th>

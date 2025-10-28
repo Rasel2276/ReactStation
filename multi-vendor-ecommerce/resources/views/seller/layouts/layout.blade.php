@@ -56,8 +56,8 @@
 					</li>
 
 
-					<li class="sidebar-item {{request()->routeIs('product.return_product')?'active':''}}">
-						<a class="sidebar-link" href="{{route('product.return_product')}}">
+					<li class="sidebar-item {{request()->routeIs('product.return_product_customer')?'active':''}}">
+						<a class="sidebar-link" href="{{route('product.return_product_customer')}}">
               <i class="align-middle" data-feather="repeat"></i> <span class="align-middle">Return product</span>
             </a>
 					</li>
@@ -121,14 +121,14 @@
 						Product Discount
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('discount.create_discount')?'active':''}}">
-						<a class="sidebar-link" href="{{route('discount.create_discount')}}">
+					<li class="sidebar-item {{request()->routeIs('discount.create_discount_vendor')?'active':''}}">
+						<a class="sidebar-link" href="{{route('discount.create_discount_vendor')}}">
               <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Create Discount</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('discount.manage_discount')?'active':''}}">
-						<a class="sidebar-link" href="{{route('discount.manage_discount')}}">
+					<li class="sidebar-item {{request()->routeIs('discount.manage_discount_vendor')?'active':''}}">
+						<a class="sidebar-link" href="{{route('discount.manage_discount_vendor')}}">
               <i class="align-middle" data-feather="list"></i> <span class="align-middle">Manage Discount</span>
             </a>
 					</li>
