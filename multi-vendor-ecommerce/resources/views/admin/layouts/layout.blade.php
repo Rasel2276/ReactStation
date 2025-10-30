@@ -43,14 +43,14 @@
 						Category
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('categories.create')?'active':''}}">
-						<a class="sidebar-link" href="{{route('categories.create')}}">
+					<li class="sidebar-item {{request()->routeIs('category.create_category')?'active':''}}">
+						<a class="sidebar-link" href="{{route('category.create_category')}}">
               <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Create Category</span>
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('categories.index')?'active':''}}">
-						<a class="sidebar-link" href="{{route('categories.index')}}">
+					<li class="sidebar-item {{request()->routeIs('category.manage_category')?'active':''}}">
+						<a class="sidebar-link" href="{{route('category.manage_category')}}">
               <i class="align-middle" data-feather="list"></i> <span class="align-middle">Manage Category</span>
             </a>
 					</li>

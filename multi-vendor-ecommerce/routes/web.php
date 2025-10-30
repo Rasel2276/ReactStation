@@ -49,11 +49,12 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/order/sales','sales')->name('admin.order.sales');
         Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
-        Route::resource('categories', CategoryController::class);
-        // Route::controller(CategoryController::class)->group(function(){
-        // Route::get('/category/create_category','index')->name('category.create_category');
-        // Route::get('/category/manage_category','manage_category')->name('category.manage_category');
-        // });
+        
+
+        Route::controller(CategoryController::class)->group(function(){
+        Route::get('/category/create_category','index')->name('category.create_category');
+        Route::get('/category/manage_category','manage_category')->name('category.manage_category');
+        });
         Route::controller(SubCategoryController::class)->group(function(){
         Route::get('/sub_category/create_sub_category','index')->name('sub_category.create_sub_category');
         Route::get('/sub_category/manage_sub_category','manage_sub_category')->name('sub_category.manage_sub_category');
