@@ -1,27 +1,28 @@
 <?php
 // Admin routes link //
-use App\Http\Controllers\Admin\AdminMainController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductAttributeController;
-use App\Http\Controllers\Admin\ProductDiscountController;
-use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\ProductController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminMainController;
+use App\Http\Controllers\Admin\AdminInventoryController;
 // seller routes link//
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Seller\SellerMainController;
-use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerStoreController;
-use App\Http\Controllers\Seller\SellerPaymentController;
+use App\Http\Controllers\Seller\InventoryController;
 use App\Http\Controllers\Seller\SellerContactController;
 use App\Http\Controllers\Seller\SellerHistoryController;
-use App\Http\Controllers\Seller\InventoryController;
-use App\Http\Controllers\Seller\SellerDiscountController;
+use App\Http\Controllers\Seller\SellerPaymentController;
+use App\Http\Controllers\Seller\SellerProductController;
 
+
+use App\Http\Controllers\Admin\ProductDiscountController;
 
 use App\Http\Controllers\Customer\CustomerMainController;
-
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Seller\SellerDiscountController;
+use App\Http\Controllers\Admin\ProductAttributeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -50,11 +51,23 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
         
+        Route::controller(AdminInventoryController::class)->group(function(){
+        Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
+        Route::get('/inventory/purchase','purchase')->name('inventory.purchase');
+        Route::get('/inventory/purchase_records','purchase_records')->name('inventory.purchase_records');
+        Route::get('/inventory/add_stock','add_stock')->name('inventory.add_stock');
+        Route::get('/inventory/stock_records','stock_records')->name('inventory.stock_records');
+        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
+        Route::get('/inventory/return_record','return_record')->name('inventory.return_record');
+        Route::get('/inventory/product','product')->name('inventory.product');
+        Route::get('/inventory/product_records','product_records')->name('inventory.product_records');
+        });
 
         Route::controller(CategoryController::class)->group(function(){
         Route::get('/category/create_category','index')->name('category.create_category');
         Route::get('/category/manage_category','manage_category')->name('category.manage_category');
         });
+
         Route::controller(SubCategoryController::class)->group(function(){
         Route::get('/sub_category/create_sub_category','index')->name('sub_category.create_sub_category');
         Route::get('/sub_category/manage_sub_category','manage_sub_category')->name('sub_category.manage_sub_category');

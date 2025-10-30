@@ -87,6 +87,62 @@
             </a>
 					</li>
 
+					<li class="sidebar-header">
+						Inventory
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.add_suplier')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.add_suplier')}}">
+              <i class="align-middle" data-feather="plus"></i> <span class="align-middle">Add Suplier</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.purchase')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.purchase')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Purchase</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.purchase_records')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.purchase_records')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Purchase Records</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.add_stock')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.add_stock')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Add Stock</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.stock_records')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.stock_records')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Stock Records</span>
+            </a>
+					</li>
+					<li class="sidebar-item {{request()->routeIs('inventory.purchase_return')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.purchase_return')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Purchase Return</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.return_record')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.return_record')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Return Records</span>
+            </a>
+					</li>
+					<li class="sidebar-item {{request()->routeIs('inventory.product')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.product')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Products</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('inventory.product_records')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.product_records')}}">
+              <i class="align-middle" data-feather="list"></i> <span class="align-middle">Product Records</span>
+            </a>
+					</li>
+
 						<li class="sidebar-header">
 						Product Discount
 					</li>
