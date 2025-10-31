@@ -6,174 +6,163 @@ Manage Product Discounts - Admin Panel
 
 @section('admin_layout')
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-    .table-wrapper {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        padding: 20px 30px;
-        margin: 10px auto;
-        max-width: 1100px;
-        overflow-x: auto;
-        font-family: 'Poppins', sans-serif;
-    }
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #182848;
-        font-weight: 600;
-    }
+      body {
+          font-family: 'Poppins', sans-serif;
+          background-color: #f0f2f5;
+          margin: 0;
+      }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: auto;
-    }
+      .container {
+          background: #fff;
+          width: 95%;
+          max-width: 1200px;
+          margin: 0 auto;
+          border-radius: 16px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+          padding: 30px 40px;
+          animation: fadeIn 0.6s ease;
+      }
 
-    table thead {
-        background: linear-gradient(90deg, #4b6cb7, #182848);
-        color: #fff;
-    }
+      @keyframes fadeIn {
+          from {opacity: 0; transform: translateY(-20px);}
+          to {opacity: 1; transform: translateY(0);}
+      }
 
-    table th, table td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        vertical-align: middle;
-    }
+      h2 {
+          text-align: center;
+          color: #182848;
+          font-weight: 600;
+          margin-bottom: 25px;
+      }
 
-    table tr:hover {
-        background-color: #f5f5f5;
-    }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 12px;
+          overflow: hidden;
+      }
 
-    .status-badge {
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        user-select: none;
-    }
+      thead {
+          background: linear-gradient(90deg, #4b6cb7, #182848);
+          color: #fff;
+      }
 
-    .status-active { background-color: #28a745; }
-    .status-inactive { background-color: #dc3545; }
+      th, td {
+          padding: 12px 16px;
+          border-bottom: 1px solid #ddd;
+          text-align: left;
+          font-size: 14px;
+      }
 
-    .action-btn {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+      tbody tr:hover {
+          background-color: #f9f9ff;
+      }
 
-    .btn-view, .btn-toggle, .btn-edit, .btn-delete {
-        padding: 6px 12px;
-        border: none;
-        border-radius: 6px;
-        color: #fff;
-        font-weight: 500;
-        cursor: pointer;
-        transition: 0.2s;
-        font-size: 13px;
-    }
+      .product-image {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 8px;
+      }
 
-    .btn-view { background-color: #007bff; }
-    .btn-view:hover { background-color: #0056b3; }
+      .status-select {
+          padding: 5px 8px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+          cursor: pointer;
+      }
 
-    .btn-toggle { background-color: #6c757d; }
-    .btn-toggle:hover { background-color: #495057; }
+      .actions {
+          display: flex;
+          gap: 10px;
+      }
 
-    .btn-edit { background-color: #17a2b8; }
-    .btn-edit:hover { background-color: #117a8b; }
+      .actions a {
+          text-decoration: none;
+          padding: 6px 12px;
+          border-radius: 6px;
+          color: #fff;
+          font-size: 13px;
+          transition: 0.3s;
+      }
 
-    .btn-delete { background-color: #dc3545; }
-    .btn-delete:hover { background-color: #a71d2a; }
+      .edit-btn {
+          background: #4b6cb7;
+      }
 
-    @media(max-width: 768px){
-        table th, table td { font-size: 13px; padding: 8px 10px; }
-        .btn-view, .btn-toggle, .btn-edit, .btn-delete { font-size: 11px; padding: 4px 8px; }
-    }
-</style>
+      .delete-btn {
+          background: #b71c1c;
+      }
 
-<div class="table-wrapper">
-    <h2>Manage Product Discounts</h2>
+      .actions a:hover {
+          opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
+          th, td {
+              font-size: 12px;
+              padding: 8px;
+          }
+          .product-image {
+              width: 40px;
+              height: 40px;
+          }
+      }
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Product Discount List</h2>
+    @if(session('success'))
+        <p style="color:green">{{ session('success') }}</p>
+    @endif
 
     <table>
         <thead>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <th>Product</th>
-                <th>Type</th>
-                <th>Value</th>
+                <th>Discount For</th>
+                <th>Discount Type</th>
+                <th>Discount Value</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            {{-- Example static data --}}
+            @foreach($discounts as $discount)
             <tr>
-                <td>1</td>
-                <td>Smartphone X</td>
-                <td>Percentage</td>
-                <td>10%</td>
-                <td>2025-10-01</td>
-                <td>2025-10-31</td>
-                <td><span class="status-badge status-active" onclick="toggleStatus(this)">Active</span></td>
+                <td>{{ $discount->id }}</td>
+                <td>{{ $discount->product->product_name }}</td>
+                <td>{{ $discount->discount_for }}</td>
+                <td>{{ $discount->discount_type }}</td>
+                <td>{{ $discount->discount_value }} {{ $discount->discount_type == 'Percentage' ? '%' : '৳' }}</td>
+                <td>{{ $discount->start_date }}</td>
+                <td>{{ $discount->end_date }}</td>
                 <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Smartphone X')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-edit" onclick="alert('Edit Smartphone X')">Edit</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
+                    <select class="status-select">
+                        <option value="Active" {{ $discount->status=='Active'?'selected':'' }}>Active</option>
+                        <option value="Inactive" {{ $discount->status=='Inactive'?'selected':'' }}>Inactive</option>
+                    </select>
+                </td>
+                <td class="actions">
+                    <a href="{{ route('discount.edit_discount',$discount->id) }}" class="edit-btn">Edit</a>
+                    <a href="{{ route('discount.delete_discount',$discount->id) }}" class="delete-btn" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
             </tr>
-
-            <tr>
-                <td>2</td>
-                <td>Leather Jacket</td>
-                <td>Fixed</td>
-                <td>$20</td>
-                <td>2025-11-01</td>
-                <td>2025-11-15</td>
-                <td><span class="status-badge status-inactive" onclick="toggleStatus(this)">Inactive</span></td>
-                <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Leather Jacket')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-edit" onclick="alert('Edit Leather Jacket')">Edit</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
-                </td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
 
-<script>
-    function toggleStatus(element) {
-        if(element.classList.contains('status-active')) {
-            element.classList.remove('status-active');
-            element.classList.add('status-inactive');
-            element.textContent = 'Inactive';
-        } else {
-            element.classList.remove('status-inactive');
-            element.classList.add('status-active');
-            element.textContent = 'Active';
-        }
-    }
-
-    function deleteRow(button) {
-        if(confirm('Are you sure you want to delete this discount?')) {
-            button.closest('tr').remove();
-            alert('Discount deleted!');
-        }
-    }
-</script>
+</body>
 
 @endsection

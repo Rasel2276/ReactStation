@@ -5,116 +5,165 @@
 @section('seller_layout')
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-body { background-color: #f4f6fb; color: #333;}
-.table-container { width: 100%; max-width: 1200px; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); padding: 25px; margin:20px auto; }
-h1 { text-align: center; color: #111827; margin-bottom: 20px; font-size: 26px; }
-.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.top-bar input { width: 250px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; outline: none; font-size: 15px; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-th { background-color: #2563eb; color: #fff; font-weight: 600; }
-tr:hover { background-color: #f9fafb; }
-.actions { display: flex; gap: 10px; }
-.btn { padding: 6px 12px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: 0.2s; }
-.btn-view { background-color: #22c55e; color: #fff; }
-.btn-purchase { background-color: #2563eb; color: #fff; }
-.btn:hover { opacity: 0.9; }
-@media (max-width:768px) { table{ display:block; overflow-x:auto; } }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f6fa;
+        margin: 0;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #1b1b1b;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #007bff;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background: #f3f4f6;
+    }
+
+    tr:hover {
+        background: #e9ecef;
+    }
+
+    .product img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 13px;
+        display: inline-block;
+    }
+
+    .available {
+        background: #e7f9ee;
+        color: #218838;
+    }
+
+    .soldout {
+        background: #fdecea;
+        color: #c82333;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+    }
+
+    .buy-btn {
+        background: #28a745;
+    }
+
+    .buy-btn:hover:not(:disabled) {
+        background: #218838;
+        transform: scale(1.05);
+    }
+
+    .buy-btn:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+    }
 </style>
-</head>
-<body>
-<div class="table-container">
-  <h1>Admin Products - Vendor View</h1>
-  <div class="top-bar">
-    <input type="text" id="search" placeholder="Search product..." onkeyup="filterTable()">
-  </div>
-  <table id="productTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price (৳)</th>
-        <th>Stock</th>
-        <th>Status</th>
-        <th>Admin Info</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="productBody"></tbody>
-  </table>
+
+<div class="container">
+    <h2>Admin Stock</h2>
+
+    @if(session('success'))
+        <p style="color:green; text-align:center;">{{ session('success') }}</p>
+    @endif
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Quantity</th>
+                <th>Vendor Price</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($stocks as $stock)
+            <tr>
+                <td>{{ $stock->id }}</td>
+                <td>{{ $stock->product->product_name ?? 'N/A' }}</td>
+                <td class="product">
+                    @if($stock->product && $stock->product->product_image)
+                        <img src="{{ asset('product_images/'.$stock->product->product_image) }}" alt="Product Image">
+                    @else
+                        <img src="https://via.placeholder.com/50" alt="Product Image">
+                    @endif
+                </td>
+                <td>{{ $stock->quantity }}</td>
+                <td>৳ {{ number_format($stock->vendor_price,2) }}</td>
+                <td>
+                    @if($stock->quantity > 0)
+                        <span class="status available">Available</span>
+                    @else
+                        <span class="status soldout">Stock Out</span>
+                    @endif
+                </td>
+                <td>{{ $stock->created_at->format('Y-m-d H:i') }}</td>
+                <td>
+                    <form action="{{ route('inventory.purchase') }}" method="GET">
+                        <input type="hidden" name="product_id" value="{{ $stock->product->id ?? '' }}">
+                        <button type="submit" class="action-btn buy-btn" 
+                                @if($stock->quantity == 0) disabled @endif>
+                            Buy Now
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
-
-<script>
-const products = [
-  {id: 1, name: 'Samsung Galaxy S21', category: 'Electronics', price: 95000, stock: 20, status: 'Active', admin: 'Admin A'},
-  {id: 2, name: 'Men T-Shirt', category: 'Fashion', price: 1200, stock: 50, status: 'Active', admin: 'Admin B'},
-  {id: 3, name: 'Rice Cooker', category: 'Home & Kitchen', price: 4500, stock: 15, status: 'Inactive', admin: 'Admin A'},
-];
-
-function renderTable() {
-  const tbody = document.getElementById('productBody');
-  tbody.innerHTML = '';
-  products.forEach(p => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${p.id}</td>
-        <td>${p.name}</td>
-        <td>${p.category}</td>
-        <td>${p.price.toLocaleString()}</td>
-        <td>${p.stock}</td>
-        <td style="color:${p.status === 'Active' ? 'green':'red'};">${p.status}</td>
-        <td>${p.admin}</td>
-        <td class="actions">
-          <button class="btn btn-view" onclick="viewProduct(${p.id})">View</button>
-          <button class="btn btn-purchase" onclick="purchaseProduct(${p.id})">Purchase</button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-function filterTable() {
-  const searchValue = document.getElementById('search').value.toLowerCase();
-  const tbody = document.getElementById('productBody');
-  tbody.innerHTML = '';
-  products.filter(p => 
-    p.name.toLowerCase().includes(searchValue) || 
-    p.category.toLowerCase().includes(searchValue) ||
-    p.admin.toLowerCase().includes(searchValue)
-  ).forEach(p => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${p.id}</td>
-        <td>${p.name}</td>
-        <td>${p.category}</td>
-        <td>${p.price.toLocaleString()}</td>
-        <td>${p.stock}</td>
-        <td style="color:${p.status === 'Active' ? 'green':'red'};">${p.status}</td>
-        <td>${p.admin}</td>
-        <td class="actions">
-          <button class="btn btn-view" onclick="viewProduct(${p.id})">View</button>
-          <button class="btn btn-purchase" onclick="purchaseProduct(${p.id})">Purchase</button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-function viewProduct(id) {
-  const p = products.find(prod => prod.id === id);
-  alert(`Product Details:\n\nName: ${p.name}\nCategory: ${p.category}\nPrice: ৳${p.price}\nStock: ${p.stock}\nStatus: ${p.status}\nAdded by: ${p.admin}`);
-}
-
-function purchaseProduct(id) {
-  const p = products.find(prod => prod.id === id);
-  alert(`Redirecting to purchase form for: ${p.name} (Implement Laravel route later)`);
-}
-
-renderTable();
-</script>
-</body>
-
 
 @endsection

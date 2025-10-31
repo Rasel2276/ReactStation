@@ -6,19 +6,20 @@ Add Product Discount - Admin Panel
 
 @section('admin_layout')
 
-
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
     body {
         background-color: #f0f2f5;
         font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     .form-wrapper {
         background: #fff;
         width: 80%;
-        max-width: 700px;
+        max-width: 750px;
         border-radius: 16px;
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         padding: 30px 40px;
@@ -51,7 +52,7 @@ Add Product Discount - Admin Panel
     }
 
     .form-row label {
-        width: 180px;
+        width: 200px;
         font-weight: 500;
         color: #182848;
     }
@@ -112,16 +113,24 @@ Add Product Discount - Admin Panel
 
 <div class="form-wrapper">
     <h2>Add Product Discount</h2>
-
-    <form action="" method="POST">
+    <form action="{{ route('discount.store_discount') }}" method="POST">
+        @csrf
         <div class="form-row">
-            <label for="product">Select Product:</label>
-            <select id="product" name="product" required>
+            <label for="product_id">Select Product:</label>
+            <select id="product_id" name="product_id" required>
                 <option value="">-- Select Product --</option>
-                <option value="1">Product 1</option>
-                <option value="2">Product 2</option>
-                <option value="3">Product 3</option>
-                <!-- Pore Laravel e loop kore dynamic products show korbe -->
+                @foreach($products as $product)
+                <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="discount_for">Discount For:</label>
+            <select id="discount_for" name="discount_for" required>
+                <option value="Customer">Customer</option>
+                <option value="Vendor">Vendor</option>
+                <option value="Supplier">Supplier</option>
             </select>
         </div>
 
@@ -129,14 +138,14 @@ Add Product Discount - Admin Panel
             <label for="discount_type">Discount Type:</label>
             <select id="discount_type" name="discount_type" required>
                 <option value="">-- Select Type --</option>
-                <option value="percentage">Percentage (%)</option>
-                <option value="fixed">Fixed Amount</option>
+                <option value="Percentage">Percentage (%)</option>
+                <option value="Fixed Amount">Fixed Amount</option>
             </select>
         </div>
 
         <div class="form-row">
             <label for="discount_value">Discount Value:</label>
-            <input type="number" id="discount_value" name="discount_value" placeholder="Enter discount value" required>
+            <input type="number" id="discount_value" name="discount_value" step="0.01" required>
         </div>
 
         <div class="form-row">
@@ -151,9 +160,9 @@ Add Product Discount - Admin Panel
 
         <div class="form-row">
             <label for="status">Status:</label>
-            <select id="status" name="status">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+            <select id="status" name="status" required>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
             </select>
         </div>
 
@@ -162,8 +171,4 @@ Add Product Discount - Admin Panel
 </div>
 
 </body>
-
-
-
-
 @endsection

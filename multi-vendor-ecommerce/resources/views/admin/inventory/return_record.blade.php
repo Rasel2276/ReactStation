@@ -94,59 +94,60 @@ Order - Admin Panel
 </head>
 <body>
 
-  <h2>Supplier Purchase Returns</h2>
+  <div class="container">
+    <h2>Supplier Purchase Returns</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Admin Purchase ID</th>
-        <th>Admin</th>
-        <th>Supplier</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Reason</th>
-        <th>Status</th>
-        <th>Return Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>#1001</td>
-        <td>Admin A</td>
-        <td>ABC Traders</td>
-        <td>Wooden Chair</td>
-        <td>10</td>
-        <td>Damaged items received</td>
-        <td><span class="status pending">Pending</span></td>
-        <td>2025-10-31 11:00</td>
-        <td class="actions">
-          <button class="btn btn-view">View</button>
-          <button class="btn btn-edit">Edit</button>
-          <button class="btn btn-delete">Delete</button>
-        </td>
-      </tr>
+    @if(session('success'))
+        <p style="color:green">{{ session('success') }}</p>
+    @endif
 
-      <tr>
-        <td>2</td>
-        <td>#1002</td>
-        <td>Admin B</td>
-        <td>Modern Supply Ltd</td>
-        <td>LED Lamp</td>
-        <td>5</td>
-        <td>Product color mismatch</td>
-        <td><span class="status approved">Approved</span></td>
-        <td>2025-10-30 16:45</td>
-        <td class="actions">
-          <button class="btn btn-view">View</button>
-          <button class="btn btn-edit">Edit</button>
-          <button class="btn btn-delete">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table border="1" cellpadding="8" style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Purchase ID</th>
+                <th>Admin</th>
+                <th>Supplier</th>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Quantity</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Return Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($returns as $r)
+            <tr>
+                <td>{{ $r->id }}</td>
+                <td>#{{ $r->admin_purchase_id }}</td>
+                <td>{{ $r->admin->name ?? 'N/A' }}</td>
+                <td>{{ $r->supplier->supplier_name ?? 'N/A' }}</td>
+                <td>{{ $r->product_name ?? ($r->product->product_name ?? 'N/A') }}</td>
+                <td>
+                    @if($r->product_image)
+                        <img src="{{ asset('product_images/'.$r->product_image) }}" width="60" alt="img">
+                    @elseif($r->product && $r->product->product_image)
+                        <img src="{{ asset('product_images/'.$r->product->product_image) }}" width="60" alt="img">
+                    @else
+                        <img src="https://via.placeholder.com/60" alt="img">
+                    @endif
+                </td>
+                <td>{{ $r->quantity }}</td>
+                <td>{{ \Illuminate\Support\Str::limit($r->reason, 40) }}</td>
+                <td>{{ $r->status }}</td>
+                <td>{{ \Carbon\Carbon::parse($r->return_date)->format('Y-m-d H:i') }}</td>
+                <td>
+                    <a href="">View</a>
+                    <a href="{{ route('inventory.edit_return',$r->id) }}">Edit</a>
+                    <a href="{{ route('inventory.delete_return',$r->id) }}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 </body>
 

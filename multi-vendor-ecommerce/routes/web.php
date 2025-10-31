@@ -65,10 +65,20 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
      Route::post('/inventory/update_purchase/{id}',[AdminInventoryController::class,'update_purchase'])->name('inventory.update_purchase');
      Route::get('/inventory/delete_purchase/{id}',[AdminInventoryController::class,'delete_purchase'])->name('inventory.delete_purchase');
 
-      Route::get('/inventory/add_stock','add_stock')->name('inventory.add_stock');
-      Route::get('/inventory/stock_records','stock_records')->name('inventory.stock_records');
-      Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
-      Route::get('/inventory/return_record','return_record')->name('inventory.return_record');
+     
+
+    Route::get('/inventory/add_stock', [AdminInventoryController::class,'add_stock'])->name('inventory.add_stock');
+    Route::post('/inventory/store_stock', [AdminInventoryController::class,'store_stock'])->name('inventory.store_stock');
+    Route::get('/inventory/stock_records', [AdminInventoryController::class,'stock_records'])->name('inventory.stock_records');
+    Route::get('/inventory/delete_stock/{id}', [AdminInventoryController::class,'delete_stock'])->name('inventory.delete_stock');
+
+      Route::get('/inventory/purchase_return',[AdminInventoryController::class,'purchase_return'])->name('inventory.purchase_return');
+      Route::post('/inventory/store_purchase_return',[AdminInventoryController::class,'store_purchase_return'])->name('inventory.store_purchase_return');
+      Route::get('/inventory/return_record',[AdminInventoryController::class,'return_record'])->name('inventory.return_record');
+      Route::get('/inventory/delete_return/{id}',[AdminInventoryController::class,'delete_return'])->name('inventory.delete_return');
+      Route::get('/inventory/edit_return/{id}',[AdminInventoryController::class,'edit_return'])->name('inventory.edit_return');
+      Route::post('/inventory/update_return/{id}',[AdminInventoryController::class,'update_return'])->name('inventory.update_return');
+
 
        // Product routes (create, store, records, view, edit, update, delete)
        Route::get('/inventory/product','product')->name('inventory.product');
@@ -130,10 +140,18 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         });
 
 
-        Route::controller(ProductDiscountController::class)->group(function(){
-        Route::get('/discount/create_discount','index')->name('discount.create_discount');
-        Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');
-        });
+        
+
+Route::controller(ProductDiscountController::class)->group(function(){
+    Route::get('/discount/create_discount','index')->name('discount.create_discount');
+    Route::post('/discount/store_discount','store_discount')->name('discount.store_discount');
+
+    Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');
+    Route::get('/discount/edit_discount/{id}','edit_discount')->name('discount.edit_discount');
+    Route::post('/discount/update_discount/{id}','update_discount')->name('discount.update_discount');
+    Route::get('/discount/delete_discount/{id}','delete_discount')->name('discount.delete_discount');
+    });
+
 
         Route::controller(PaymentController::class)->group(function(){
         Route::get('/payment/vendor_payouts_request','index')->name('payment.vendor_payouts_request');
@@ -154,8 +172,9 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         });
 
         Route::controller(InventoryController::class)->group(function(){
-        Route::get('/inventory/purchase','index')->name('inventory.purchase');
-        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
+        Route::get('/inventory/purchase','index')->name('inventory.vendor_purchase');
+        
+        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.vendor_purchase_return');
         Route::get('/inventory/manage_stock','manage_stock')->name('inventory.manage_stock');
         Route::get('/inventory/admin_product_list','admin_product_list')->name('inventory.admin_product_list');
         });

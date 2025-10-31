@@ -76,8 +76,8 @@
 						Inventory Management
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('inventory.purchase')?'active':''}}">
-						<a class="sidebar-link" href="{{route('inventory.purchase')}}">
+					<li class="sidebar-item {{request()->routeIs('inventory.vendor_purchase')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.vendor_purchase')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Purchase</span>
             </a>
 					</li>
@@ -88,8 +88,8 @@
             </a>
 					</li>
 
-					<li class="sidebar-item {{request()->routeIs('inventory.purchase_return')?'active':''}}">
-						<a class="sidebar-link" href="{{route('inventory.purchase_return')}}">
+					<li class="sidebar-item {{request()->routeIs('inventory.vendor_purchase_return')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.vendor_purchase_return')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Purchase Return</span>
             </a>
 					</li>

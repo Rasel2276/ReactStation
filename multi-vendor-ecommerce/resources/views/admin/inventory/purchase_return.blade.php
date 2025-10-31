@@ -87,50 +87,62 @@ Order - Admin Panel
 </head>
 <body>
 
-  <div class="container">
+ <div class="container">
     <h2>Supplier Purchase Return Form</h2>
-    <form action="#" method="POST">
-      <!-- Admin Purchase ID -->
-      <label for="admin_purchase_id">Admin Purchase ID:</label>
+
+    @if ($errors->any())
+        <div style="color:red;">
+            <ul>
+                @foreach ($errors->all() as $err) <li>{{ $err }}</li> @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session('success'))
+        <p style="color:green">{{ session('success') }}</p>
+    @endif
+
+    <form action="{{ route('inventory.store_purchase_return') }}" method="POST">
+      @csrf
+
+      <label for="admin_purchase_id">Admin Purchase:</label>
       <select id="admin_purchase_id" name="admin_purchase_id" required>
         <option value="">Select Purchase</option>
-        <option value="1">Purchase #1</option>
-        <option value="2">Purchase #2</option>
+        @foreach($purchases as $p)
+            <option value="{{ $p->id }}">#{{ $p->id }} - {{ $p->product->product_name ?? 'N/A' }}</option>
+        @endforeach
       </select>
 
-      <!-- Admin ID -->
       <label for="admin_id">Admin:</label>
       <select id="admin_id" name="admin_id" required>
         <option value="">Select Admin</option>
-        <option value="1">Admin 1</option>
-        <option value="2">Admin 2</option>
+        @foreach($admins as $a)
+          <option value="{{ $a->id }}">{{ $a->name }}</option>
+        @endforeach
       </select>
 
-      <!-- Supplier ID -->
       <label for="supplier_id">Supplier:</label>
       <select id="supplier_id" name="supplier_id" required>
         <option value="">Select Supplier</option>
-        <option value="1">ABC Traders</option>
-        <option value="2">Modern Supply Ltd</option>
+        @foreach($suppliers as $s)
+          <option value="{{ $s->id }}">{{ $s->supplier_name }}</option>
+        @endforeach
       </select>
 
-      <!-- Product ID -->
       <label for="product_id">Product:</label>
       <select id="product_id" name="product_id" required>
         <option value="">Select Product</option>
-        <option value="1">Wooden Chair</option>
-        <option value="2">LED Lamp</option>
+        @foreach($products as $prod)
+          <option value="{{ $prod->id }}">{{ $prod->product_name }}</option>
+        @endforeach
       </select>
 
-      <!-- Quantity -->
       <label for="quantity">Return Quantity:</label>
       <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" min="1" required>
 
-      <!-- Reason -->
       <label for="reason">Reason for Return:</label>
-      <textarea id="reason" name="reason" placeholder="Enter reason for return" required></textarea>
+      <textarea id="reason" name="reason" placeholder="Enter reason for return"></textarea>
 
-      <!-- Status -->
       <label for="status">Return Status:</label>
       <select id="status" name="status" required>
         <option value="Pending">Pending</option>
@@ -143,8 +155,7 @@ Order - Admin Panel
 
       <p class="note">* Submitting this form will automatically decrease the stock quantity for the selected product.</p>
     </form>
-  </div>
-
+</div>
 </body>
 
 

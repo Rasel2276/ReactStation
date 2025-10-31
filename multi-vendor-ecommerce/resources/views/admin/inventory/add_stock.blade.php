@@ -66,35 +66,50 @@ Order - Admin Panel
 </head>
 <body>
 
-  <div class="container">
-    <h2>Add Admin Stock</h2>
+<div class="container">
+    <h2>Add Stock</h2>
 
-    <form action="#" method="POST" id="stockForm">
-      <!-- Laravel এ ব্যবহার করলে এখানে @csrf যোগ করবেন -->
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-      <label for="product_id">Product</label>
-      <select id="product_id" name="product_id" required>
-        <option value="">-- Select Product --</option>
-        <option value="1">Product 1</option>
-        <option value="2">Product 2</option>
-        <option value="3">Product 3</option>
-      </select>
+    <form action="{{ route('inventory.store_stock') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="product_id">Select Product</label>
+            <select name="product_id" id="product_id" class="form-control" required>
+                <option value="">-- Select Product --</option>
+                @foreach($products as $product)
+                    <option value="{{ $product->id }}">
+                        {{ $product->product_name }} 
+                        (Remaining Stock: {{ $product->remaining_stock }})
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-      <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" class="form-control" min="1" required>
+        </div>
 
-      <label for="vendor_price">Vendor Price (per unit)</label>
-      <input type="number" step="0.01" id="vendor_price" name="vendor_price" placeholder="Enter vendor price" required>
+        <div class="form-group">
+            <label for="vendor_price">Vendor Price</label>
+            <input type="number" name="vendor_price" class="form-control" min="0" step="0.01" required>
+        </div>
 
-      <label for="status">Status</label>
-      <select id="status" name="status">
-        <option value="Available" selected>Available</option>
-        <option value="Sold Out">Sold Out</option>
-      </select>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select name="status" class="form-control" required>
+                <option value="Available">Available</option>
+                <option value="Sold Out">Sold Out</option>
+            </select>
+        </div>
 
-      <button type="submit">Save Stock</button>
+        <button type="submit" class="btn btn-primary mt-2">Add Stock</button>
     </form>
-  </div>
+</div>
+
 
 </body>
 @endsection
