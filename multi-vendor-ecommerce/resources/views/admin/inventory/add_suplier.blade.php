@@ -63,34 +63,43 @@ Order - Admin Panel
 
   <div class="form-container">
     <h2>Add Supplier</h2>
-    <form action="#" method="POST">
-      <!-- Laravel e use korle ekhane @csrf add korben -->
 
-      <label for="supplier_name">Supplier Name</label>
-      <input type="text" id="supplier_name" name="supplier_name" placeholder="Enter supplier name" required>
+    @if(session('success'))
+        <div style="color:green;margin-bottom:15px;">{{ session('success') }}</div>
+    @endif
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter email">
+    <form action="{{ route('inventory.store_supplier') }}" method="POST">
+        @csrf
 
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" name="phone" placeholder="Enter phone number">
+        <label for="supplier_name">Supplier Name</label>
+        <input type="text" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" placeholder="Enter supplier name" required>
+        @error('supplier_name')<div style="color:red">{{ $message }}</div>@enderror
 
-      <label for="address">Address</label>
-      <textarea id="address" name="address" placeholder="Enter address"></textarea>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Enter email">
+        @error('email')<div style="color:red">{{ $message }}</div>@enderror
 
-      <label for="contact_person">Contact Person</label>
-      <input type="text" id="contact_person" name="contact_person" placeholder="Enter contact person">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter phone number">
+        @error('phone')<div style="color:red">{{ $message }}</div>@enderror
 
-      <label for="status">Status</label>
-      <select id="status" name="status">
-        <option value="Active" selected>Active</option>
-        <option value="Inactive">Inactive</option>
-      </select>
+        <label for="address">Address</label>
+        <textarea id="address" name="address" placeholder="Enter address">{{ old('address') }}</textarea>
+        @error('address')<div style="color:red">{{ $message }}</div>@enderror
 
-      <button type="submit">Save Supplier</button>
+        <label for="contact_person">Contact Person</label>
+        <input type="text" id="contact_person" name="contact_person" value="{{ old('contact_person') }}" placeholder="Enter contact person">
+        @error('contact_person')<div style="color:red">{{ $message }}</div>@enderror
+
+        <label for="status">Status</label>
+        <select id="status" name="status">
+            <option value="Active" {{ old('status')=='Active'?'selected':'' }}>Active</option>
+            <option value="Inactive" {{ old('status')=='Inactive'?'selected':'' }}>Inactive</option>
+        </select>
+
+        <button type="submit">Save Supplier</button>
     </form>
-  </div>
+</div>
 
-</body>
 
 @endsection

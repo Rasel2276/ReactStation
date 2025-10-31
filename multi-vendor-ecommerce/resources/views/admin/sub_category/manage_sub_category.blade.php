@@ -98,10 +98,17 @@ Manage Sub-Categories - Admin Panel
 <div class="table-wrapper">
     <h2>Manage Sub-Categories</h2>
 
+    @if(session('success'))
+        <div style="color: green; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table>
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Image</th>
                 <th>Sub-Category Name</th>
                 <th>Parent Category</th>
                 <th>Slug</th>
@@ -110,54 +117,45 @@ Manage Sub-Categories - Admin Panel
             </tr>
         </thead>
         <tbody>
-            {{-- Example static data --}}
+            @forelse($sub_categories as $sub)
             <tr>
-                <td>1</td>
-                <td>Smartphones</td>
-                <td>Electronics</td>
-                <td>smartphones</td>
-                <td><span class="status-badge status-active" onclick="toggleStatus(this)">Active</span></td>
+                <td>{{ $sub->id }}</td>
                 <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Smartphones')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
+                    @if($sub->image)
+                        <img src="{{ asset('sub_category_images/'.$sub->image) }}" width="80" alt="{{ $sub->name }}">
+                    @else
+                        <img src="https://via.placeholder.com/80" alt="No Image">
+                    @endif
+                </td>
+                <td>{{ $sub->name }}</td>
+                <td>{{ $sub->category->category_name ?? 'N/A' }}</td>
+                <td>{{ $sub->slug }}</td>
+                <td>
+                    <a href="{{ route('sub_category.toggle_status', $sub->id) }}">
+                        <span class="status-badge {{ strtolower($sub->status) }}">{{ $sub->status }}</span>
+                    </a>
+                </td>
+                <td class="actions">
+                    <a href="{{ route('sub_category.view', $sub->id) }}">
+                        <button class="btn btn-view">View</button>
+                    </a>
+                    <a href="{{ route('sub_category.toggle_status', $sub->id) }}">
+                        <button class="btn btn-toggle">Toggle Status</button>
+                    </a>
+                    <a href="{{ route('sub_category.delete', $sub->id) }}" onclick="return confirm('Are you sure?')">
+                        <button class="btn btn-delete">Delete</button>
+                    </a>
                 </td>
             </tr>
-
+            @empty
             <tr>
-                <td>2</td>
-                <td>Men Clothing</td>
-                <td>Fashion</td>
-                <td>men-clothing</td>
-                <td><span class="status-badge status-inactive" onclick="toggleStatus(this)">Inactive</span></td>
-                <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Men Clothing')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
-                </td>
+                <td colspan="7">No sub-categories found.</td>
             </tr>
-
-            <tr>
-                <td>3</td>
-                <td>Phone Cases</td>
-                <td>Mobile Accessories</td>
-                <td>phone-cases</td>
-                <td><span class="status-badge status-active" onclick="toggleStatus(this)">Active</span></td>
-                <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Phone Cases')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
-                </td>
-            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
+
 
 <script>
     function toggleStatus(element) {

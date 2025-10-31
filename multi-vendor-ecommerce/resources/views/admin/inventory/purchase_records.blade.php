@@ -82,66 +82,51 @@ Order - Admin Panel
 <body>
 
   <div class="container">
-    <h2>Admin Purchase List</h2>
+  <h2>Admin Purchase List</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Supplier</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Purchase Price</th>
-          <th>Total</th>
-          <th>Purchase Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Supplier 1</td>
-          <td>Product 1</td>
-          <td>10</td>
-          <td>100.00</td>
-          <td>1000.00</td>
-          <td>2025-10-30</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Supplier</th>
+        <th>Product</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Purchase Price</th>
+        <th>Total</th>
+        <th>Purchase Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
-        <tr>
-          <td>2</td>
-          <td>Supplier 2</td>
-          <td>Product 2</td>
-          <td>5</td>
-          <td>150.00</td>
-          <td>750.00</td>
-          <td>2025-10-29</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td>3</td>
-          <td>Supplier 1</td>
-          <td>Product 3</td>
-          <td>8</td>
-          <td>120.00</td>
-          <td>960.00</td>
-          <td>2025-10-28</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <tbody>
+      @foreach($purchases as $purchase)
+      <tr>
+        <td>{{ $purchase->id }}</td>
+        <td>{{ $purchase->supplier->supplier_name ?? 'N/A' }}</td>
+        <td>{{ $purchase->product->product_name ?? 'N/A' }}</td>
+        <td>
+          @if($purchase->product && $purchase->product->product_image)
+            <img src="{{ asset('product_images/'.$purchase->product->product_image) }}" alt="Image" width="50">
+          @else
+            N/A
+          @endif
+        </td>
+        <td>{{ $purchase->quantity }}</td>
+        <td>{{ number_format($purchase->purchase_price,2) }}</td>
+        <td>{{ number_format($purchase->quantity*$purchase->purchase_price,2) }}</td>
+        <td>{{ $purchase->purchase_date }}</td>
+        <td>{{ $purchase->status }}</td>
+        <td>
+          <a href="{{ route('inventory.edit_purchase',$purchase->id) }}" class="btn btn-edit">Edit</a>
+          <a href="{{ route('inventory.delete_purchase',$purchase->id) }}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
 
 </body>
 @endsection

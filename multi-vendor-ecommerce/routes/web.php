@@ -51,27 +51,61 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
         
-        Route::controller(AdminInventoryController::class)->group(function(){
-        Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
-        Route::get('/inventory/purchase','purchase')->name('inventory.purchase');
-        Route::get('/inventory/purchase_records','purchase_records')->name('inventory.purchase_records');
-        Route::get('/inventory/add_stock','add_stock')->name('inventory.add_stock');
-        Route::get('/inventory/stock_records','stock_records')->name('inventory.stock_records');
-        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
-        Route::get('/inventory/return_record','return_record')->name('inventory.return_record');
-        Route::get('/inventory/product','product')->name('inventory.product');
-        Route::get('/inventory/product_records','product_records')->name('inventory.product_records');
-        });
+       
+
+      Route::controller(AdminInventoryController::class)->group(function(){ 
+      Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
+      Route::post('/inventory/add_suplier','store_supplier')->name('inventory.store_supplier');
+
+     // Purchase CRUD Routes
+     Route::get('/inventory/purchase',[AdminInventoryController::class,'purchase'])->name('inventory.purchase');
+     Route::post('/inventory/store_purchase',[AdminInventoryController::class,'store_purchase'])->name('inventory.store_purchase');
+     Route::get('/inventory/purchase_records',[AdminInventoryController::class,'purchase_records'])->name('inventory.purchase_records');
+     Route::get('/inventory/edit_purchase/{id}',[AdminInventoryController::class,'edit_purchase'])->name('inventory.edit_purchase');
+     Route::post('/inventory/update_purchase/{id}',[AdminInventoryController::class,'update_purchase'])->name('inventory.update_purchase');
+     Route::get('/inventory/delete_purchase/{id}',[AdminInventoryController::class,'delete_purchase'])->name('inventory.delete_purchase');
+
+      Route::get('/inventory/add_stock','add_stock')->name('inventory.add_stock');
+      Route::get('/inventory/stock_records','stock_records')->name('inventory.stock_records');
+      Route::get('/inventory/purchase_return','purchase_return')->name('inventory.purchase_return');
+      Route::get('/inventory/return_record','return_record')->name('inventory.return_record');
+
+       // Product routes (create, store, records, view, edit, update, delete)
+       Route::get('/inventory/product','product')->name('inventory.product');
+       Route::post('/inventory/product','store_product')->name('inventory.store_product');
+       Route::get('/inventory/product_records','product_records')->name('inventory.product_records');
+       Route::get('/inventory/product/view/{id}','view_product')->name('inventory.product.view');
+       Route::get('/inventory/product/edit/{id}','edit_product')->name('inventory.product.edit');
+       Route::post('/inventory/product/update/{id}','update_product')->name('inventory.product.update');
+       Route::get('/inventory/product/delete/{id}','delete_product')->name('inventory.product.delete');
+      });
+
+
 
         Route::controller(CategoryController::class)->group(function(){
         Route::get('/category/create_category','index')->name('category.create_category');
+        Route::post('/category/store','store')->name('category.store');
+
         Route::get('/category/manage_category','manage_category')->name('category.manage_category');
+        Route::get('/category/edit/{id}','edit')->name('category.edit');
+        Route::post('/category/update/{id}','update')->name('category.update');
+        Route::get('/category/delete/{id}','delete')->name('category.delete');
         });
+
+
+
+
 
         Route::controller(SubCategoryController::class)->group(function(){
         Route::get('/sub_category/create_sub_category','index')->name('sub_category.create_sub_category');
+        Route::post('/sub_category/store','store')->name('sub_category.store');
         Route::get('/sub_category/manage_sub_category','manage_sub_category')->name('sub_category.manage_sub_category');
+        Route::get('/sub_category/toggle_status/{id}','toggleStatus')->name('sub_category.toggle_status');
+        Route::get('/sub_category/delete/{id}','delete')->name('sub_category.delete');
+        Route::get('/sub_category/view/{id}','view')->name('sub_category.view');
         });
+
+
 
 
         Route::controller(ProductController::class)->group(function(){
@@ -82,10 +116,20 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/product/purchase_request','purchase_request')->name('product.purchase_request');
         });
 
+        
+
         Route::controller(ProductAttributeController::class)->group(function(){
         Route::get('/product_attribute/create_attribute','index')->name('product_attribute.create_attribute');
+        Route::post('/product_attribute/store','store')->name('product_attribute.store');
         Route::get('/product_attribute/manage_attribute','manage_attribute')->name('product_attribute.manage_attribute');
+        Route::get('/product_attribute/view/{id}','view')->name('product_attribute.view');
+        Route::get('/product_attribute/edit/{id}','edit')->name('product_attribute.edit');
+        Route::post('/product_attribute/update/{id}','update')->name('product_attribute.update');
+        Route::get('/product_attribute/delete/{id}','delete')->name('product_attribute.delete');
+        Route::get('/product_attribute/toggle_status/{id}','toggleStatus')->name('product_attribute.toggle_status');
         });
+
+
         Route::controller(ProductDiscountController::class)->group(function(){
         Route::get('/discount/create_discount','index')->name('discount.create_discount');
         Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount');

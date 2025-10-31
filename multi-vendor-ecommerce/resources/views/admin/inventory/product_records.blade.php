@@ -6,147 +6,173 @@ Order - Admin Panel
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f6fa;
       margin: 0;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
-      color: #333;
-      margin-bottom: 20px;
+      color: #007bff;
+      margin-bottom: 25px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
       font-size: 14px;
     }
 
     th {
       background-color: #007bff;
-      color: white;
-      font-weight: bold;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
     }
 
     tr:hover {
-      background-color: #eaf2ff;
+      background: #f1f2f6;
     }
 
-    .status-pending {
-      color: #ff9800;
-      font-weight: bold;
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #ddd;
     }
-    .status-completed {
-      color: #28a745;
+
+    .status {
+      padding: 5px 10px;
+      border-radius: 5px;
       font-weight: bold;
+      font-size: 12px;
     }
-    .status-cancelled {
-      color: #dc3545;
+
+    .active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .featured {
+      background: #fff3cd;
+      color: #856404;
+      padding: 5px 10px;
+      border-radius: 5px;
       font-weight: bold;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
     }
 
     .btn {
-      padding: 5px 10px;
+      padding: 6px 10px;
       border: none;
       border-radius: 5px;
-      color: white;
       cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.3s;
     }
-    .btn-edit {
+
+    .btn-view {
       background: #17a2b8;
+      color: white;
     }
+
+    .btn-edit {
+      background: #ffc107;
+      color: white;
+    }
+
     .btn-delete {
       background: #dc3545;
+      color: white;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h2>Admin Purchase List</h2>
+<h2>Product List</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Supplier</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Purchase Price</th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Purchase Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Supplier 1</td>
-          <td>Product 1</td>
-          <td>10</td>
-          <td>100.00</td>
-          <td>1000.00</td>
-          <td><span class="status-pending">Pending</span></td>
-          <td>2025-10-30</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Product Name</th>
+        <th>SKU</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Supplier</th>
+        <th>Base Price (৳)</th>
+        <th>Color</th>
+        <th>Size</th>
+        <th>Featured</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-        <tr>
-          <td>2</td>
-          <td>Supplier 2</td>
-          <td>Product 2</td>
-          <td>5</td>
-          <td>150.00</td>
-          <td>750.00</td>
-          <td><span class="status-completed">Completed</span></td>
-          <td>2025-10-29</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td>3</td>
-          <td>Supplier 1</td>
-          <td>Product 3</td>
-          <td>8</td>
-          <td>120.00</td>
-          <td>960.00</td>
-          <td><span class="status-cancelled">Cancelled</span></td>
-          <td>2025-10-28</td>
-          <td>
-            <button class="btn btn-edit">Edit</button>
-            <button class="btn btn-delete">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <tbody>
+      @forelse($products as $p)
+      <tr>
+        <td>{{ $p->id }}</td>
+        <td>
+            @if($p->product_image)
+                <img src="{{ asset('product_images/'.$p->product_image) }}" alt="Product Image" width="80">
+            @else
+                <img src="https://via.placeholder.com/80" alt="Product Image">
+            @endif
+        </td>
+        <td>{{ $p->product_name }}</td>
+        <td>{{ $p->sku }}</td>
+        <td>{{ $p->category->category_name ?? 'N/A' }}</td>
+        <td>{{ $p->subcategory->name ?? 'N/A' }}</td>
+        <td>{{ $p->supplier->supplier_name ?? 'N/A' }}</td>
+        <td>{{ number_format((float) $p->base_price, 2) }}</td>
+        <td>{{ $p->color }}</td>
+        <td>{{ $p->size }}</td>
+        <td><span class="featured">{{ $p->featured }}</span></td>
+        <td><span class="status {{ strtolower($p->status) }}">{{ $p->status }}</span></td>
+        <td>{{ $p->created_at->format('Y-m-d') }}</td>
+        <td class="actions">
+          <a href="{{ route('inventory.product.view', $p->id) }}" class="btn btn-view">View</a>
+          <a href="{{ route('inventory.product.edit', $p->id) }}" class="btn btn-edit">Edit</a>
+          <a href="{{ route('inventory.product.delete', $p->id) }}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+        </td>
+      </tr>
+      @empty
+      <tr>
+        <td colspan="14">No products found.</td>
+      </tr>
+      @endforelse
+    </tbody>
+  </table>
 
 </body>
 @endsection

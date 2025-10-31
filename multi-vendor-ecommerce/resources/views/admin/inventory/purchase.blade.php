@@ -67,60 +67,60 @@ Order - Admin Panel
 <body>
 
   <div class="container">
-    <h2>Add Admin Purchase</h2>
+  <h2>Add Admin Purchase</h2>
 
-    <form action="#" method="POST" id="purchaseForm">
-      <!-- Laravel এ use করলে এখানে @csrf যোগ করবেন -->
+  <form action="{{ route('inventory.store_purchase') }}" method="POST" id="purchaseForm">
+    @csrf
 
-      <label for="supplier_id">Supplier</label>
-      <select id="supplier_id" name="supplier_id" required>
-        <option value="">-- Select Supplier --</option>
-        <option value="1">Supplier 1</option>
-        <option value="2">Supplier 2</option>
-      </select>
+    <label for="supplier_id">Supplier</label>
+    <select id="supplier_id" name="supplier_id" required>
+      <option value="">-- Select Supplier --</option>
+      @foreach($suppliers as $supplier)
+        <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+      @endforeach
+    </select>
 
-      <label for="product_id">Product</label>
-      <select id="product_id" name="product_id" required>
-        <option value="">-- Select Product --</option>
-        <option value="1">Product 1</option>
-        <option value="2">Product 2</option>
-      </select>
+    <label for="product_id">Product</label>
+    <select id="product_id" name="product_id" required>
+      <option value="">-- Select Product --</option>
+      @foreach($products as $product)
+        <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+      @endforeach
+    </select>
 
-      <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
 
-      <label for="purchase_price">Purchase Price (per unit)</label>
-      <input type="number" step="0.01" id="purchase_price" name="purchase_price" placeholder="Enter price" required>
+    <label for="purchase_price">Purchase Price (per unit)</label>
+    <input type="number" step="0.01" id="purchase_price" name="purchase_price" placeholder="Enter price" required>
 
-      <label for="total">Total</label>
-      <input type="number" step="0.01" id="total" name="total" readonly placeholder="Auto calculated">
+    <label for="total">Total</label>
+    <input type="number" step="0.01" id="total" name="total" readonly placeholder="Auto calculated">
 
-      <label for="status">Status</label>
-      <select id="status" name="status">
-        <option value="Pending" selected>Pending</option>
-        <option value="Completed">Completed</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="Pending" selected>Pending</option>
+      <option value="Completed">Completed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
 
-      <button type="submit">Save Purchase</button>
-    </form>
-  </div>
+    <button type="submit">Save Purchase</button>
+  </form>
+</div>
 
-  <script>
-    // Auto total calculation
-    const quantity = document.getElementById('quantity');
-    const price = document.getElementById('purchase_price');
-    const total = document.getElementById('total');
+<script>
+const quantity=document.getElementById('quantity');
+const price=document.getElementById('purchase_price');
+const total=document.getElementById('total');
+function updateTotal(){
+  const q=parseFloat(quantity.value)||0;
+  const p=parseFloat(price.value)||0;
+  total.value=(q*p).toFixed(2);
+}
+quantity.addEventListener('input',updateTotal);
+price.addEventListener('input',updateTotal);
+</script>
 
-    function updateTotal() {
-      const q = parseFloat(quantity.value) || 0;
-      const p = parseFloat(price.value) || 0;
-      total.value = (q * p).toFixed(2);
-    }
-
-    quantity.addEventListener('input', updateTotal);
-    price.addEventListener('input', updateTotal);
-  </script>
 
 </body>
 

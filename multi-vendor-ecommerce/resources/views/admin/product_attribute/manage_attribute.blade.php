@@ -101,6 +101,12 @@ Manage Attributes - Admin Panel
 <div class="table-wrapper">
     <h2>Manage Attributes</h2>
 
+    @if(session('success'))
+        <div style="color: green; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table>
         <thead>
             <tr>
@@ -113,57 +119,41 @@ Manage Attributes - Admin Panel
             </tr>
         </thead>
         <tbody>
-            {{-- Example static data --}}
+            @forelse($attributes as $attr)
             <tr>
-                <td>1</td>
-                <td>Color</td>
-                <td>Select</td>
-                <td>Choose product color</td>
-                <td><span class="status-badge status-active" onclick="toggleStatus(this)">Active</span></td>
+                <td>{{ $attr->id }}</td>
+                <td>{{ $attr->name }}</td>
+                <td>{{ ucfirst($attr->type) }}</td>
+                <td>{{ $attr->description }}</td>
                 <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Color')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-edit" onclick="alert('Edit Color')">Edit</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
+                    <a href="{{ route('product_attribute.toggle_status', $attr->id) }}">
+                        <span class="status-badge {{ strtolower($attr->status) }}">{{ $attr->status }}</span>
+                    </a>
+                </td>
+                <td class="actions">
+                    <a href="{{ route('product_attribute.view', $attr->id) }}">
+                        <button class="btn-view">View</button>
+                    </a>
+                    <a href="{{ route('product_attribute.edit', $attr->id) }}">
+                        <button class="btn-edit">Edit</button>
+                    </a>
+                    <a href="{{ route('product_attribute.toggle_status', $attr->id) }}">
+                        <button class="btn-toggle">Toggle Status</button>
+                    </a>
+                    <a href="{{ route('product_attribute.delete', $attr->id) }}" onclick="return confirm('Are you sure?')">
+                        <button class="btn-delete">Delete</button>
+                    </a>
                 </td>
             </tr>
-
+            @empty
             <tr>
-                <td>2</td>
-                <td>Size</td>
-                <td>Select</td>
-                <td>Choose product size</td>
-                <td><span class="status-badge status-inactive" onclick="toggleStatus(this)">Inactive</span></td>
-                <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Size')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-edit" onclick="alert('Edit Size')">Edit</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
-                </td>
+                <td colspan="6">No attributes found.</td>
             </tr>
-
-            <tr>
-                <td>3</td>
-                <td>Material</td>
-                <td>Text</td>
-                <td>Product material details</td>
-                <td><span class="status-badge status-active" onclick="toggleStatus(this)">Active</span></td>
-                <td>
-                    <div class="action-btn">
-                        <button class="btn-view" onclick="alert('Viewing Material')">View</button>
-                        <button class="btn-toggle" onclick="toggleStatus(this.closest('tr').querySelector('.status-badge'))">Toggle Status</button>
-                        <button class="btn-edit" onclick="alert('Edit Material')">Edit</button>
-                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                    </div>
-                </td>
-            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
+
 
 <script>
     function toggleStatus(element) {

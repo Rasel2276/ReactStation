@@ -122,18 +122,22 @@ Add Sub-Category - Admin Panel
 <div class="form-wrapper">
     <h2>Add New Sub-Category</h2>
 
-    <!-- Laravel route optional -->
-    <form action="" method="POST" enctype="multipart/form-data">
-        <!-- @csrf -->
+    @if(session('success'))
+        <div style="color: green; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <form action="{{ route('sub_category.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
         <div class="form-row">
             <label for="parent_category">Parent Category:</label>
             <select id="parent_category" name="parent_category" required>
                 <option value="">-- Select Parent Category --</option>
-                <option value="1">Electronics</option>
-                <option value="2">Fashion</option>
-                <option value="3">Mobile Accessories</option>
-                <!-- Dynamically populate categories from DB in Laravel -->
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                @endforeach
             </select>
         </div>
 
@@ -168,5 +172,6 @@ Add Sub-Category - Admin Panel
         <button type="submit" class="submit-btn">Add Sub-Category</button>
     </form>
 </div>
+
 
 @endsection

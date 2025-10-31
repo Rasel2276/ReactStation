@@ -111,37 +111,55 @@ Add Attribute - Admin Panel
 <div class="form-wrapper">
     <h2>Add New Product Attribute</h2>
 
-    <!-- Laravel route optional -->
-    <form action="" method="POST">
-        <!-- @csrf -->
+    <!-- Success Message -->
+    @if(session('success'))
+        <div style="color: green; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <form action="{{ route('product_attribute.store') }}" method="POST">
+        @csrf
 
         <div class="form-row">
             <label for="name">Attribute Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter attribute name" required>
+            <input type="text" id="name" name="name" placeholder="Enter attribute name" value="{{ old('name') }}" required>
+            @error('name')
+                <div style="color:red">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-row">
             <label for="type">Attribute Type:</label>
             <select id="type" name="type" required>
                 <option value="">-- Select Type --</option>
-                <option value="text">Text</option>
-                <option value="number">Number</option>
-                <option value="select">Select</option>
-                <option value="textarea">Textarea</option>
+                <option value="text" {{ old('type')=='text'?'selected':'' }}>Text</option>
+                <option value="number" {{ old('type')=='number'?'selected':'' }}>Number</option>
+                <option value="select" {{ old('type')=='select'?'selected':'' }}>Select</option>
+                <option value="textarea" {{ old('type')=='textarea'?'selected':'' }}>Textarea</option>
             </select>
+            @error('type')
+                <div style="color:red">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-row">
             <label for="description">Description:</label>
-            <textarea id="description" name="description" placeholder="Write short description..."></textarea>
+            <textarea id="description" name="description" placeholder="Write short description...">{{ old('description') }}</textarea>
+            @error('description')
+                <div style="color:red">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-row">
             <label for="status">Status:</label>
             <select id="status" name="status">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+                <option value="1" {{ old('status')=='1'?'selected':'' }}>Active</option>
+                <option value="0" {{ old('status')=='0'?'selected':'' }}>Inactive</option>
             </select>
+            @error('status')
+                <div style="color:red">{{ $message }}</div>
+            @enderror
         </div>
 
         <button type="submit" class="submit-btn">Add Attribute</button>
