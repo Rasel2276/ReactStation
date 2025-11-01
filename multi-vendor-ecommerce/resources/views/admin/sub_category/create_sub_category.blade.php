@@ -127,6 +127,16 @@ Add Sub-Category - Admin Panel
             {{ session('success') }}
         </div>
     @endif
+        <!-- Display validation errors -->
+    <!-- @if ($errors->any())
+        <div style="color:red; margin-bottom:15px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif -->
 
     <form action="{{ route('sub_category.store') }}" method="POST" enctype="multipart/form-data">
         @csrf

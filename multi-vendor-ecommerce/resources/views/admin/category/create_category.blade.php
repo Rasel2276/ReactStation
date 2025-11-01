@@ -92,6 +92,16 @@ Order - Admin Panel
             {{ session('success') }}
         </div>
     @endif
+         <!-- Display validation errors -->
+    <!-- @if ($errors->any())
+        <div style="color:red; margin-bottom:15px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif -->
     <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <label for="category_name">Category Name:</label>
@@ -113,7 +123,7 @@ Order - Admin Panel
     </div>
 
     <button type="submit">Save Category</button>
-</form>
+   </form>
  
   </div>
 
