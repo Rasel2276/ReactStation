@@ -19,7 +19,7 @@ use App\Http\Controllers\Seller\SellerProductController;
 
 
 use App\Http\Controllers\Admin\ProductDiscountController;
-use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\Website\WebsiteController;
 use App\Http\Controllers\Customer\CustomerMainController;
 use App\Http\Controllers\Seller\SellerDiscountController;
 use App\Http\Controllers\Admin\ProductAttributeController;
@@ -27,15 +27,24 @@ use App\Http\Controllers\Admin\ProductAttributeController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+// Route::get('/category', function () {
+//     return view('front_end.home.category.category');
+// });
 
 
 
 // Website home
-Route::get('/', [WebsiteController::class, 'home'])->name('website.home');
-
+// Route::get('/', [WebsiteController::class, 'home'])->name('website.home');
+Route::controller(WebsiteController::class)->group(function() {
+    Route::get('/', 'home')->name('website.home');               
+    Route::get('/checkout', 'checkout')->name('website.checkout');            
+    Route::get('/view_cart', 'view_cart')->name('website.view_cart');            
+    Route::get('/login', 'loginForm')->name('website.login');               
+    Route::get('/register', 'registerForm')->name('website.register');
+});
 // Website login / register
-Route::get('/login', [WebsiteController::class, 'loginForm'])->name('website.login');
-Route::get('/register', [WebsiteController::class, 'registerForm'])->name('website.register');
+// Route::get('/login', [WebsiteController::class, 'loginForm'])->name('website.login');
+// Route::get('/register', [WebsiteController::class, 'registerForm'])->name('website.register');
 
 
 

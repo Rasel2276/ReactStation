@@ -248,7 +248,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </nav><!-- End .mobile-nav -->
+                    </nav>End .mobile-nav
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                     <nav class="mobile-cats-nav">
