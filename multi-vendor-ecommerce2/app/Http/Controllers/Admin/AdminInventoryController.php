@@ -20,6 +20,10 @@ class AdminInventoryController extends Controller
        🧩 SUPPLIER SECTION
        ========================================================== */
     
+     public function purchase_from_suplier() {
+        return view('admin.inventory.purchase_from_suplier');
+    }
+
     // Show Add Supplier Form
     public function index() {
         return view('admin.inventory.add_suplier');

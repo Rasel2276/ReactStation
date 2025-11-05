@@ -68,6 +68,7 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
       Route::controller(AdminInventoryController::class)->group(function(){ 
       Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
       Route::post('/inventory/add_suplier','store_supplier')->name('inventory.store_supplier');
+      Route::get('/inventory/purchase_from_suplier','purchase_from_suplier')->name('inventory.purchase_from_suplier');
 
      // Purchase CRUD Routes
      Route::get('/inventory/purchase',[AdminInventoryController::class,'purchase'])->name('inventory.purchase');

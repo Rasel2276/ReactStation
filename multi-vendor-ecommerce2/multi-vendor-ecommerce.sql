@@ -1,5 +1,5 @@
 -- =====================================================
--- DATABASE: multi_vendor_ecommerce (Full Final Version)
+-- DATABASE: multi_vendor_ecommerce (Updated for Admin Sale Price)
 -- =====================================================
 CREATE DATABASE IF NOT EXISTS multi_vendor_ecommerce;
 USE multi_vendor_ecommerce;
@@ -124,6 +124,7 @@ CREATE TABLE admin_purchases (
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     purchase_price DECIMAL(10,2) NOT NULL,
+    vendor_sale_price DECIMAL(10,2) DEFAULT 0, -- New: Admin sets vendor sale price
     total DECIMAL(10,2) GENERATED ALWAYS AS (quantity * purchase_price) STORED,
     status ENUM('Pending','Completed','Cancelled') DEFAULT 'Pending',
     purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -139,7 +140,8 @@ CREATE TABLE admin_stock (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-    vendor_price DECIMAL(10,2) NOT NULL,
+    purchase_price DECIMAL(10,2) NOT NULL,
+    vendor_sale_price DECIMAL(10,2) NOT NULL, -- New: Sale price for vendors
     status ENUM('Available','Sold Out') DEFAULT 'Available',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id)
@@ -388,7 +390,7 @@ CREATE TABLE vendor_account_settings (
 CREATE VIEW admin_total_sales AS
 SELECT 
     SUM(vp.total) AS total_vendor_sales,
-    SUM(vp.total * 0.1) AS admin_commission,  -- Example: 10% commission from vendor sales
+    SUM(vp.total * 0.1) AS admin_commission,
     SUM(vp.total * 0.9) AS vendor_income
 FROM vendor_purchases vp
 WHERE vp.status='Completed';
