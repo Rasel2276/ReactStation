@@ -17,5 +17,18 @@ class Supplier extends Model
         'contact_person',
         'status'
     ];
+
+    // ✅ RELATIONSHIP WITH PURCHASE
+    public function purchases()
+    {
+        return $this->hasMany(\App\Models\AdminPurchase::class, 'supplier_id');
+    }
+
+    // ✅ RELATIONSHIP WITH PRODUCT
+    public function products()
+    {
+        return $this->hasMany(\App\Models\Product::class, 'supplier_id');
+    }
 }
+
 

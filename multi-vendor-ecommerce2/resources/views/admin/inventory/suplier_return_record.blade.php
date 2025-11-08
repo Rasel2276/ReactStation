@@ -128,7 +128,7 @@ Order - Admin Panel
 </head>
 <body>
 
-<h2>Purchase Return List</h2>
+<h2>Supplier Return List</h2>
 
 <div class="table-container">
     <table>
@@ -147,39 +147,28 @@ Order - Admin Panel
             </tr>
         </thead>
         <tbody>
+            @foreach(App\Models\SupplierPurchaseReturn::with(['product','purchase','supplier','admin'])->get() as $return)
             <tr>
-                <td data-label="Id">1</td>
-                <td data-label="Product">Product A</td>
-                <td data-label="Image"><img src="https://via.placeholder.com/50" class="product-img"></td>
-                <td data-label="Admin Purchase">Purchase #1</td>
-                <td data-label="Admin">Admin A</td>
-                <td data-label="Supplier">Supplier X</td>
-                <td data-label="Quantity">10</td>
-                <td data-label="Reason">Damaged goods</td>
-                <td data-label="Status">Pending</td>
-                <td data-label="Action">
-                    <a href="#" class="action-btn edit-btn">Edit</a>
-                    <a href="#" class="action-btn delete-btn">Delete</a>
+                <td>{{ $return->id }}</td>
+                <td>{{ $return->product->product_name }}</td>
+                <td>
+                    <img src="{{ asset('product_images/'.$return->product->product_image) }}" class="product-img" style="width:50px;height:50px;border-radius:4px;">
+                </td>
+                <td>Purchase #{{ $return->purchase->id }}</td>
+                <td>{{ $return->admin->name }}</td>
+                <td>{{ $return->supplier->supplier_name }}</td>
+                <td>{{ $return->quantity }}</td>
+                <td>{{ $return->reason }}</td>
+                <td>{{ $return->status }}</td>
+                <td>
+                    <a href="{{ route('inventory.delete_supplier_return', $return->id) }}" class="action-btn delete-btn">Delete</a>
                 </td>
             </tr>
-            <tr>
-                <td data-label="Id">2</td>
-                <td data-label="Product">Product B</td>
-                <td data-label="Image"><img src="https://via.placeholder.com/50" class="product-img"></td>
-                <td data-label="Admin Purchase">Purchase #2</td>
-                <td data-label="Admin">Admin B</td>
-                <td data-label="Supplier">Supplier Y</td>
-                <td data-label="Quantity">5</td>
-                <td data-label="Reason">Wrong item</td>
-                <td data-label="Status">Approved</td>
-                <td data-label="Action">
-                    <a href="#" class="action-btn edit-btn">Edit</a>
-                    <a href="#" class="action-btn delete-btn">Delete</a>
-                </td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
+
 
 </body>
 </html>

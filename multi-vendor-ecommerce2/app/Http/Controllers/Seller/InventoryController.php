@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\AdminStock; 
+use App\Models\AdminStock;
 
 class InventoryController extends Controller
 {
-     public function index(){
+    public function index(){
         return view('seller.inventory.purchase');
     }
 
@@ -20,8 +20,11 @@ class InventoryController extends Controller
         return view('seller.inventory.manage_stock');
     }
 
+    // ✅ Vendor will see Admin Product Stock List
     public function admin_product_list(){
-        return view('seller.inventory.admin_product_list');
+        $stocks = AdminStock::with('product')->get();  
+        return view('seller.inventory.admin_product_list', compact('stocks'));
     }
 }
+
 

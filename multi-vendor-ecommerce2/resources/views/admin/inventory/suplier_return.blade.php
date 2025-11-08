@@ -86,87 +86,84 @@ Order - Admin Panel
         }
     }
 </style>
-</head>
-<body>
-
-<h2>Purchase Return Form</h2>
 
 <div class="form-container">
-    <form id="purchaseReturnForm">
-        <!-- Admin Purchase -->
+    <h2>Supplier Return Form</h2>
+    @if(session('error'))
+<div style="color:red; margin-bottom:15px;">{{ session('error') }}</div>
+@endif
+
+
+    @if(session('success'))
+    <div style="color:green; margin-bottom:15px;">{{ session('success') }}</div>
+    @endif
+
+    <form action="{{ route('inventory.store_supplier_return') }}" method="POST">
+        @csrf
+
         <div class="form-group">
-            <label for="admin_purchase_id">Admin Purchase</label>
-            <select id="admin_purchase_id" name="admin_purchase_id" required>
-                <option value="">-- Select Purchase --</option>
-                <option value="1">Purchase #1</option>
-                <option value="2">Purchase #2</option>
+            <label>Admin Purchase</label>
+            <select name="admin_purchase_id" required>
+                <option value="">--Select Purchase--</option>
+                @foreach($purchases as $purchase)
+                <option value="{{ $purchase->id }}">
+                    Purchase #{{ $purchase->id }} ({{ $purchase->product->product_name }})
+                </option>
+                @endforeach
             </select>
         </div>
 
-        <!-- Admin -->
         <div class="form-group">
-            <label for="admin_id">Admin</label>
-            <select id="admin_id" name="admin_id" required>
-                <option value="">-- Select Admin --</option>
-                <option value="1">Admin A</option>
-                <option value="2">Admin B</option>
+            <label>Admin</label>
+            <select name="admin_id" required>
+                <option value="">--Select Admin--</option>
+                @foreach($admins as $admin)
+                <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                @endforeach
             </select>
         </div>
 
-        <!-- Supplier -->
         <div class="form-group">
-            <label for="supplier_id">Supplier</label>
-            <select id="supplier_id" name="supplier_id" required>
-                <option value="">-- Select Supplier --</option>
-                <option value="1">Supplier A</option>
-                <option value="2">Supplier B</option>
+            <label>Supplier</label>
+            <select name="supplier_id" required>
+                <option value="">--Select Supplier--</option>
+                @foreach($suppliers as $supplier)
+                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                @endforeach
             </select>
         </div>
 
-        <!-- Product -->
         <div class="form-group">
-            <label for="product_id">Product</label>
-            <select id="product_id" name="product_id" required>
-                <option value="">-- Select Product --</option>
-                <option value="1">Product A</option>
-                <option value="2">Product B</option>
+            <label>Product</label>
+            <select name="product_id" required>
+                <option value="">--Select Product--</option>
+                @foreach($purchases as $purchase)
+                <option value="{{ $purchase->product_id }}">{{ $purchase->product->product_name }}</option>
+                @endforeach
             </select>
         </div>
 
-        <!-- Quantity -->
         <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" id="quantity" name="quantity" min="1" required placeholder="Enter quantity to return">
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="1" required>
         </div>
 
-        <!-- Status -->
         <div class="form-group">
-            <label for="status">Status</label>
-            <select id="status" name="status" required>
-                <option value="Pending" selected>Pending</option>
+            <label>Status</label>
+            <select name="status" required>
+                <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
                 <option value="Rejected">Rejected</option>
                 <option value="Completed">Completed</option>
             </select>
         </div>
 
-        <!-- Reason -->
         <div class="form-group full-width">
-            <label for="reason">Reason</label>
-            <textarea id="reason" name="reason" rows="3" placeholder="Enter reason for return"></textarea>
+            <label>Reason</label>
+            <textarea name="reason" rows="3"></textarea>
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="submit-btn">Submit Return</button>
     </form>
 </div>
-
-<script>
-    document.getElementById('purchaseReturnForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Form submitted! Laravel backend can handle this now.');
-    });
-</script>
-
-</body>
 @endsection

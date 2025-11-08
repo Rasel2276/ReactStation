@@ -110,6 +110,8 @@ Order - Admin Panel
 </style>
 
 
+<h2>Stock List</h2>
+
 <div class="table-container">
     <table>
         <thead>
@@ -119,52 +121,36 @@ Order - Admin Panel
                 <th>Image</th>
                 <th>Total Qty</th>
                 <th>Purchase Price</th>
-                <th>Selling Price</th>
+                <th>Vendor Sale Price</th>
                 <th>Available Qty</th>
                 <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
+            @foreach($stocks as $stock)
             <tr>
-                <td data-label="Id">1</td>
-                <td data-label="Product">Product A</td>
-
+                <td data-label="Id">{{ $stock->id }}</td>
+                <td data-label="Product">{{ $stock->product->product_name }}</td>
                 <td data-label="Image">
-                    <img src="https://via.placeholder.com/60" class="product-img">
+                    @if($stock->product->product_image)
+                        <img src="{{ asset('product_images/'.$stock->product->product_image) }}" class="product-img">
+                    @else
+                        N/A
+                    @endif
                 </td>
-
-                <td data-label="Total Qty">120</td>
-                <td data-label="Purchase Price">৳120</td>
-                <td data-label="Selling Price">৳150</td>
-                <td data-label="Available Qty">70</td>
-
+                <td data-label="Total Qty">{{ $stock->quantity }}</td>
+                <td data-label="Purchase Price">৳{{ $stock->purchase_price }}</td>
+                <td data-label="Vendor Sale Price">৳{{ $stock->vendor_sale_price }}</td>
+                <td data-label="Available Qty">{{ $stock->available_quantity }}</td>
                 <td data-label="Action">
                     <a href="#" class="action-btn edit-btn">Edit</a>
                     <a href="#" class="action-btn delete-btn">Delete</a>
                 </td>
             </tr>
-
-            <tr>
-                <td data-label="Id">2</td>
-                <td data-label="Product">Product B</td>
-
-                <td data-label="Image">
-                    <img src="https://via.placeholder.com/60" class="product-img">
-                </td>
-
-                <td data-label="Total Qty">85</td>
-                <td data-label="Purchase Price">৳200</td>
-                <td data-label="Selling Price">৳260</td>
-                <td data-label="Available Qty">40</td>
-
-                <td data-label="Action">
-                    <a href="#" class="action-btn edit-btn">Edit</a>
-                    <a href="#" class="action-btn delete-btn">Delete</a>
-                </td>
-            </tr>
-
+            @endforeach
         </tbody>
     </table>
 </div>
+
 @endsection

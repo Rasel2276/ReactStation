@@ -5,6 +5,7 @@ Order - Admin Panel
 @section('admin_layout') 
 
 <style>
+    
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f2f5;
@@ -97,8 +98,29 @@ select, input {
 <body>
 
 <h2>Admin Purchase - Multiple Products</h2>
+        <!-- Success Message -->
+    @if(session('success'))
+        <div style="color: green; margin-bottom: 15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+         <!-- Display validation errors -->
+   @if ($errors->any())
+        <div style="color:red; margin-bottom:15px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif 
 
-<form id="purchaseForm">
+@if(session('success'))
+    <div style="color: green; margin-bottom: 15px;">{{ session('success') }}</div>
+@endif
+
+<form id="purchaseForm" action="{{ route('inventory.store_purchase') }}" method="POST">
+    @csrf
     <div class="total-amount">
         Total Amount: ৳<span id="totalAmount">0.00</span>
     </div>
@@ -108,17 +130,19 @@ select, input {
             <!-- Supplier -->
             <select name="products[0][supplier_id]" required>
                 <option value="">-- Supplier --</option>
-                <option value="1">Supplier A</option>
-                <option value="2">Supplier B</option>
-                <option value="3">Supplier C</option>
+                @foreach($suppliers as $supplier)
+                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                @endforeach
             </select>
+
             <!-- Product -->
             <select name="products[0][product_id]" required>
                 <option value="">-- Product --</option>
-                <option value="1">Product A</option>
-                <option value="2">Product B</option>
-                <option value="3">Product C</option>
+                @foreach($products as $product)
+                    <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+                @endforeach
             </select>
+
             <input type="number" name="products[0][quantity]" placeholder="Qty" min="1" required>
             <input type="number" step="0.01" name="products[0][purchase_price]" placeholder="Purchase Price" required>
             <input type="number" step="0.01" name="products[0][vendor_sale_price]" placeholder="Vendor Sale" required>
@@ -136,7 +160,6 @@ select, input {
 <script>
 let productIndex = 1;
 
-// Add new product row
 document.getElementById('add_product_btn').addEventListener('click', function() {
     const wrapper = document.getElementById('product_wrapper');
     const newRow = document.createElement('div');
@@ -144,15 +167,15 @@ document.getElementById('add_product_btn').addEventListener('click', function() 
     newRow.innerHTML = `
         <select name="products[${productIndex}][supplier_id]" required>
             <option value="">-- Supplier --</option>
-            <option value="1">Supplier A</option>
-            <option value="2">Supplier B</option>
-            <option value="3">Supplier C</option>
+            @foreach($suppliers as $supplier)
+                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+            @endforeach
         </select>
         <select name="products[${productIndex}][product_id]" required>
             <option value="">-- Product --</option>
-            <option value="1">Product A</option>
-            <option value="2">Product B</option>
-            <option value="3">Product C</option>
+            @foreach($products as $product)
+                <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+            @endforeach
         </select>
         <input type="number" name="products[${productIndex}][quantity]" placeholder="Qty" min="1" required>
         <input type="number" step="0.01" name="products[${productIndex}][purchase_price]" placeholder="Purchase Price" required>
@@ -164,7 +187,6 @@ document.getElementById('add_product_btn').addEventListener('click', function() 
     updateTotal();
 });
 
-// Remove product row
 document.addEventListener('click', function(e){
     if(e.target && e.target.classList.contains('remove-btn')){
         e.target.closest('.product-row').remove();
@@ -172,7 +194,6 @@ document.addEventListener('click', function(e){
     }
 });
 
-// Calculate total amount
 function updateTotal(){
     let total = 0;
     const rows = document.querySelectorAll('.product-row');
@@ -184,19 +205,13 @@ function updateTotal(){
     document.getElementById('totalAmount').textContent = total.toFixed(2);
 }
 
-// Update total on input change
 document.getElementById('product_wrapper').addEventListener('input', function(e){
     if(e.target && (e.target.name.includes('quantity') || e.target.name.includes('purchase_price'))){
         updateTotal();
     }
 });
-
-// Handle form submit
-document.getElementById('purchaseForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    alert('Form submitted! Laravel backend will handle saving data.');
-});
 </script>
+
 
 </body>
 
