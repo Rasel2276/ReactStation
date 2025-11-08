@@ -17,13 +17,8 @@ use Illuminate\Support\Facades\Auth;
 class AdminInventoryController extends Controller
 {
     /* ==========================================================
-       🧩 SUPPLIER SECTION
+       🧩 SUPPLIER SECTION START
        ========================================================== */
-    
-     public function purchase_from_suplier() {
-        return view('admin.inventory.purchase_from_suplier');
-    }
-
     // Show Add Supplier Form
     public function index() {
         return view('admin.inventory.add_suplier');
@@ -46,284 +41,33 @@ class AdminInventoryController extends Controller
         return redirect()->route('inventory.add_suplier')
                          ->with('success', 'Supplier added successfully!');
     }
-
     /* ==========================================================
-       📦 PURCHASE SECTION
+       🧩 SUPPLIER SECTION END
        ========================================================== */
     
-    // Show Purchase Form
-    public function purchase(){
-        $suppliers = Supplier::all();
-        $products  = Product::all();
-        return view('admin.inventory.purchase', compact('suppliers', 'products'));
+     public function purchase_from_suplier() {
+        return view('admin.inventory.purchase_from_suplier');
     }
 
-    // Store Purchase Record
-    public function store_purchase(Request $request){
-        $request->validate([
-            'supplier_id'   => 'required|exists:suppliers,id',
-            'product_id'    => 'required|exists:products,id',
-            'quantity'      => 'required|integer|min:1',
-            'purchase_price'=> 'required|numeric|min:0',
-            'status'        => 'required|in:Pending,Completed,Cancelled'
-        ]);
-
-        AdminPurchase::create([
-            'admin_id'      => Auth::id() ?? 1,
-            'supplier_id'   => $request->supplier_id,
-            'product_id'    => $request->product_id,
-            'quantity'      => $request->quantity,
-            'purchase_price'=> $request->purchase_price,
-            'status'        => $request->status
-        ]);
-
-        return redirect()->route('inventory.purchase_records')
-                         ->with('success', 'Purchase added successfully!');
+     public function purchase_record() {
+        return view('admin.inventory.purchase_record');
     }
 
-    // View All Purchases
-    public function purchase_records(){
-        $purchases = AdminPurchase::with(['supplier', 'product'])->latest()->get();
-        return view('admin.inventory.purchase_records', compact('purchases'));
+     public function inventory_list() {
+        return view('admin.inventory.inventory_list');
     }
 
-    // Edit Purchase
-    public function edit_purchase($id){
-        $purchase  = AdminPurchase::findOrFail($id);
-        $suppliers = Supplier::all();
-        $products  = Product::all();
-        return view('admin.inventory.edit_purchase', compact('purchase', 'suppliers', 'products'));
+     public function suplier_return() {
+        return view('admin.inventory.suplier_return');
     }
 
-    // Update Purchase
-    public function update_purchase(Request $request, $id){
-        $purchase = AdminPurchase::findOrFail($id);
-
-        $request->validate([
-            'supplier_id'   => 'required|exists:suppliers,id',
-            'product_id'    => 'required|exists:products,id',
-            'quantity'      => 'required|integer|min:1',
-            'purchase_price'=> 'required|numeric|min:0',
-            'status'        => 'required|in:Pending,Completed,Cancelled'
-        ]);
-
-        $purchase->update($request->all());
-
-        return redirect()->route('inventory.purchase_records')
-                         ->with('success', 'Purchase updated successfully!');
+      public function suplier_return_record() {
+        return view('admin.inventory.suplier_return_record');
     }
 
-    // Delete Purchase
-    public function delete_purchase($id){
-        AdminPurchase::findOrFail($id)->delete();
-        return redirect()->route('inventory.purchase_records')
-                         ->with('success', 'Purchase deleted successfully!');
-    }
 
-    /* ==========================================================
-       🏷️ STOCK SECTION
-       ========================================================== */
 
-    // Show Add Stock Form with remaining stock info
-    public function add_stock(){
-        $products = Product::all();
-
-        // Remaining stock calculation
-        foreach($products as $product){
-            $totalPurchased = AdminPurchase::where('product_id', $product->id)
-                                            ->where('status','Completed')
-                                            ->sum('quantity');
-            $currentStock = AdminStock::where('product_id', $product->id)->sum('quantity');
-            $product->remaining_stock = max(0, $totalPurchased - $currentStock);
-        }
-
-        return view('admin.inventory.add_stock', compact('products'));
-    }
-
-    // Store Stock Record with purchase check
-    public function store_stock(Request $request){
-        $request->validate([
-            'product_id'   => 'required|exists:products,id',
-            'quantity'     => 'required|integer|min:1',
-            'vendor_price' => 'required|numeric|min:0',
-            'status'       => 'required|in:Available,Sold Out'
-        ]);
-
-        $productId = $request->product_id;
-
-        // Total purchased quantity of this product
-        $totalPurchased = AdminPurchase::where('product_id', $productId)
-                            ->where('status','Completed')
-                            ->sum('quantity');
-
-        // Current stock quantity of this product
-        $currentStock = AdminStock::where('product_id', $productId)->sum('quantity');
-
-        // Check if requested stock quantity is valid
-        if(($currentStock + $request->quantity) > $totalPurchased){
-            return redirect()->back()->with('error', 'You cannot add more stock than purchased quantity!');
-        }
-
-        AdminStock::create($request->all());
-
-        return redirect()->route('inventory.stock_records')
-                         ->with('success','Stock added successfully!');
-    }
-
-    // View All Stocks
-    public function stock_records(){
-        $stocks = AdminStock::with('product')->latest()->get();
-        return view('admin.inventory.stock_records', compact('stocks'));
-    }
-
-    // Delete Stock
-    public function delete_stock($id){
-        AdminStock::findOrFail($id)->delete();
-        return redirect()->route('inventory.stock_records')
-                         ->with('success','Stock deleted successfully!');
-    }
-
-    /* ==========================================================
-       🔄 PURCHASE RETURN SECTION
-       ========================================================== */
-
-    // Show Purchase Return Form
-    public function purchase_return(){
-        $purchases = AdminPurchase::with(['product','supplier'])->get();
-        $admins    = User::all();
-        $suppliers = Supplier::all();
-        $products  = Product::all();
-        return view('admin.inventory.purchase_return', compact('purchases','admins','suppliers','products'));
-    }
-
-    // Store Purchase Return
-    public function store_purchase_return(Request $request){
-        $request->validate([
-            'admin_purchase_id' => 'required|exists:admin_purchases,id',
-            'admin_id'          => 'required|exists:users,id',
-            'supplier_id'       => 'required|exists:suppliers,id',
-            'product_id'        => 'required|exists:products,id',
-            'quantity'          => 'required|integer|min:1',
-            'reason'            => 'nullable|string',
-            'status'            => 'required|in:Pending,Approved,Rejected,Completed'
-        ]);
-
-        $product = Product::find($request->product_id);
-
-        SupplierPurchaseReturn::create([
-            'admin_purchase_id' => $request->admin_purchase_id,
-            'admin_id'          => $request->admin_id,
-            'supplier_id'       => $request->supplier_id,
-            'product_id'        => $request->product_id,
-            'product_name'      => $product->product_name ?? null,
-            'product_image'     => $product->product_image ?? null,
-            'quantity'          => $request->quantity,
-            'reason'            => $request->reason,
-            'status'            => $request->status,
-        ]);
-
-        // Update Stock Quantity
-        $stock = AdminStock::where('product_id', $request->product_id)->first();
-        if($stock){
-            $stock->quantity = max(0, $stock->quantity - $request->quantity);
-            $stock->save();
-        }
-
-        return redirect()->route('inventory.return_record')
-                         ->with('success','Return added successfully!');
-    }
-
-    // List All Returns
-    public function return_record(){
-        $returns = SupplierPurchaseReturn::with(['purchase','admin','supplier','product'])->latest()->get();
-        return view('admin.inventory.return_record', compact('returns'));
-    }
-
-    // View Single Return
-    public function view_return($id){
-        $return = SupplierPurchaseReturn::with(['purchase','admin','supplier','product'])->findOrFail($id);
-        return view('admin.inventory.view_return', compact('return'));
-    }
-
-    // Edit Return
-    public function edit_return($id){
-        $return     = SupplierPurchaseReturn::findOrFail($id);
-        $purchases  = AdminPurchase::all();
-        $admins     = User::all();
-        $suppliers  = Supplier::all();
-        $products   = Product::all();
-        return view('admin.inventory.edit_return', compact('return','purchases','admins','suppliers','products'));
-    }
-
-    // Update Return
-    public function update_return(Request $request, $id){
-        $return = SupplierPurchaseReturn::findOrFail($id);
-
-        $request->validate([
-            'admin_purchase_id' => 'required|exists:admin_purchases,id',
-            'admin_id'          => 'required|exists:users,id',
-            'supplier_id'       => 'required|exists:suppliers,id',
-            'product_id'        => 'required|exists:products,id',
-            'quantity'          => 'required|integer|min:1',
-            'reason'            => 'nullable|string',
-            'status'            => 'required|in:Pending,Approved,Rejected,Completed'
-        ]);
-
-        $oldQty = $return->quantity;
-        $newQty = (int) $request->quantity;
-        $productId = $request->product_id;
-
-        $stock = AdminStock::where('product_id', $productId)->first();
-
-        if($stock){
-            if($return->product_id != $productId){
-                $oldStock = AdminStock::where('product_id', $return->product_id)->first();
-                if($oldStock){
-                    $oldStock->quantity += $oldQty;
-                    $oldStock->save();
-                }
-                $stock->quantity = max(0, $stock->quantity - $newQty);
-                $stock->save();
-            } else {
-                $diff = $newQty - $oldQty;
-                $stock->quantity = max(0, $stock->quantity - $diff);
-                $stock->save();
-            }
-        }
-
-        $product = Product::find($productId);
-
-        $return->update([
-            'admin_purchase_id' => $request->admin_purchase_id,
-            'admin_id'          => $request->admin_id,
-            'supplier_id'       => $request->supplier_id,
-            'product_id'        => $productId,
-            'product_name'      => $product->product_name ?? null,
-            'product_image'     => $product->product_image ?? null,
-            'quantity'          => $newQty,
-            'reason'            => $request->reason,
-            'status'            => $request->status
-        ]);
-
-        return redirect()->route('inventory.return_record')
-                         ->with('success','Return updated successfully!');
-    }
-
-    // Delete Return
-    public function delete_return($id){
-        $return = SupplierPurchaseReturn::findOrFail($id);
-        $stock  = AdminStock::where('product_id', $return->product_id)->first();
-
-        if($stock){
-            $stock->quantity += $return->quantity;
-            $stock->save();
-        }
-
-        $return->delete();
-
-        return redirect()->route('inventory.return_record')
-                         ->with('success','Return deleted successfully!');
-    }
+    
 
     /* ==========================================================
        🛒 PRODUCT SECTION

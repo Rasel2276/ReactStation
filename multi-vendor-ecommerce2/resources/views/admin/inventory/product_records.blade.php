@@ -60,11 +60,6 @@ Order - Admin Panel
       font-size: 12px;
     }
 
-    .active {
-      background: #d4edda;
-      color: #155724;
-    }
-
     .inactive {
       background: #f8d7da;
       color: #721c24;

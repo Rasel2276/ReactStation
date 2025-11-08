@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\AdminStock; // AdminStock model import korte hobe
+use App\Models\AdminStock; 
 
 class InventoryController extends Controller
 {
@@ -21,11 +21,7 @@ class InventoryController extends Controller
     }
 
     public function admin_product_list(){
-        // Admin stock fetch koro with product relation
-        $stocks = AdminStock::with('product')->latest()->get();
-
-        // Vendor view e pathao
-        return view('seller.inventory.admin_product_list', compact('stocks'));
+        return view('seller.inventory.admin_product_list');
     }
 }
 

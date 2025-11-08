@@ -1,10 +1,9 @@
-@extends('seller.layouts.layout')
-@section('seller_page_title')
-     create store
+@extends('admin.layouts.layout')
+@section('admin_page_title')
+Order - Admin Panel
 @endsection
-@section('seller_layout')
-
- <h2 style="margin-top:40px;">Product Inventory List</h2>
+@section('admin_layout')
+  <h2 style="margin-top:40px;">Product Inventory List</h2>
 
 <style>
     .table-container {
@@ -119,6 +118,7 @@
                 <th>Product</th>
                 <th>Image</th>
                 <th>Total Qty</th>
+                <th>Purchase Price</th>
                 <th>Selling Price</th>
                 <th>Available Qty</th>
                 <th>Action</th>
@@ -135,6 +135,7 @@
                 </td>
 
                 <td data-label="Total Qty">120</td>
+                <td data-label="Purchase Price">৳120</td>
                 <td data-label="Selling Price">৳150</td>
                 <td data-label="Available Qty">70</td>
 
@@ -153,6 +154,7 @@
                 </td>
 
                 <td data-label="Total Qty">85</td>
+                <td data-label="Purchase Price">৳200</td>
                 <td data-label="Selling Price">৳260</td>
                 <td data-label="Available Qty">40</td>
 
@@ -165,5 +167,4 @@
         </tbody>
     </table>
 </div>
-
 @endsection

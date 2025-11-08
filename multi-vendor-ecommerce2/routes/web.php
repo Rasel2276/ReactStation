@@ -69,30 +69,10 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
       Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
       Route::post('/inventory/add_suplier','store_supplier')->name('inventory.store_supplier');
       Route::get('/inventory/purchase_from_suplier','purchase_from_suplier')->name('inventory.purchase_from_suplier');
-
-     // Purchase CRUD Routes
-     Route::get('/inventory/purchase',[AdminInventoryController::class,'purchase'])->name('inventory.purchase');
-     Route::post('/inventory/store_purchase',[AdminInventoryController::class,'store_purchase'])->name('inventory.store_purchase');
-     Route::get('/inventory/purchase_records',[AdminInventoryController::class,'purchase_records'])->name('inventory.purchase_records');
-     Route::get('/inventory/edit_purchase/{id}',[AdminInventoryController::class,'edit_purchase'])->name('inventory.edit_purchase');
-     Route::post('/inventory/update_purchase/{id}',[AdminInventoryController::class,'update_purchase'])->name('inventory.update_purchase');
-     Route::get('/inventory/delete_purchase/{id}',[AdminInventoryController::class,'delete_purchase'])->name('inventory.delete_purchase');
-
-     
-
-    Route::get('/inventory/add_stock', [AdminInventoryController::class,'add_stock'])->name('inventory.add_stock');
-    Route::post('/inventory/store_stock', [AdminInventoryController::class,'store_stock'])->name('inventory.store_stock');
-    Route::get('/inventory/stock_records', [AdminInventoryController::class,'stock_records'])->name('inventory.stock_records');
-    Route::get('/inventory/delete_stock/{id}', [AdminInventoryController::class,'delete_stock'])->name('inventory.delete_stock');
-
-      Route::get('/inventory/purchase_return',[AdminInventoryController::class,'purchase_return'])->name('inventory.purchase_return');
-      Route::post('/inventory/store_purchase_return',[AdminInventoryController::class,'store_purchase_return'])->name('inventory.store_purchase_return');
-      Route::get('/inventory/return_record',[AdminInventoryController::class,'return_record'])->name('inventory.return_record');
-      Route::get('/inventory/delete_return/{id}',[AdminInventoryController::class,'delete_return'])->name('inventory.delete_return');
-      Route::get('/inventory/edit_return/{id}',[AdminInventoryController::class,'edit_return'])->name('inventory.edit_return');
-      Route::post('/inventory/update_return/{id}',[AdminInventoryController::class,'update_return'])->name('inventory.update_return');
-
-
+      Route::get('/inventory/purchase_record','purchase_record')->name('inventory.purchase_record');
+      Route::get('/inventory/inventory_list','inventory_list')->name('inventory.inventory_list');
+      Route::get('/inventory/suplier_return','suplier_return')->name('inventory.suplier_return');
+      Route::get('/inventory/suplier_return_record','suplier_return_record')->name('inventory.suplier_return_record');
        // Product routes (create, store, records, view, edit, update, delete)
        Route::get('/inventory/product','product')->name('inventory.product');
        Route::post('/inventory/product','store_product')->name('inventory.store_product');
