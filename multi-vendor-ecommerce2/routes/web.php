@@ -159,10 +159,12 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
 
         Route::controller(InventoryController::class)->group(function(){
         Route::get('/inventory/purchase','index')->name('inventory.vendor_purchase');
+        Route::post('/inventory/purchase/store','store_purchase')->name('inventory.vendor_purchase_store');
         Route::get('/inventory/purchase_return','purchase_return')->name('inventory.vendor_purchase_return');
         Route::get('/inventory/manage_stock','manage_stock')->name('inventory.manage_stock');
         Route::get('/inventory/admin_product_list','admin_product_list')->name('inventory.admin_product_list');
         });
+
 
         Route::controller(SellerProductController::class)->group(function(){
         Route::get('/product/create','index')->name('product.create');
