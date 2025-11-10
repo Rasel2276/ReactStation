@@ -2,7 +2,7 @@
 // Admin routes link //
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminMainController;
@@ -63,7 +63,9 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
         
-       
+       Route::controller(PaymentController::class)->group(function(){
+       Route::get('/payment','index')->name('purchase_payment');
+       });
 
        Route::controller(AdminInventoryController::class)->group(function(){ 
        Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');

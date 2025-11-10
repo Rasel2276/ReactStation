@@ -13,9 +13,9 @@ Order - Admin Panel
     }
 
     .form-container {
-      width: 400px;
+      width: 700px;
       background: #fff;
-      margin: 10px auto;
+      margin: 20px auto;
       padding: 25px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -25,6 +25,16 @@ Order - Admin Panel
       text-align: center;
       color: #333;
       margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      flex: 1;
     }
 
     label {
@@ -37,10 +47,14 @@ Order - Admin Panel
     input, textarea, select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 14px;
+    }
+
+    textarea {
+      height: 80px;
+      resize: vertical;
     }
 
     button {
@@ -48,20 +62,19 @@ Order - Admin Panel
       background: #007bff;
       color: white;
       border: none;
-      padding: 10px;
+      padding: 12px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      margin-top: 10px;
     }
 
     button:hover {
       background: #0056b3;
     }
-  </style>
-</head>
-<body>
+</style>
 
-  <div class="form-container">
+<div class="form-container">
     <h2>Add Supplier</h2>
 
     @if(session('success'))
@@ -71,35 +84,52 @@ Order - Admin Panel
     <form action="{{ route('inventory.store_supplier') }}" method="POST">
         @csrf
 
-        <label for="supplier_name">Supplier Name</label>
-        <input type="text" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" placeholder="Enter supplier name" required>
-        @error('supplier_name')<div style="color:red">{{ $message }}</div>@enderror
+        <div class="form-row">
+            <div class="form-group">
+                <label>Supplier Name</label>
+                <input type="text" name="supplier_name" value="{{ old('supplier_name') }}" required>
+                @error('supplier_name')<div style="color:red">{{ $message }}</div>@enderror
+            </div>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Enter email">
-        @error('email')<div style="color:red">{{ $message }}</div>@enderror
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ old('email') }}">
+                @error('email')<div style="color:red">{{ $message }}</div>@enderror
+            </div>
+        </div>
 
-        <label for="phone">Phone</label>
-        <input type="text" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter phone number">
-        @error('phone')<div style="color:red">{{ $message }}</div>@enderror
+        <div class="form-row">
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" value="{{ old('phone') }}">
+                @error('phone')<div style="color:red">{{ $message }}</div>@enderror
+            </div>
 
-        <label for="address">Address</label>
-        <textarea id="address" name="address" placeholder="Enter address">{{ old('address') }}</textarea>
-        @error('address')<div style="color:red">{{ $message }}</div>@enderror
+            <div class="form-group">
+                <label>Contact Person</label>
+                <input type="text" name="contact_person" value="{{ old('contact_person') }}">
+                @error('contact_person')<div style="color:red">{{ $message }}</div>@enderror
+            </div>
+        </div>
 
-        <label for="contact_person">Contact Person</label>
-        <input type="text" id="contact_person" name="contact_person" value="{{ old('contact_person') }}" placeholder="Enter contact person">
-        @error('contact_person')<div style="color:red">{{ $message }}</div>@enderror
+        <div class="form-row">
+            <div class="form-group">
+                <label>Address</label>
+                <textarea name="address">{{ old('address') }}</textarea>
+                @error('address')<div style="color:red">{{ $message }}</div>@enderror
+            </div>
 
-        <label for="status">Status</label>
-        <select id="status" name="status">
-            <option value="Active" {{ old('status')=='Active'?'selected':'' }}>Active</option>
-            <option value="Inactive" {{ old('status')=='Inactive'?'selected':'' }}>Inactive</option>
-        </select>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Active" {{ old('status')=='Active'?'selected':'' }}>Active</option>
+                    <option value="Inactive" {{ old('status')=='Inactive'?'selected':'' }}>Inactive</option>
+                </select>
+            </div>
+        </div>
 
         <button type="submit">Save Supplier</button>
     </form>
 </div>
-
 
 @endsection
