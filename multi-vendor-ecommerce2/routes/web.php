@@ -65,6 +65,7 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         
        Route::controller(PaymentController::class)->group(function(){
        Route::get('/payment','index')->name('purchase_payment');
+       Route::get('/admin_invoice','admin_invoice')->name('purchase_payment');
        });
 
        Route::controller(AdminInventoryController::class)->group(function(){ 
