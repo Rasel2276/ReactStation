@@ -7,56 +7,86 @@ use Illuminate\Http\Request;
 use App\Models\AdminStock;
 use App\Models\VendorPurchase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB; // Added DB Facade for transactions
 
 class InventoryController extends Controller
 {
-    // ✅ Purchase Form Page (Vendor sees available admin stock)
+    // ✅ Purchase Form Page (Now handles multi-purchase form)
     public function index(){
         $stocks = AdminStock::with('product')->where('quantity','>',0)->get();
+        
+        // 🚨 FIX: Reverted view name to the likely existing file: purchase
         return view('seller.inventory.purchase', compact('stocks'));
     }
 
-    // ✅ Store Vendor Purchase
+    // ✅ Store Vendor MULTI Purchase
     public function store_purchase(Request $request)
     {
+        // 1. Validate the array structure and contents
         $request->validate([
-            'admin_stock_id' => 'required|exists:admin_stock,id',
-            'quantity'       => 'required|integer|min:1',
+            'purchases' => 'required|array|min:1',
+            // Validate each item in the purchases array
+            'purchases.*.admin_stock_id' => 'required|exists:admin_stock,id',
+            'purchases.*.quantity'       => 'required|integer|min:1',
         ]);
 
-        // Get the selected admin stock
-        $stock = AdminStock::findOrFail($request->admin_stock_id);
+        $vendorId = Auth::id();
+        $purchases = $request->purchases;
 
-        // Check if requested quantity is available
-        if ($request->quantity > $stock->quantity) {
-            return back()->with('error', 'Not enough stock available!');
+        // 2. Start Database Transaction for Atomicity
+        DB::beginTransaction();
+
+        try {
+            foreach ($purchases as $item) {
+                
+                // Ensure the purchase item has required fields
+                if (!isset($item['admin_stock_id']) || !isset($item['quantity'])) {
+                    continue; // Skip invalid rows
+                }
+
+                // 3. Get the selected admin stock
+                $stock = AdminStock::findOrFail($item['admin_stock_id']);
+
+                // 4. Check if requested quantity is available
+                if ($item['quantity'] > $stock->quantity) {
+                    // Throw an exception to trigger the DB::rollBack()
+                    throw new \Exception('Insufficient stock available for product: ' . $stock->product->name . '. Requested: ' . $item['quantity'] . ', Available: ' . $stock->quantity);
+                }
+
+                // 5. Determine price
+                $price = $stock->vendor_sale_price ?: $stock->purchase_price;
+
+                // 6. Create Vendor Purchase record
+                VendorPurchase::create([
+                   'vendor_id'      => $vendorId,
+                   'admin_stock_id' => $item['admin_stock_id'],
+                   'quantity'       => $item['quantity'],
+                   'price'          => $price,
+                   'status'         => 'Pending' // Keep status as Pending
+                ]);
+
+                // 7. Reduce admin stock quantity immediately (as per your existing logic)
+                $stock->quantity -= $item['quantity'];
+                $stock->save();
+            }
+
+            // 8. Commit the transaction if all items are processed successfully
+            DB::commit();
+            return back()->with('success', 'Multiple purchase requests submitted successfully!');
+
+        } catch (\Exception $e) {
+            // 9. Rollback the transaction if any item fails
+            DB::rollBack();
+            // Return specific error message to the user
+            return back()->with('error', 'Purchase Failed! ' . $e->getMessage());
         }
-
-        // Determine price (vendor_sale_price if set, otherwise purchase_price)
-        $price = $stock->vendor_sale_price ?: $stock->purchase_price;
-
-        // Create Vendor Purchase
-        VendorPurchase::create([
-         'vendor_id'      => Auth::id(),
-         'admin_stock_id' => $request->admin_stock_id,
-         'quantity'       => $request->quantity,
-         'price'          => $price,
-         'status'         => 'Pending' // ✅ ENUM value must match table
-       ]);
-
-
-        // Reduce admin stock quantity
-        $stock->quantity -= $request->quantity;
-        $stock->save();
-
-        return back()->with('success', 'Purchase submitted successfully!');
     }
 
     // ✅ View Vendor Purchased Product List
     public function manage_stock(){
         $purchases = VendorPurchase::with('adminStock.product')
-                    ->where('vendor_id', Auth::id())
-                    ->get();
+                            ->where('vendor_id', Auth::id())
+                            ->get();
 
         return view('seller.inventory.manage_stock', compact('purchases'));
     }
