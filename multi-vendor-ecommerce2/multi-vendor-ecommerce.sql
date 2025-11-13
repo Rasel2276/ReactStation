@@ -171,7 +171,7 @@ CREATE TABLE vendor_stock (
     vendor_id INT NOT NULL,
     admin_stock_id INT NOT NULL,
     quantity INT NOT NULL,
-    selling_price DECIMAL(10,2) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
     status ENUM('Available','Sold Out') DEFAULT 'Available',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (vendor_id) REFERENCES users(id),

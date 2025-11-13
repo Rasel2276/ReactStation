@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->decimal('total', 10, 2)->storedAs('quantity * price');
-            $table->enum('status', ['Pending','Completed','Cancelled'])->default('Pending');
+            $table->enum('status', ['Pending','Completed','Cancelled','Allocated'])->default('Pending');
             $table->timestamp('purchase_date')->useCurrent();
             $table->timestamps();
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Admin\AdminInventoryController;
+use App\Http\Controllers\Admin\ProductAttributeController;
+use App\Http\Controllers\Admin\ProductDiscountController;
 // seller routes link//
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Seller\SellerMainController;
@@ -16,13 +18,14 @@ use App\Http\Controllers\Seller\SellerContactController;
 use App\Http\Controllers\Seller\SellerHistoryController;
 use App\Http\Controllers\Seller\SellerPaymentController;
 use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerDiscountController;
 
 
-use App\Http\Controllers\Admin\ProductDiscountController;
+
 use App\Http\Controllers\Website\WebsiteController;
 use App\Http\Controllers\Customer\CustomerMainController;
-use App\Http\Controllers\Seller\SellerDiscountController;
-use App\Http\Controllers\Admin\ProductAttributeController;
+
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -116,13 +119,27 @@ Route::controller(AdminInventoryController::class)->group(function(){
         });
 
 
-        Route::controller(ProductController::class)->group(function(){
-        Route::get('/product/manage_product_reviews','index')->name('product.manage_product_reviews');
-        Route::get('/product/add_product','add_product')->name('product.add_product');
-        Route::get('/product/manage_product','manage_product')->name('product.manage_product');
-        Route::get('/product/return_product','return_product')->name('product.return_product');
-        Route::get('/product/purchase_request','purchase_request')->name('product.purchase_request');
-        });
+    // --- 3. PRODUCT MANAGEMENT & PURCHASE APPROVAL ROUTES (ProductController) ---
+    Route::controller(ProductController::class)->group(function(){
+        
+        // Product Management Views
+        Route::get('product/manage-reviews', 'index')->name('product.manage_product_reviews');
+        Route::get('product/add-product', 'add_product')->name('product.add_product');
+        Route::get('product/manage-product', 'manage_product')->name('product.manage_product');
+        Route::get('product/return-product', 'return_product')->name('product.return_product');
+        
+        // Core Purchase Approval Logic
+        // [VIEW] Requests waiting for Admin approval
+        Route::get('product/purchase-requests', 'purchase_request')->name('product.purchase_request');
+
+        // [ACTION] Accept request (Stock Allocation)
+        Route::post('product/purchase-requests/{purchase}/accept', 'acceptPurchase')
+             ->name('admin.product.purchase_request.accept');
+             
+        // [ACTION] Reject request (Cancel)
+        Route::post('product/purchase-requests/{purchase}/reject', 'rejectPurchase')
+             ->name('admin.product.purchase_request.reject');
+    });
 
         
         Route::controller(ProductAttributeController::class)->group(function(){
@@ -165,13 +182,16 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::get('/order_list','order_list')->name('order.order_list');
         });
 
-        Route::controller(InventoryController::class)->group(function(){
-        Route::get('/inventory/purchase','index')->name('inventory.vendor_purchase');
-        Route::post('/inventory/purchase/store','store_purchase')->name('inventory.vendor_purchase_store');
-        Route::get('/inventory/purchase_return','purchase_return')->name('inventory.vendor_purchase_return');
-        Route::get('/inventory/manage_stock','manage_stock')->name('inventory.manage_stock');
-        Route::get('/inventory/admin_product_list','admin_product_list')->name('inventory.admin_product_list');
-        });
+
+    // --- 2. INVENTORY ROUTES (InventoryController) ---
+    Route::controller(InventoryController::class)->group(function(){
+        Route::get('inventory/purchase', 'index')->name('inventory.vendor_purchase');
+        Route::post('inventory/purchase/store', 'store_purchase')->name('inventory.vendor_purchase_store');
+        
+        Route::get('inventory/purchase-return', 'purchase_return')->name('inventory.vendor_purchase_return');
+        Route::get('inventory/manage-stock', 'manage_stock')->name('inventory.manage_stock');
+        Route::get('inventory/admin-product-list', 'admin_product_list')->name('inventory.admin_product_list');
+    });
 
 
         Route::controller(SellerProductController::class)->group(function(){
@@ -190,12 +210,20 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
         Route::get('/discount/manage_discount','manage_discount')->name('discount.manage_discount_vendor');
         });
 
-        Route::controller(SellerPaymentController::class)->group(function(){
-        Route::get('/payment/payout_request','index')->name('payment.payout_request');
-        Route::get('/payment/payout_paid_list','payout_paid_list')->name('payment.payout_paid_list');
-        Route::get('/payment/payout_pending_list','payout_pending_list')->name('payment.payout_pending_list');
-        Route::get('/payment/refund','refund')->name('payment.refund');
-        });
+    Route::controller(SellerPaymentController::class)->group(function(){
+        
+        // Payout Views
+        Route::get('payment/payout-request','index')->name('payment.payout_request');
+        Route::get('payment/payout-paid-list','payout_paid_list')->name('payment.payout_paid_list');
+        Route::get('payment/payout-pending-list','payout_pending_list')->name('payment.payout_pending_list');
+        Route::get('payment/refund','refund')->name('payment.refund');
+
+        // Core Purchase Payment Logic
+        // [VIEW] Pending purchases list for payment
+        Route::get('purchase/payment', 'seller_purchase_payment')->name('purchase.payment');
+        // [ACTION] Submit payment (updates status from Pending to Completed)
+        Route::post('purchase/submit-payment', 'submitPurchasePayment')->name('purchase.submit.payment');
+    });
 
         Route::controller(SellerContactController::class)->group(function(){
         Route::get('/contact/chat_with_customer','index')->name('contact.chat_with_customer');
