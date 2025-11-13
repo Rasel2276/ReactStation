@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Auth;
 class AdminInventoryController extends Controller
 {
     /* ==========================================================
-       🧩 SUPPLIER SECTION START
-       ========================================================== */
+    * 🧩 SUPPLIER SECTION START
+    * ========================================================== */
     public function index() {
         return view('admin.inventory.add_suplier');
     }
@@ -40,12 +40,12 @@ class AdminInventoryController extends Controller
                          ->with('success', 'Supplier added successfully!');
     }
     /* ==========================================================
-       🧩 SUPPLIER SECTION END
-       ========================================================== */
+    * 🧩 SUPPLIER SECTION END
+    * ========================================================== */
 
     /* ==========================================================
-       ✅ PURCHASE FORM
-       ========================================================== */
+    * ✅ PURCHASE FORM
+    * ========================================================== */
     public function purchase_from_suplier()
     {
         $suppliers = Supplier::where('status', 'Active')->get();
@@ -55,16 +55,19 @@ class AdminInventoryController extends Controller
     }
 
     /* ==========================================================
-       ✅ PURCHASE STORE + MULTIPLE PRODUCTS + STOCK UPDATE
-       ========================================================== */
+    * 🔄 PURCHASE INITIATE + STOCK UPDATE (REDIRECT TO PAYMENT)
+    * ========================================================== 
+    * এই ফাংশনটি এখন পেমেন্ট না হওয়া পর্যন্ত স্ট্যাটাস 'Pending' রাখবে 
+    * এবং ইউজারকে পেমেন্ট পেজে রিডাইরেক্ট করবে।
+    */
     public function store_purchase(Request $request)
     {
         $request->validate([
             'products' => 'required|array|min:1',
-            'products.*.supplier_id'       => 'required|exists:suppliers,id',
-            'products.*.product_id'        => 'required|exists:products,id',
-            'products.*.quantity'          => 'required|integer|min:1',
-            'products.*.purchase_price'    => 'required|numeric|min:1',
+            'products.*.supplier_id'      => 'required|exists:suppliers,id',
+            'products.*.product_id'       => 'required|exists:products,id',
+            'products.*.quantity'         => 'required|integer|min:1',
+            'products.*.purchase_price'   => 'required|numeric|min:1',
             'products.*.vendor_sale_price' => 'required|numeric|min:1',
         ],[
             'products.*.supplier_id.required' => 'The supplier field is required.',
@@ -74,8 +77,14 @@ class AdminInventoryController extends Controller
             'products.*.vendor_sale_price.required' => 'The vendor sale price field is required.',
         ]);
 
+        $purchase_ids = [];
+        $total_payable_amount = 0; // মোট টাকা হিসাব করার জন্য ভ্যারিয়েবল
+
         foreach ($request->products as $prod) {
-            // ✅ create purchase record
+            $total_item_amount = $prod['quantity'] * $prod['purchase_price'];
+            $total_payable_amount += $total_item_amount; // মোট টাকার সাথে যোগ করা হলো
+
+            // ✅ 1. create purchase record. Status এখন 'Pending' সেট করা হয়েছে।
             $purchase = AdminPurchase::create([
                 'admin_id'          => Auth::id(),
                 'supplier_id'       => $prod['supplier_id'],
@@ -83,16 +92,20 @@ class AdminInventoryController extends Controller
                 'quantity'          => $prod['quantity'],
                 'purchase_price'    => $prod['purchase_price'],
                 'vendor_sale_price' => $prod['vendor_sale_price'],
-                'status'            => 'Completed',
+                'total'             => $total_item_amount, // 'total' কলামে সেভ করা হলো
+                'status'            => 'Pending', // <--- এখন 'Pending'
+                'payment_method'    => null, // পেমেন্ট মেথড এখন null থাকবে
             ]);
+            
+            $purchase_ids[] = $purchase->id; // আইডিগুলো লিস্টে রাখা হলো
 
-            // ✅ STOCK MERGE LOGIC
+            // ✅ 2. STOCK MERGE LOGIC (স্টক এখনই যোগ করা হচ্ছে)
             $stock = AdminStock::where('product_id', $prod['product_id'])->first();
 
             if ($stock) {
                 $stock->quantity += $prod['quantity'];
-                $stock->purchase_price     = $prod['purchase_price'];
-                $stock->vendor_sale_price  = $prod['vendor_sale_price'];
+                $stock->purchase_price      = $prod['purchase_price'];
+                $stock->vendor_sale_price   = $prod['vendor_sale_price'];
                 $stock->status = $stock->quantity > 0 ? 'Available' : 'Sold Out';
                 $stock->save();
             } else {
@@ -105,24 +118,30 @@ class AdminInventoryController extends Controller
                 ]);
             }
         }
+        
+        // ✅ 3. Redirect to Payment Page 
+        $purchase_ids_string = implode(',', $purchase_ids); // আইডিগুলো কমা-সেপারেটেড স্ট্রিং করা হলো
 
-        return back()->with('success', 'Purchase Successfully Added & Stock Updated!');
+        return redirect()->route('purchase_payment', [
+            'purchase_ids' => $purchase_ids_string, // সকল ID পাঠানো হচ্ছে
+            'total_amount' => $total_payable_amount, // মোট টাকা পাঠানো হচ্ছে
+        ])->with('purchase_initiated', 'Purchase initiated. Please complete the payment.');
     }
 
     /* ==========================================================
-       ✅ PURCHASE RECORD LIST
-       ========================================================== */
+    * ✅ PURCHASE RECORD LIST
+    * ========================================================== */
     public function purchase_record()
     {
         $purchases = AdminPurchase::with(['supplier','product','admin'])
-                    ->orderBy('id','DESC')->get();
+                            ->orderBy('id','DESC')->get();
 
         return view('admin.inventory.purchase_record', compact('purchases'));
     }
 
     /* ==========================================================
-       ✅ PURCHASE EDIT
-       ========================================================== */
+    * ✅ PURCHASE EDIT
+    * ========================================================== */
     public function edit_purchase($id)
     {
         $purchase = AdminPurchase::findOrFail($id);
@@ -133,8 +152,8 @@ class AdminInventoryController extends Controller
     }
 
     /* ==========================================================
-       ✅ PURCHASE UPDATE + STOCK RECALCULATE
-       ========================================================== */
+    * ✅ PURCHASE UPDATE + STOCK RECALCULATE
+    * ========================================================== */
     public function update_purchase(Request $request, $id)
     {
         $request->validate([
@@ -170,12 +189,12 @@ class AdminInventoryController extends Controller
         }
 
         return redirect()->route('inventory.purchase_record')
-                         ->with('success','Purchase Updated Successfully!');
+                            ->with('success','Purchase Updated Successfully!');
     }
 
     /* ==========================================================
-       ✅ PURCHASE DELETE + STOCK REDUCE
-       ========================================================== */
+    * ✅ PURCHASE DELETE + STOCK REDUCE
+    * ========================================================== */
     public function delete_purchase($id)
     {
         $purchase = AdminPurchase::findOrFail($id);
@@ -196,98 +215,98 @@ class AdminInventoryController extends Controller
     }
 
     /* ==========================================================
-       ✅ STOCK LIST
-       ========================================================== */
+    * ✅ STOCK LIST
+    * ========================================================== */
     public function inventory_list()
     {
         $stocks = AdminStock::with('product')
-                ->orderBy('id','DESC')->get();
+                            ->orderBy('id','DESC')->get();
 
         return view('admin.inventory.inventory_list', compact('stocks'));
     }
 
- /* ==========================================================
-   🧩 SUPPLIER RETURN SECTION
-   ========================================================== */
+    /* ==========================================================
+    * 🧩 SUPPLIER RETURN SECTION
+    * ========================================================== */
 
-// Show Supplier Return Form
-public function suplier_return()
-{
-    $purchases = AdminPurchase::with('product')->get();
-    $admins    = User::all();
-    $suppliers = Supplier::all();
+    // Show Supplier Return Form
+    public function suplier_return()
+    {
+        $purchases = AdminPurchase::with('product')->get();
+        $admins     = User::all();
+        $suppliers = Supplier::all();
 
-    return view('admin.inventory.suplier_return', compact('purchases','admins','suppliers'));
-}
-
-// Store Supplier Return
-public function store_supplier_return(Request $request)
-{
-    $request->validate([
-        'admin_purchase_id' => 'required|exists:admin_purchases,id',
-        'admin_id'          => 'required|exists:users,id',
-        'supplier_id'       => 'required|exists:suppliers,id',
-        'product_id'        => 'required|exists:products,id',
-        'quantity'          => 'required|integer|min:1',
-        'status'            => 'required|in:Pending,Approved,Rejected,Completed',
-        'reason'            => 'nullable|string|max:500',
-    ]);
-
-    // ✅ Check stock
-    $stock = AdminStock::where('product_id', $request->product_id)->first();
-
-    if (!$stock || $stock->quantity <= 0) {
-        return back()->with('error', 'Stock not available for this product!');
+        return view('admin.inventory.suplier_return', compact('purchases','admins','suppliers'));
     }
 
-    if ($request->quantity > $stock->quantity) {
-        return back()->with('error', 'Return quantity cannot exceed available stock!');
-    }
+    // Store Supplier Return
+    public function store_supplier_return(Request $request)
+    {
+        $request->validate([
+            'admin_purchase_id' => 'required|exists:admin_purchases,id',
+            'admin_id'          => 'required|exists:users,id',
+            'supplier_id'       => 'required|exists:suppliers,id',
+            'product_id'        => 'required|exists:products,id',
+            'quantity'          => 'required|integer|min:1',
+            'status'            => 'required|in:Pending,Approved,Rejected,Completed',
+            'reason'            => 'nullable|string|max:500',
+        ]);
 
-    // Create Supplier Return
-    $return = SupplierPurchaseReturn::create($request->all());
+        // ✅ Check stock
+        $stock = AdminStock::where('product_id', $request->product_id)->first();
 
-    // Update stock if status is Completed
-    if($request->status == 'Completed'){
-        $stock->quantity -= $request->quantity;
-        $stock->status = $stock->quantity > 0 ? 'Available' : 'Sold Out';
-        $stock->save();
-    }
+        if (!$stock || $stock->quantity <= 0) {
+            return back()->with('error', 'Stock not available for this product!');
+        }
 
-    return redirect()->route('inventory.suplier_return')
-                     ->with('success','Supplier return submitted successfully!');
-}
+        if ($request->quantity > $stock->quantity) {
+            return back()->with('error', 'Return quantity cannot exceed available stock!');
+        }
 
-// Show Supplier Return Records
-public function suplier_return_record()
-{
-    $returns = SupplierPurchaseReturn::with(['product','purchase','supplier','admin'])->get();
-    return view('admin.inventory.suplier_return_record', compact('returns'));
-}
+        // Create Supplier Return
+        $return = SupplierPurchaseReturn::create($request->all());
 
-// Delete Supplier Return
-public function delete_supplier_return($id)
-{
-    $return = SupplierPurchaseReturn::findOrFail($id);
-
-    // Adjust stock if already Completed
-    if($return->status == 'Completed'){
-        $stock = AdminStock::where('product_id', $return->product_id)->first();
-        if($stock){
-            $stock->quantity += $return->quantity;
+        // Update stock if status is Completed
+        if($request->status == 'Completed'){
+            $stock->quantity -= $request->quantity;
             $stock->status = $stock->quantity > 0 ? 'Available' : 'Sold Out';
             $stock->save();
         }
+
+        return redirect()->route('inventory.suplier_return')
+                         ->with('success','Supplier return submitted successfully!');
     }
 
-    $return->delete();
+    // Show Supplier Return Records
+    public function suplier_return_record()
+    {
+        $returns = SupplierPurchaseReturn::with(['product','purchase','supplier','admin'])->get();
+        return view('admin.inventory.suplier_return_record', compact('returns'));
+    }
 
-    return back()->with('success','Supplier return deleted successfully!');
-}
+    // Delete Supplier Return
+    public function delete_supplier_return($id)
+    {
+        $return = SupplierPurchaseReturn::findOrFail($id);
+
+        // Adjust stock if already Completed
+        if($return->status == 'Completed'){
+            $stock = AdminStock::where('product_id', $return->product_id)->first();
+            if($stock){
+                $stock->quantity += $return->quantity;
+                $stock->status = $stock->quantity > 0 ? 'Available' : 'Sold Out';
+                $stock->save();
+            }
+        }
+
+        $return->delete();
+
+        return back()->with('success','Supplier return deleted successfully!');
+    }
 
     /* ==========================================================
-       ✅ PRODUCT SECTION
-       ========================================================== */
+    * ✅ PRODUCT SECTION
+    * ========================================================== */
     public function product()
     {
         $categories   = Category::all();
@@ -358,10 +377,10 @@ public function delete_supplier_return($id)
 
     public function edit_product($id)
     {
-        $product      = Product::findOrFail($id);
-        $categories   = Category::all();
-        $subcategories= SubCategory::all();
-        $suppliers    = Supplier::all();
+        $product       = Product::findOrFail($id);
+        $categories    = Category::all();
+        $subcategories = SubCategory::all();
+        $suppliers     = Supplier::all();
 
         return view('admin.inventory.edit_product', compact('product','categories','subcategories','suppliers'));
     }

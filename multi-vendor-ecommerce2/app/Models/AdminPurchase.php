@@ -13,7 +13,9 @@ class AdminPurchase extends Model
         'quantity',
         'purchase_price',
         'vendor_sale_price',
-        'status'
+        'status',
+        'payment_method',
+        'total'
     ];
 
     // RELATIONSHIP
@@ -32,3 +34,4 @@ class AdminPurchase extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 }
+

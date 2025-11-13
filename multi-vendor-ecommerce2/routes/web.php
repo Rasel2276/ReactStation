@@ -63,31 +63,36 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
         Route::get('/order/total_income','total_income')->name('admin.order.total_income');
         });
         
-       Route::controller(PaymentController::class)->group(function(){
-       Route::get('/payment','index')->name('purchase_payment');
-       Route::get('/admin_invoice','admin_invoice')->name('purchase_payment');
-       });
+// routes/web.php
 
-       Route::controller(AdminInventoryController::class)->group(function(){ 
-       Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
-       Route::post('/inventory/add_suplier','store_supplier')->name('inventory.store_supplier');
-       Route::get('/inventory/purchase_from_suplier','purchase_from_suplier')->name('inventory.purchase_from_suplier');
-       Route::post('/inventory/store_purchase','store_purchase')->name('inventory.store_purchase');
-       Route::get('/inventory/purchase_record','purchase_record')->name('inventory.purchase_record');
-       Route::get('/inventory/delete_purchase/{id}','delete_purchase')->name('inventory.delete_purchase');
-       Route::get('/inventory/inventory_list','inventory_list')->name('inventory.inventory_list');
-       Route::get('/inventory/suplier_return','suplier_return')->name('inventory.suplier_return');
-       Route::post('/inventory/store_supplier_return','store_supplier_return')->name('inventory.store_supplier_return');
-       Route::get('/inventory/suplier_return_record','suplier_return_record')->name('inventory.suplier_return_record');
-       Route::get('/inventory/delete_supplier_return/{id}','delete_supplier_return')->name('inventory.delete_supplier_return');
-       Route::get('/inventory/product','product')->name('inventory.product');
-       Route::post('/inventory/product','store_product')->name('inventory.store_product');
-       Route::get('/inventory/product_records','product_records')->name('inventory.product_records');
-       Route::get('/inventory/product/view/{id}','view_product')->name('inventory.product.view');
-       Route::get('/inventory/product/edit/{id}','edit_product')->name('inventory.product.edit');
-       Route::post('/inventory/product/update/{id}','update_product')->name('inventory.product.update');
-       Route::get('/inventory/product/delete/{id}','delete_product')->name('inventory.product.delete');
-      });
+//... (অন্যান্য uses একই থাকবে) ...
+
+Route::controller(PaymentController::class)->group(function(){
+    Route::get('/payment','index')->name('purchase_payment');
+    Route::post('/purchase/submit_payment','submit_payment')->name('purchase.submit_payment'); 
+    Route::get('/admin_invoice','admin_invoice')->name('admin_invoice');
+});
+
+Route::controller(AdminInventoryController::class)->group(function(){ 
+    Route::get('/inventory/add_suplier','index')->name('inventory.add_suplier');
+    Route::post('/inventory/add_suplier','store_supplier')->name('inventory.store_supplier');
+    Route::get('/inventory/purchase_from_suplier','purchase_from_suplier')->name('inventory.purchase_from_suplier');
+    Route::post('/inventory/store_purchase','store_purchase')->name('inventory.store_purchase');
+    Route::get('/inventory/purchase_record','purchase_record')->name('inventory.purchase_record');
+    Route::get('/inventory/delete_purchase/{id}','delete_purchase')->name('inventory.delete_purchase');
+    Route::get('/inventory/inventory_list','inventory_list')->name('inventory.inventory_list');
+    Route::get('/inventory/suplier_return','suplier_return')->name('inventory.suplier_return');
+    Route::post('/inventory/store_supplier_return','store_supplier_return')->name('inventory.store_supplier_return');
+    Route::get('/inventory/suplier_return_record','suplier_return_record')->name('inventory.suplier_return_record');
+    Route::get('/inventory/delete_supplier_return/{id}','delete_supplier_return')->name('inventory.delete_supplier_return');
+    Route::get('/inventory/product','product')->name('inventory.product');
+    Route::post('/inventory/product','store_product')->name('inventory.store_product');
+    Route::get('/inventory/product_records','product_records')->name('inventory.product_records');
+    Route::get('/inventory/product/view/{id}','view_product')->name('inventory.product.view');
+    Route::get('/inventory/product/edit/{id}','edit_product')->name('inventory.product.edit');
+    Route::post('/inventory/product/update/{id}','update_product')->name('inventory.product.update');
+    Route::get('/inventory/product/delete/{id}','delete_product')->name('inventory.product.delete');
+});
 
 
 
