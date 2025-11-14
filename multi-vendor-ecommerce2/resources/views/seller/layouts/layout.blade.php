@@ -84,7 +84,7 @@
 
 					<li class="sidebar-item {{request()->routeIs('inventory.manage_stock')?'active':''}}">
 						<a class="sidebar-link" href="{{route('inventory.manage_stock')}}">
-              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Stock</span>
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Purchase Record</span>
             </a>
 					</li>
 
@@ -94,9 +94,20 @@
             </a>
 					</li>
 
+					<li class="sidebar-item {{request()->routeIs('inventory.vendor_return_record')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.vendor_return_record')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Return Record</span>
+            </a>
+					</li>
+
 					<li class="sidebar-item {{request()->routeIs('inventory.admin_product_list')?'active':''}}">
 						<a class="sidebar-link" href="{{route('inventory.admin_product_list')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Admin Product List</span>
+            </a>
+					</li>
+					<li class="sidebar-item {{request()->routeIs('inventory.my_stock')?'active':''}}">
+						<a class="sidebar-link" href="{{route('inventory.my_stock')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">My Stock</span>
             </a>
 					</li>
 					

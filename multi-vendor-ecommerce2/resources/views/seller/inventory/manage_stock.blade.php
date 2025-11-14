@@ -5,15 +5,15 @@
 @section('seller_layout')
 
 <style>
+/* Container */
 .container {
-    width: 90%;
+    width: 95%;
     margin: 40px auto;
     background: #fff;
     padding: 25px 30px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
-
 
 .container h1 {
     text-align: center;
@@ -22,7 +22,7 @@
     color: #111827;
 }
 
-
+/* Search box */
 #search {
     width: 100%;
     padding: 10px 15px;
@@ -30,6 +30,7 @@
     border-radius: 8px;
     font-size: 15px;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 #search:focus {
@@ -38,17 +39,19 @@
     outline: none;
 }
 
-
+/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: 15px;
+    table-layout: auto;
 }
 
 th, td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
 }
 
 th {
@@ -56,33 +59,48 @@ th {
     font-weight: 600;
 }
 
-
 .product-image {
     width: 50px;
     height: 50px;
     object-fit: cover;
+    border-radius: 6px;
 }
 
-
+/* Status */
 .status.active { color: green; font-weight: bold; }
 .status.inactive { color: red; font-weight: bold; }
+.status.allocated { color: orange; font-weight: bold; }
+.status.completed { color: blue; font-weight: bold; }
 
+/* Action Buttons - Horizontal */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
 
 button {
     padding: 6px 12px;
     border: none;
-    background: #2563eb;
     color: #fff;
     font-weight: 500;
     border-radius: 6px;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
-button:hover { background: #1e40af; transform: translateY(-1px); }
+button:hover { transform: translateY(-1px); }
 
+.btn-delete { background: #e74c3c; }
+.btn-delete:hover { background: #c0392b; }
 
-@media (max-width: 700px) {
-    table, thead, tbody, th, td, tr { display: block; }
+.btn-buy { background: #10b981; }
+.btn-buy:hover { background: #059669; }
+
+/* Responsive table */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
     thead tr { display: none; }
     tr { margin-bottom: 15px; border-bottom: 2px solid #f3f4f6; padding-bottom: 10px; }
     td { padding-left: 50%; position: relative; text-align: right; }
@@ -104,7 +122,7 @@ button:hover { background: #1e40af; transform: translateY(-1px); }
                 <th>Price (৳)</th>
                 <th>Total (৳)</th>
                 <th>Status</th>
-                <th>Return</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="purchaseBody">
@@ -121,10 +139,17 @@ button:hover { background: #1e40af; transform: translateY(-1px); }
                 <td data-label="Price (৳)">{{ number_format($p->price) }}</td>
                 <td data-label="Total (৳)">{{ number_format($p->price * $p->quantity) }}</td>
                 <td data-label="Status">
-                    <span class="status {{ $p->status }}">{{ strtoupper($p->status) }}</span>
+                    <span class="status {{ strtolower($p->status) }}">{{ strtoupper($p->status) }}</span>
                 </td>
-                <td data-label="Return">
-                    <button onclick="alert('Return request sent!')">Return</button>
+                <td data-label="Actions">
+                    <div class="action-buttons">
+                        <form action="{{ route('inventory.delete_manage_stock', $p->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                        <button class="btn-buy">Buy Now</button>
+                    </div>
                 </td>
             </tr>
             @endforeach

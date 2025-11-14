@@ -250,6 +250,8 @@ CREATE TABLE vendor_returns (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+
+
 CREATE TABLE customer_returns (
     id INT AUTO_INCREMENT PRIMARY KEY,
     customer_order_item_id INT NOT NULL,
