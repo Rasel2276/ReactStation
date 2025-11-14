@@ -12,16 +12,14 @@
     font-family: "Poppins", sans-serif;
   }
 
-
-
   .form-container {
     background: #fff;
     width: 90%;
-    max-width: 800px;
+    max-width: 900px;
     padding: 25px 40px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    margin: auto;
   }
 
   h2 {
@@ -32,62 +30,54 @@
 
   form {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .form-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
     flex-wrap: wrap;
+    gap: 20px;
   }
 
-  .form-row label {
-    flex: 1;
-    min-width: 180px;
-    font-weight: 500;
+  /* Two-column layout */
+  .form-group {
+    flex: 1 1 calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
     color: #444;
   }
 
-  .form-row input[type="text"],
-  .form-row input[type="number"],
-  .form-row select,
-  .form-row textarea,
-  .form-row input[type="file"] {
-    flex: 2;
-    padding: 10px;
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    background: #fafafa;
     font-size: 15px;
-    outline: none;
-    width: 100%;
-    transition: all 0.3s;
-    background-color: #fafafa;
+    transition: 0.3s;
   }
 
-  /* 🔹 File input এর custom look */
-  .form-row input[type="file"] {
-    cursor: pointer;
-  }
-
-  .form-row input:focus,
-  .form-row textarea:focus,
-  .form-row select:focus,
-  .form-row input[type="file"]:focus {
-    border-color: #3c91e6;
-    box-shadow: 0 0 5px rgba(60,145,230,0.3);
-    background-color: #fff;
-  }
-
-  .form-row textarea {
+  .form-group textarea {
+    height: 90px;
     resize: none;
-    height: 80px;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #3c91e6;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(60,145,230,0.3);
+  }
+
+  /* Full width for description and image */
+  .full-row {
+    flex: 1 1 100%;
   }
 
   .btn-submit {
-    background-color: #3c91e6;
+    background: #3c91e6;
     color: white;
     padding: 12px;
     border: none;
@@ -96,80 +86,93 @@
     cursor: pointer;
     width: 100%;
     margin-top: 10px;
-    transition: background 0.3s ease;
+    transition: 0.3s;
   }
 
   .btn-submit:hover {
-    background-color: #2c76c3;
+    background: #2c76c3;
   }
 
-  @media (max-width: 600px) {
-    .form-row {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .form-row label {
-      min-width: 100%;
-    }
-
-    .form-row input,
-    .form-row select,
-    .form-row textarea {
-      width: 100%;
+  @media(max-width: 600px) {
+    .form-group {
+      flex: 1 1 100%;
     }
   }
 </style>
 
-</head>
-<body>
-  <div class="form-container">
-    <h2>Add New Product</h2>
-    <form action="#" method="POST" enctype="multipart/form-data">
-      
-      <div class="form-row">
-        <label for="name">Product Name</label>
-        <input type="text" id="name" name="product_name" placeholder="Enter product name" required />
-      </div>
+<div class="form-container">
+  <h2>Add New Product</h2>
 
-      <div class="form-row">
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
-          <option value="">-- Select Category --</option>
-          <option value="electronics">Electronics</option>
-          <option value="fashion">Fashion</option>
-          <option value="home">Home & Living</option>
-          <option value="beauty">Beauty</option>
-          <option value="sports">Sports</option>
+    {{-- Success message --}}
+  @if(session('success'))
+      <div style="background: #36d75c; color: #f9fff5; padding: 10px 15px; border-radius: 6px; margin-bottom: 15px;">
+          {{ session('success') }}
+      </div>
+  @endif
+
+  <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+
+      <div class="form-group full-row">
+        <label>Select Product From Purchased Stock</label>
+        <select name="vendor_stock_id" id="vendorStockSelect" required>
+            <option value="">-- Select Product --</option>
+            @foreach($stocks as $stock)
+                <option value="{{ $stock->id }}" 
+                        data-max="{{ $stock->quantity }}" 
+                        data-purchase="{{ $stock->price }}">
+                    {{ $stock->adminStock->product->product_name }} 
+                    (Purchased Qty: {{ $stock->quantity }}, Purchase Price: ৳{{ number_format($stock->price, 2) }})
+                </option>
+            @endforeach
         </select>
       </div>
 
-      <div class="form-row">
-        <label for="price">Price (৳)</label>
-        <input type="number" id="price" name="price" placeholder="Enter product price" required />
+      <div class="form-group">
+        <label>Sell Price (৳)</label>
+        <input type="number" name="price" id="priceInput" required>
       </div>
 
-      <div class="form-row">
-        <label for="stock">Stock Quantity</label>
-        <input type="number" id="stock" name="stock" placeholder="Enter stock quantity" required />
+      <div class="form-group">
+        <label>Stock Quantity</label>
+        <input type="number" name="quantity" id="quantityInput" min="1" required placeholder="Enter quantity">
       </div>
 
-      <div class="form-row">
-        <label for="description">Product Description</label>
-        <textarea id="description" name="description" placeholder="Write about your product..."></textarea>
+      <div class="form-group full-row">
+        <label>Details</label>
+        <textarea name="details" required></textarea>
       </div>
 
-      <div class="form-row">
-        <label for="image">Product Image</label>
-        <input type="file" id="image" name="product_image" accept="image/*" required />
+      <div class="form-group full-row">
+        <label>Image</label>
+        <input type="file" name="product_image" accept="image/*" required>
       </div>
 
       <button type="submit" class="btn-submit">Add Product</button>
-    </form>
-  </div>
-</body>
+  </form>
+</div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const stockSelect = document.getElementById('vendorStockSelect');
+    const qtyInput = document.getElementById('quantityInput');
+    const priceInput = document.getElementById('priceInput');
 
+    stockSelect.addEventListener('change', function() {
+        const selectedOption = stockSelect.options[stockSelect.selectedIndex];
+        const maxQty = selectedOption.getAttribute('data-max');
+        const purchasePrice = selectedOption.getAttribute('data-purchase');
 
+        qtyInput.max = maxQty;
+        qtyInput.placeholder = "Max: " + maxQty;
+
+        // Optional: auto set sell price to purchase price
+        priceInput.value = purchasePrice;
+        if(qtyInput.value > maxQty){
+            qtyInput.value = maxQty;
+        }
+    });
+});
+</script>
 
 @endsection

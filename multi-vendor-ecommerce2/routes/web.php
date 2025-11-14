@@ -186,7 +186,9 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
 
     Route::controller(SellerProductController::class)->group(function(){
         Route::get('/product/create','index')->name('product.create');
+        Route::post('/product/store','store')->name('product.store');
         Route::get('/product/manage','manage')->name('product.manage');
+        Route::delete('/product/delete/{id}','destroy')->name('product.delete');
         Route::get('/product/return_product','return_product')->name('product.return_product_customer');
         });
 

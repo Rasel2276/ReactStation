@@ -154,63 +154,35 @@
     </div>
 
     <table>
-      <thead>
+    <thead>
         <tr>
-          <th>Image</th>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Price (৳)</th>
-          <th>Stock</th>
-          <th>Actions</th>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Details</th>
+            <th>Action</th>
         </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
+        @foreach($products as $product)
         <tr>
-          <td data-label="Image"><img src="https://via.placeholder.com/60" class="product-img" alt="Product"></td>
-          <td data-label="Product Name">Smart Watch</td>
-          <td data-label="Category">Electronics</td>
-          <td data-label="Price">2500</td>
-          <td data-label="Stock">30</td>
-          <td data-label="Actions">
-            <div class="action-btns">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-delete">Delete</button>
-            </div>
-          </td>
+            <td><img src="{{ asset('product_images/'.$product->image) }}" width="60"></td>
+            <td>{{ $product->product->product_name ?? 'N/A' }}</td>
+            <td>৳{{ $product->price }}</td>
+            <td>{{ $product->quantity }}</td>
+            <td>{{ $product->details }}</td>
+            <td>
+                <form action="{{ route('product.delete', $product->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" style="background:red;color:white;">Delete</button>
+                </form>
+            </td>
         </tr>
-
-        <tr>
-          <td data-label="Image"><img src="https://via.placeholder.com/60" class="product-img" alt="Product"></td>
-          <td data-label="Product Name">Ladies Bag</td>
-          <td data-label="Category">Fashion</td>
-          <td data-label="Price">1200</td>
-          <td data-label="Stock">50</td>
-          <td data-label="Actions">
-            <div class="action-btns">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-delete">Delete</button>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td data-label="Image"><img src="https://via.placeholder.com/60" class="product-img" alt="Product"></td>
-          <td data-label="Product Name">Running Shoes</td>
-          <td data-label="Category">Sports</td>
-          <td data-label="Price">1800</td>
-          <td data-label="Stock">40</td>
-          <td data-label="Actions">
-            <div class="action-btns">
-              <button class="btn-edit">Edit</button>
-              <button class="btn-delete">Delete</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        @endforeach
+    </tbody>
+</table>
   </div>
-
 </body>
-
-
 @endsection

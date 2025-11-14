@@ -187,12 +187,16 @@ CREATE TABLE customer_products (
     product_id INT NOT NULL,
     vendor_id INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    quantity INT NOT NULL,
+    details TEXT,
+    image VARCHAR(255),
     status ENUM('Active','Inactive') DEFAULT 'Active',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (vendor_stock_id) REFERENCES vendor_stock(id),
     FOREIGN KEY (vendor_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
 
 -- =======================
 -- 12. CUSTOMER ORDERS
