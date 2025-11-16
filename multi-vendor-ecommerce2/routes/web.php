@@ -2,31 +2,33 @@
 // Admin routes link //
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Payment\PaymentController;
-use App\Http\Controllers\Admin\AdminInventoryController;
+use App\Http\Controllers\Website\WebsiteController;
+use App\Http\Controllers\Seller\InventoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\ProductAttributeController;
-use App\Http\Controllers\Admin\ProductDiscountController;
 // seller routes link//
 use App\Http\Controllers\Seller\SellerMainController;
 use App\Http\Controllers\Seller\SellerStoreController;
+use App\Http\Controllers\Admin\AdminInventoryController;
 use App\Http\Controllers\Seller\SellerContactController;
 use App\Http\Controllers\Seller\SellerHistoryController;
 use App\Http\Controllers\Seller\SellerPaymentController;
 use App\Http\Controllers\Seller\SellerProductController;
-use App\Http\Controllers\Seller\SellerDiscountController;
-use App\Http\Controllers\Seller\InventoryController;
+use App\Http\Controllers\Website\WebsitePagesController;
 
 
 // website routes link//
-use App\Http\Controllers\Website\WebsitePagesController;
-use App\Http\Controllers\Website\WebsiteController;
+use App\Http\Controllers\Admin\ProductDiscountController;
+use App\Http\Controllers\Customer\CustomerMainController;
+use App\Http\Controllers\Website\CartController;
 
 // customer routes link//
-use App\Http\Controllers\Customer\CustomerMainController;
+use App\Http\Controllers\Seller\SellerDiscountController;
+use App\Http\Controllers\Admin\ProductAttributeController;
 
 
 // Route::get('/', function () {
@@ -54,6 +56,9 @@ Route::controller(WebsiteController::class)->group(function() {
 
 Route::controller(WebsitePagesController::class)->group(function() {
     Route::get('/shop', 'shop')->name('website.shop');
+});
+Route::controller(CartController::class)->group(function() {
+    Route::post('/cart/add', 'add')->name('cart.add');
 });
 
 
