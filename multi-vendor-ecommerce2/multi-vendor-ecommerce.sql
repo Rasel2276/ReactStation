@@ -201,21 +201,50 @@ CREATE TABLE customer_products (
 -- =======================
 -- 12. CUSTOMER ORDERS
 -- =======================
-CREATE TABLE customer_orders (
+CREATE TABLE guest_customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
-    total_payment DECIMAL(10,2),
-    status ENUM('Pending','Processing','Completed','Cancelled') DEFAULT 'Pending',
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES users(id)
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    company_name VARCHAR(100),
+    country VARCHAR(100) NOT NULL,
+    street_address VARCHAR(255) NOT NULL,
+    street_address2 VARCHAR(255),
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    postcode VARCHAR(20) NOT NULL,
+    order_notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- =====================================
+-- Customer Orders Table
+-- =====================================
+CREATE TABLE customer_orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NULL,         -- Logged-in user
+    guest_id INT NULL,            -- Guest user
+    subtotal DECIMAL(10,2) NOT NULL,
+    shipping_cost DECIMAL(10,2) DEFAULT 0,
+    total_payment DECIMAL(10,2) NOT NULL,
+    shipping_method VARCHAR(50) DEFAULT 'Free Shipping',
+    payment_method VARCHAR(50) DEFAULT 'Direct Bank Transfer',
+    status ENUM('Pending','Processing','Completed','Cancelled') DEFAULT 'Pending',
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES users(id),
+    FOREIGN KEY (guest_id) REFERENCES guest_customers(id)
+);
+
+-- =====================================
+-- Customer Order Items Table
+-- =====================================
 CREATE TABLE customer_order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    customer_product_id INT,
-    quantity INT,
-    price DECIMAL(10,2),
+    order_id INT NOT NULL,
+    customer_product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
     total DECIMAL(10,2) GENERATED ALWAYS AS (quantity * price) STORED,
     FOREIGN KEY (order_id) REFERENCES customer_orders(id),
     FOREIGN KEY (customer_product_id) REFERENCES customer_products(id)

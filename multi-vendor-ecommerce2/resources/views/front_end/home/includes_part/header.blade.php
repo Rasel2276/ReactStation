@@ -109,7 +109,7 @@
                         </div><!-- End .compare-dropdown -->
 
                       <div class="dropdown cart-dropdown">
-    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+    <a href="" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
         <div class="icon">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span>

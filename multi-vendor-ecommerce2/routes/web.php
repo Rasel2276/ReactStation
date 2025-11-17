@@ -3,30 +3,32 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\Website\CartController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Website\WebsiteController;
 use App\Http\Controllers\Seller\InventoryController;
-use App\Http\Controllers\Admin\SubCategoryController;
 // seller routes link//
+
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Seller\SellerMainController;
 use App\Http\Controllers\Seller\SellerStoreController;
 use App\Http\Controllers\Admin\AdminInventoryController;
 use App\Http\Controllers\Seller\SellerContactController;
 use App\Http\Controllers\Seller\SellerHistoryController;
 use App\Http\Controllers\Seller\SellerPaymentController;
-use App\Http\Controllers\Seller\SellerProductController;
-use App\Http\Controllers\Website\WebsitePagesController;
 
 
 // website routes link//
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Website\WebsitePagesController;
 use App\Http\Controllers\Admin\ProductDiscountController;
-use App\Http\Controllers\Customer\CustomerMainController;
-use App\Http\Controllers\Website\CartController;
+use App\Http\Controllers\Website\CheckoutController;
 
 // customer routes link//
+use App\Http\Controllers\Customer\CustomerMainController;
 use App\Http\Controllers\Seller\SellerDiscountController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 
@@ -46,7 +48,7 @@ Route::controller(WebsiteController::class)->group(function() {
     Route::get('/', 'home')->name('website.home');               
     Route::get('/checkout', 'checkout')->name('website.checkout');            
     Route::get('/view_cart', 'view_cart')->name('website.view_cart');            
-    Route::get('/login', 'loginForm')->name('website.login');               
+    Route::get('/login', 'loginForm')->name('website.login');    
     Route::get('/register', 'registerForm')->name('website.register');
 });
 // Website login / register
@@ -54,14 +56,20 @@ Route::controller(WebsiteController::class)->group(function() {
 // Route::get('/register', [WebsiteController::class, 'registerForm'])->name('website.register');
 
 
-Route::controller(WebsitePagesController::class)->group(function() {
-    Route::get('/shop', 'shop')->name('website.shop');
+    Route::controller(WebsitePagesController::class)->group(function() {
+        Route::get('/shop', 'shop')->name('website.shop');
+       });
+
+Route::controller(CheckoutController::class)->group(function() {
+    Route::post('/checkout/place-order', 'placeOrder')->name('checkout.placeOrder');
 });
-Route::controller(CartController::class)->group(function() {
-    Route::post('/cart/add', 'add')->name('cart.add');
-     Route::get('/cart/remove/{id}', 'remove')->name('cart.remove');
-     Route::put('/cart/update/{id}', 'update')->name('cart.update');
-});
+
+
+    Route::controller(CartController::class)->group(function() {
+        Route::post('/cart/add', 'add')->name('cart.add');
+        Route::get('/cart/remove/{id}', 'remove')->name('cart.remove');
+        Route::put('/cart/update/{id}', 'update')->name('cart.update');
+       });
 
 
 
@@ -176,8 +184,15 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
 Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () {
         Route::prefix('vendor')->group(function(){
         Route::controller(SellerMainController::class)->group(function(){
-        Route::get('/dashboard','index')->name('vendor');
+Route::get('/dashboard','index')->name('vendor');
         Route::get('/order_list','order_list')->name('order.order_list');
+        Route::get('/customer_order_items','customer_order_items')->name('order.customer_order_items');
+        Route::get('/guest_customer_information','guest_customer_information')->name('order.guest_customer_information');
+
+        // Delete routes using POST method
+        Route::post('/order/{id}/delete','delete_order')->name('order.delete');
+        Route::post('/order_item/{id}/delete','delete_order_item')->name('order_item.delete');
+        Route::post('/guest/{id}/delete','delete_guest')->name('guest.delete');
         });
 
 

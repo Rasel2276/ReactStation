@@ -63,12 +63,23 @@
 					</li>
 
 					<li class="sidebar-header">
-						Order
+						Order Management
 					</li>
 
 					<li class="sidebar-item {{request()->routeIs('order.order_list')?'active':''}}">
 						<a class="sidebar-link" href="{{route('order.order_list')}}">
               <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Manage Order</span>
+            </a>
+					</li>
+					<li class="sidebar-item {{request()->routeIs('order.customer_order_items')?'active':''}}">
+						<a class="sidebar-link" href="{{route('order.customer_order_items')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Customer Order Items</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item {{request()->routeIs('order.guest_customer_information')?'active':''}}">
+						<a class="sidebar-link" href="{{route('order.guest_customer_information')}}">
+              <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Customer Information</span>
             </a>
 					</li>
 

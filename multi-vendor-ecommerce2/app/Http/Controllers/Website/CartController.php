@@ -24,6 +24,7 @@ class CartController extends Controller
             $cart[$product->id]['quantity']++;
         } else {
             $cart[$product->id] = [
+                "id" => $product->id,                   // ✅ Add id here for safety
                 "name" => $product->product->name,
                 "quantity" => 1,
                 "price" => $product->price,
@@ -64,5 +65,12 @@ class CartController extends Controller
         }
 
         return redirect()->back()->with('success', 'Cart updated successfully!');
+    }
+
+    // Optional: Clear entire cart
+    public function clear()
+    {
+        session()->forget('cart');
+        return redirect()->back()->with('success', 'Cart cleared!');
     }
 }

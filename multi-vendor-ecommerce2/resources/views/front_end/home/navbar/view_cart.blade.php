@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('website.home')}}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
-            </ol>
+            </ol>  
         </div>
     </nav>
 
