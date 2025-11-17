@@ -59,6 +59,8 @@ Route::controller(WebsitePagesController::class)->group(function() {
 });
 Route::controller(CartController::class)->group(function() {
     Route::post('/cart/add', 'add')->name('cart.add');
+     Route::get('/cart/remove/{id}', 'remove')->name('cart.remove');
+     Route::put('/cart/update/{id}', 'update')->name('cart.update');
 });
 
 

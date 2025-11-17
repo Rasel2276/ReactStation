@@ -35,4 +35,34 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product added to cart!');
     }
+
+    // Remove product from cart
+    public function remove($id)
+    {
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Product removed from cart!');
+    }
+
+    // Update all product quantities at once
+    public function update(Request $request)
+    {
+        $cart = session()->get('cart', []);
+
+        if($request->has('quantities') && is_array($request->quantities)) {
+            foreach ($request->quantities as $id => $quantity) {
+                if(isset($cart[$id])) {
+                    $cart[$id]['quantity'] = max(1, (int)$quantity); // ensure minimum 1
+                }
+            }
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Cart updated successfully!');
+    }
 }

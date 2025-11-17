@@ -108,70 +108,65 @@
                             </a>
                         </div><!-- End .compare-dropdown -->
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <div class="icon">
-                                    <i class="icon-shopping-cart"></i>
-                                    <span class="cart-count">2</span>
-                                </div>
-                                <p>Cart</p>
+                      <div class="dropdown cart-dropdown">
+    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+        <div class="icon">
+            <i class="icon-shopping-cart"></i>
+            <span class="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span>
+        </div>
+        <p>Cart</p>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-cart-products">
+            @if(session('cart') && count(session('cart')) > 0)
+                @foreach(session('cart') as $id => $item)
+                    <div class="product">
+                        <div class="product-cart-details">
+                            <h4 class="product-title">
+                                <a href="#">{{ $item['name'] }}</a>
+                            </h4>
+
+                            <span class="cart-product-info">
+                                <span class="cart-product-qty">{{ $item['quantity'] }}</span>
+                                x ${{ $item['price'] }}
+                            </span>
+                        </div><!-- End .product-cart-details -->
+
+                        <figure class="product-image-container">
+                            <a href="#" class="product-image">
+                                <img src="{{ asset('product_images/'.$item['image']) }}" alt="product">
                             </a>
+                        </figure>
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Beige knitted elastic runner shoes</a>
-                                            </h4>
+                        <a href="{{ route('cart.remove', $id) }}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                    </div><!-- End .product -->
+                @endforeach
+            @else
+                <p class="text-center p-2">Your cart is empty.</p>
+            @endif
+        </div><!-- End .cart-product -->
 
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $84.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
+        <div class="dropdown-cart-total">
+            <span>Total</span>
+            @php $total = 0; @endphp
+            @if(session('cart'))
+                @foreach(session('cart') as $item)
+                    @php $total += $item['price'] * $item['quantity']; @endphp
+                @endforeach
+            @endif
+            <span class="cart-total-price">${{ $total }}</span>
+        </div><!-- End .dropdown-cart-total -->
 
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('front_end_asset/') }}/assets/images/products/cart/product-1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
+        <div class="dropdown-cart-action">
+            <a href="{{ route('website.view_cart') }}" class="btn btn-primary">View Cart</a>
+            <a href="{{ route('website.checkout') }}" class="btn btn-outline-primary-2">
+                <span>Checkout</span><i class="icon-long-arrow-right"></i>
+            </a>
+        </div><!-- End .dropdown-cart-action -->
+    </div><!-- End .dropdown-menu -->
+</div><!-- End .cart-dropdown -->
 
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Blue utility pinafore denim dress</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $76.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('front_end_asset/') }}/assets/images/products/cart/product-2.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .cart-product -->
-
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-
-                                    <span class="cart-total-price">$160.00</span>
-                                </div><!-- End .dropdown-cart-total -->
-
-                                <div class="dropdown-cart-action">
-                                    <a href="{{route('website.view_cart')}}" class="btn btn-primary">View Cart</a>
-                                    <a href="{{route('website.checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
