@@ -221,10 +221,22 @@ Route::get('/dashboard','index')->name('vendor');
         });
 
 
-    Route::controller(SellerStoreController::class)->group(function(){
-        Route::get('/store/create','index')->name('store.create');
-        Route::get('/store/manage','manage')->name('store.manage');
-        });
+Route::controller(SellerStoreController::class)->group(function(){
+    // CREATE (Form View)
+    Route::get('/store/create','index')->name('store.create');
+    // CREATE (Form Submission)
+    Route::post('/store/create','store')->name('store.store');
+    
+    // READ / VIEW / MANAGE
+    Route::get('/store/manage','manage')->name('store.manage');
+    
+    // DELETE (Use POST with @method('DELETE') or a dedicated route)
+    // We use a POST route for simplicity with form submit
+    Route::post('/store/delete/{id}','destroy')->name('store.destroy'); 
+
+    // Note: The UPDATE route for editing would typically be:
+    // Route::post('/store/update/{id}','update')->name('store.update');
+});
 
 
 
