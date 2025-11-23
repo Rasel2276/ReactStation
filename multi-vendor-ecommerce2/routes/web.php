@@ -184,7 +184,7 @@ Route::middleware(['auth', 'verified','rolemanager:admin'])->group(function () {
 Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () {
         Route::prefix('vendor')->group(function(){
         Route::controller(SellerMainController::class)->group(function(){
-Route::get('/dashboard','index')->name('vendor');
+        Route::get('/dashboard','index')->name('vendor');
         Route::get('/order_list','order_list')->name('order.order_list');
         Route::get('/customer_order_items','customer_order_items')->name('order.customer_order_items');
         Route::get('/guest_customer_information','guest_customer_information')->name('order.guest_customer_information');
