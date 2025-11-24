@@ -222,7 +222,7 @@ Route::middleware(['auth', 'verified','rolemanager:vendor'])->group(function () 
 
 
 Route::controller(SellerStoreController::class)->group(function(){
-        // CREATE (Form View)
+        // CREATE (Form Views)
         Route::get('/store/create','index')->name('store.create');
         // CREATE (Form Submission)
         Route::post('/store/create','store')->name('store.store');
