@@ -7,7 +7,7 @@ import "./css/App.css";
 function App() {
   return (
     <Router>
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: "20px" }} >
         <nav>
           <Link to="/insert">Insert Student</Link> |{" "}
           <Link to="/show">Show Students</Link>
