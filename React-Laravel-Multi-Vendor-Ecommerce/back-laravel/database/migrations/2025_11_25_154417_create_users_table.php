@@ -15,10 +15,13 @@ Schema::create('users', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->string('email')->unique();
+    $table->timestamp('email_verified_at')->nullable(); // add this
     $table->string('password');
+    $table->rememberToken(); // add this
     $table->enum('role',['admin','customer','vendor'])->default('customer');
     $table->timestamps();
 });
+
     }
 
     /**
