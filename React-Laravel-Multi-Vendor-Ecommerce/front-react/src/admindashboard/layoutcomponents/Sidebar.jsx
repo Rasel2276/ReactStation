@@ -4,31 +4,32 @@ import {
   BsPeopleFill, BsListCheck, BsMenuButtonWideFill, BsFillGearFill, BsChevronDown 
 } from 'react-icons/bs';
 
-
-function Sidebar({ openSidebarToggle }) {
+function Sidebar({ openSidebarToggle,user }) {
   const [productsOpen, setProductsOpen] = useState(false);
   const toggleProducts = () => setProductsOpen(!productsOpen);
 
   return (
-    // ধরে নিচ্ছি openSidebarToggle prop-টি Sidebar-এর visibility নিয়ন্ত্রণ করে
     <aside id="sidebar" className={openSidebarToggle ? '' : 'sidebar-hidden'}> 
-      <div className='sidebar-title'>
-        <div className='sidebar-brand'>
-          <BsCart3 className='icon_header' /> SHOP
+
+      {/* 🔵 Sidebar Top Profile Box (image + name) */}
+      <div className="sidebar-top-box">
+        <div className="sidebar-profile-img">
+          <img src="/profile.jpg" alt="Profile"  />
         </div>
+        
+        <div className="sidebar-profile-name">{user?.name || 'Admin'}</div>
       </div>
 
       <ul className='sidebar-list'>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsGrid1X2Fill className='icon' /> Dashboard
+            <BsGrid1X2Fill className='icon' id="side-icon" /> Dashboard
           </a>
         </li>
 
-        {/* Products Dropdown */}
         <li className='sidebar-list-item'>
           <div className='dropdown-header' onClick={toggleProducts}>
-            <BsFillArchiveFill className='icon' /> Products
+            <BsFillArchiveFill className='icon' id="side-icon" /> Products
             <BsChevronDown className={`icon-right ${productsOpen ? 'rotate' : ''}`} />
           </div>
           {productsOpen && (
@@ -42,27 +43,27 @@ function Sidebar({ openSidebarToggle }) {
 
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsFillGrid3X3GapFill className='icon' /> Categories
+            <BsFillGrid3X3GapFill className='icon' id="side-icon" /> Categories
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsPeopleFill className='icon' /> Customers
+            <BsPeopleFill className='icon' id="side-icon" /> Customers
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsListCheck className='icon' /> Inventory
+            <BsListCheck className='icon' id="side-icon" /> Inventory
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsMenuButtonWideFill className='icon' /> Reports
+            <BsMenuButtonWideFill className='icon' id="side-icon" /> Reports
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsFillGearFill className='icon' /> Setting
+            <BsFillGearFill className='icon' id="side-icon" /> Setting
           </a>
         </li>
       </ul>

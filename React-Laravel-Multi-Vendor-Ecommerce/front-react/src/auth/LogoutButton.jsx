@@ -20,7 +20,6 @@ export default function LogoutButton() {
         backgroundColor: '#f44336',
         color: '#fff',
         cursor: 'pointer',
-        marginTop: '20px'
       }}
     >
       Logout
