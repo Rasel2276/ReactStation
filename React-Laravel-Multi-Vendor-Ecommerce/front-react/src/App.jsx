@@ -4,6 +4,7 @@ import Registration from './auth/Registration';
 import AdminDashboard from './admindashboard/AdminDashboard';
 import SellerDashboard from './sellerdashboard/SellerDashboard';
 import CustomerDashboard from './customerdashboard/CustomerDashboard';
+import Dashboardlayout from './admindashboard/dashboardlayout';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/vendor" element={<SellerDashboard />} />
         <Route path="/customer" element={<CustomerDashboard />} />
+        <Route path="/dashboard" element={<Dashboardlayout />} />
       </Routes>
     </BrowserRouter>
   );
