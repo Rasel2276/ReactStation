@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
-import LogoutButton from '../../auth/LogoutButton'; // path check koro
+import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../../auth/LogoutButton';
 
-import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify } from 'react-icons/bs';
+import { 
+  BsFillBellFill, 
+  BsFillEnvelopeFill, 
+  BsPersonCircle, 
+  BsSearch, 
+  BsJustify 
+} from 'react-icons/bs';
 
 function Header({ OpenSidebar }) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(prev => !prev);
   };
 
-
   const handleLogout = () => {
+    // storage clear
+    localStorage.clear();
+    sessionStorage.clear();
 
-    console.log("User logged out!");
-    alert("Logging out...");
+    // dropdown close
+    setIsDropdownOpen(false);
 
-    setIsDropdownOpen(false); 
-
+    // redirect
+    navigate('/');   
   };
 
   return (
@@ -27,31 +36,39 @@ function Header({ OpenSidebar }) {
       <div className='menu-icon'>
         <BsJustify className='icon' onClick={OpenSidebar} />
       </div>
+
       <div className='header-left'>
         <BsSearch className='icon' />
       </div>
 
-      {/* Dropdown এর জন্য নতুন div */}
       <div className='header-right'>
         <BsFillBellFill className='icon' id="header-icon" />
         <BsFillEnvelopeFill className='icon' id="header-icon" />
 
-        {/* Profile Icon এবং Dropdown কন্টেইনার */}
         <div className='dropdown-container'>
+
           <BsPersonCircle 
             className='icon dropdown-toggle' 
-            onClick={toggleDropdown} 
+            onClick={toggleDropdown}
             id="header-icon"
           />
-          
-          {/* ড্রপডাউন মেনু */}
+
           {isDropdownOpen && (
             <div className='dropdown-menu'>
-              <a href="#" onClick={handleLogout} className='dropdown-item'>
+
+              {/* UI menu */}
+              <div className='dropdown-item' onClick={() => navigate('#')}>
+                Website
+              </div>
+
+              {/* Logout menu */}
+              <div className='dropdown-item' onClick={handleLogout}>
                 <LogoutButton />
-              </a>
+              </div>
+
             </div>
           )}
+          
         </div>
       </div>
     </header>

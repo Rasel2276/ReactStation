@@ -307,7 +307,7 @@ body {
 
 .dropdown-list {
   list-style-type: none;
-  padding: 0;
+  padding: 0px;
   margin: 0;
   background-color: #0A2A6A; 
   overflow: hidden;
@@ -317,11 +317,12 @@ body {
 
 .dropdown-list li a {
   display: block;
-  padding: 10px 20px 10px 45px; 
+  padding: 10px 20px 10px 60px;
   font-size: 16px;
   text-decoration: none;
   color: rgb(247, 246, 246);
   transition: background-color 0.3s ease;
+  
 }
 
 .dropdown-list li a:hover {
@@ -336,7 +337,7 @@ body {
 
 
 .dropdown-list::-webkit-scrollbar {
-  width: 2px; 
+  width: 2px;
 }
 
 .dropdown-list::-webkit-scrollbar-thumb {
@@ -367,24 +368,34 @@ body {
   position: absolute;
   top: 100%; 
   right: 0; 
-  background-color: #ffffff; 
   border: 1px solid #ccc;
-  border-radius: 4px;
   min-width: 100px;
   z-index: 1000; 
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  margin-top: 10px; 
+  margin-top: 16px; 
+  margin-left: 5px;
 }
 
 .dropdown-item {
   color: #333;
-  padding: 5px 15px;
   text-decoration: none;
   display: block;
   font-size: 14px;
 }
 
-.dropdown-item:hover {
-  background-color: #f1f1f1;
+.dropdown-menu {
+  background: #8F5FE8;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+  width: 100px;
 }
 
+.dropdown-item {
+  padding: 10px 28px;
+  cursor: pointer;
+  color: #fffefe;
+}
+
+.dropdown-item:hover {
+    background-color: #FF9F00;
+  color: rgb(247, 246, 246);
+}
