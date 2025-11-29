@@ -18,9 +18,9 @@ function AdminDashboard() {
 
   return (
     <div className='grid-container'>
-      <Header toggleSidebar={toggleSidebar} />
-      <Sidebar openSidebarToggle={openSidebarToggle} />
-      <Home />
+      <Header OpenSidebar={toggleSidebar} user={user} />
+      <Sidebar openSidebarToggle={openSidebarToggle} user={user} />
+      <Home user={user} />
     </div>
   );
 }

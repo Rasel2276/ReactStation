@@ -1,16 +1,28 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import LogoutButton from '../auth/LogoutButton';
+import './Style.css';
+import Header from './layoutcomponents/Header.jsx';
+import Sidebar from './layoutcomponents/Sidebar.jsx';
+import Home from './layoutcomponents/Home.jsx';
 
-export default function CustomerDashboard() {
+function CustomerDashboard() {
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
+
   const location = useLocation();
-  const user = location.state?.user;
+  const user = location.state?.user || { name: 'Customer' };
+
+  const toggleSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle);
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Welcome, {user?.name || 'Customer'}!</h1>
-      <p>This is your Customer Dashboard.</p>
-      <LogoutButton />
+    <div className='grid-container'>
+      <Header OpenSidebar={toggleSidebar} user={user} />
+      <Sidebar openSidebarToggle={openSidebarToggle} user={user} />
+      <Home user={user} />
     </div>
   );
 }
+
+export default CustomerDashboard;
 
