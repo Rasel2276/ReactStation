@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from "./ProtectedRoute";
 import Login from './auth/Login';
 import Registration from './auth/Registration';
 import AdminDashboard from './admindashboard/AdminDashboard';
 import SellerDashboard from './sellerdashboard/SellerDashboard';
 import CustomerDashboard from './customerdashboard/CustomerDashboard';
-
-
 
 function App() {
   return (
@@ -13,13 +12,35 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/vendor" element={<SellerDashboard />} />
-        <Route path="/customer" element={<CustomerDashboard />} />
+
+        {/* Protected Routes with role */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vendor"
+          element={
+            <ProtectedRoute role="vendor">
+              <SellerDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/customer"
+          element={
+            <ProtectedRoute role="customer">
+              <CustomerDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

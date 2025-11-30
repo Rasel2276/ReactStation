@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+
+import { useState, useEffect } from 'react';
 import './Style.css';
 import Header from './layoutcomponents/Header.jsx';
 import Sidebar from './layoutcomponents/Sidebar.jsx';
@@ -7,13 +7,19 @@ import Home from './layoutcomponents/Home.jsx';
 
 function VendorDashboard() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(true);
-
-  const location = useLocation();
-  const user = location.state?.user || { name: 'Vendor' };
+  const [user, setUser] = useState({ name: 'Vendor' });
 
   const toggleSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
+
+  useEffect(() => {
+    // localStorage theke user info fetch
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   return (
     <div className='grid-container'>
@@ -25,3 +31,9 @@ function VendorDashboard() {
 }
 
 export default VendorDashboard;
+
+
+
+
+
+

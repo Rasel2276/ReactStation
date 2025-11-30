@@ -20,14 +20,14 @@ function Header({ OpenSidebar }) {
   };
 
   const handleLogout = () => {
-    // storage clear
+    
     localStorage.clear();
     sessionStorage.clear();
 
-    // dropdown close
+    
     setIsDropdownOpen(false);
 
-    // redirect
+   
     navigate('/');   
   };
 

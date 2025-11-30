@@ -9,22 +9,35 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post('http://127.0.0.1:8000/api/login', { email, password });
-      const user = res.data.user;
+  setLoading(true);
+  try {
+    const res = await axios.post('http://127.0.0.1:8000/api/login', { email, password });
 
-      if (user.role === 'admin') navigate('/admin', { state: { user } });
-      else if (user.role === 'vendor') navigate('/vendor', { state: { user } });
-      else navigate('/customer', { state: { user } });
+    const user = res.data.user;
+    const token = res.data.token;
 
-    } catch (err) {
-      console.log(err.response?.data);
-      alert(err.response?.data?.message || 'Login failed');
-    } finally {
-      setLoading(false);
+    // Save token + user info
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", user.role);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Redirect based on role
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else if (user.role === "vendor") {
+      navigate("/vendor");
+    } else {
+      navigate("/customer");
     }
-  };
+
+  } catch (err) {
+    console.log(err.response?.data);
+    alert(err.response?.data?.message || 'Login failed');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div style={styles.container}>
