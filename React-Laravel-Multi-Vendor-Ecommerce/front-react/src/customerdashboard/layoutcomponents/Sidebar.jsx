@@ -23,13 +23,13 @@ function Sidebar({ openSidebarToggle, user }) {
       <ul className='sidebar-list'>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsGrid1X2Fill className='icon' /> Dashboard
+            <BsGrid1X2Fill className='icon' id="side-icon" /> Dashboard
           </a>
         </li>
 
         <li className='sidebar-list-item'>
           <div className='dropdown-header' onClick={toggleProducts}>
-            <BsFillArchiveFill className='icon' /> Products
+            <BsFillArchiveFill className='icon' id="side-icon" /> Products
             <BsChevronDown className={`icon-right ${productsOpen ? 'rotate' : ''}`} />
           </div>
           {productsOpen && (
@@ -43,27 +43,27 @@ function Sidebar({ openSidebarToggle, user }) {
 
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsFillGrid3X3GapFill className='icon' /> Categories
+            <BsFillGrid3X3GapFill className='icon' id="side-icon" /> Categories
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsPeopleFill className='icon' /> Customers
+            <BsPeopleFill className='icon' id="side-icon" /> Customers
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsListCheck className='icon' /> Inventory
+            <BsListCheck className='icon' id="side-icon" /> Inventory
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsMenuButtonWideFill className='icon' /> Reports
+            <BsMenuButtonWideFill className='icon' id="side-icon" /> Reports
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsFillGearFill className='icon' /> Setting
+            <BsFillGearFill className='icon' id="side-icon" /> Setting
           </a>
         </li>
       </ul>

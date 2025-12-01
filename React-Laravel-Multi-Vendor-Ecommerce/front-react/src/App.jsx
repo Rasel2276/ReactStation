@@ -5,6 +5,8 @@ import Registration from './auth/Registration';
 import AdminDashboard from './admindashboard/AdminDashboard';
 import SellerDashboard from './sellerdashboard/SellerDashboard';
 import CustomerDashboard from './customerdashboard/CustomerDashboard';
+import Home from './admindashboard/layoutcomponents/Home';
+import AddProduct from './admindashboard/adminpages/AddProduct';
 
 function App() {
   return (
@@ -17,11 +19,19 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute role="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
+              <ProtectedRoute role="admin">
+                 <AdminDashboard />
+              </ProtectedRoute>
           }
-        />
+        >
+        {/* Admin dashboard home page */}
+        <Route index element={<Home />} />
+
+        {/* Other pages inside admin */}
+        <Route path="/admin/addporduct" element={<AddProduct />} />
+
+       </Route>
+
         <Route
           path="/vendor"
           element={
