@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { 
-  BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, 
-  BsPeopleFill, BsListCheck, BsMenuButtonWideFill, BsFillGearFill, BsChevronDown 
+  BsGrid1X2Fill, BsChatLeftTextFill, 
+  BsMenuButtonWideFill, BsFillGearFill, BsChevronDown 
 } from 'react-icons/bs';
+import { VscAccount } from "react-icons/vsc";
+import { MdBorderColor } from "react-icons/md";
 
 function Sidebar({ openSidebarToggle, user }) {
   const [productsOpen, setProductsOpen] = useState(false);
   const toggleProducts = () => setProductsOpen(!productsOpen);
 
   return (
-    <aside id="sidebar" className={openSidebarToggle ? '' : 'sidebar-hidden'}> 
+    <aside id="sidebar" className={openSidebarToggle ? '' : 'sidebar-hidden'}>
 
-      {/* 🔵 Sidebar Top Profile Box (image + name) */}
+  
       <div className="sidebar-top-box">
         <div className="sidebar-profile-img">
           <img src="/profile.jpg" alt="Profile" />
@@ -29,33 +31,28 @@ function Sidebar({ openSidebarToggle, user }) {
 
         <li className='sidebar-list-item'>
           <div className='dropdown-header' onClick={toggleProducts}>
-            <BsFillArchiveFill className='icon' id="side-icon" /> Products
+            <VscAccount className='icon' id="side-icon" /> Account Info
             <BsChevronDown className={`icon-right ${productsOpen ? 'rotate' : ''}`} />
           </div>
           {productsOpen && (
             <ul className='dropdown-list'>
-              <li><a href="#">Add Product</a></li>
-              <li><a href="#">All Products</a></li>
-              <li><a href="#">Featured Products</a></li>
+              <li><a href="#">My Porfile</a></li>
+              <li><a href="#">Manage Profile</a></li>
             </ul>
           )}
         </li>
 
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsFillGrid3X3GapFill className='icon' id="side-icon" /> Categories
+            <MdBorderColor className='icon' id="side-icon" /> My Orders
           </a>
         </li>
         <li className='sidebar-list-item'>
           <a href="#">
-            <BsPeopleFill className='icon' id="side-icon" /> Customers
+            <BsChatLeftTextFill className='icon' id="side-icon" /> Chats
           </a>
         </li>
-        <li className='sidebar-list-item'>
-          <a href="#">
-            <BsListCheck className='icon' id="side-icon" /> Inventory
-          </a>
-        </li>
+
         <li className='sidebar-list-item'>
           <a href="#">
             <BsMenuButtonWideFill className='icon' id="side-icon" /> Reports
