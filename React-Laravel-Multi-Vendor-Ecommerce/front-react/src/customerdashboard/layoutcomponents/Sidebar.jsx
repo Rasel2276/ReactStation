@@ -11,7 +11,7 @@ function Sidebar({ openSidebarToggle, user }) {
   const toggleProducts = () => setProductsOpen(!productsOpen);
 
   return (
-    <aside id="sidebar" className={openSidebarToggle ? '' : 'sidebar-hidden'}>
+    <aside id="sidebar_customer" className={openSidebarToggle ? '' : 'sidebar-hidden'}>
 
   
       <div className="sidebar-top-box">
@@ -19,7 +19,9 @@ function Sidebar({ openSidebarToggle, user }) {
           <img src="/profile.jpg" alt="Profile" />
         </div>
         
-        <div className="sidebar-profile-name">{user?.name || 'Customer'}</div>
+        <div className="sidebar-profile-name">{user?.name || 'Customer'}
+          <div className="sidebar-role"><p>{user?.role || 'Customer'}</p></div>
+        </div>
       </div>
 
       <ul className='sidebar-list'>

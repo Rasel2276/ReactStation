@@ -39,7 +39,9 @@ function Sidebar({ openSidebarToggle, user }) {
           <img src="/profile.jpg" alt="Profile" />
         </div>
         
-        <div className="sidebar-profile-name">{user?.name || 'Vendor'}</div>
+        <div className="sidebar-profile-name">{user?.name || 'Vendor'}
+          <div className="sidebar-role"><p>{user?.role || 'Vendor'}</p></div>
+        </div>
       </div>
 
       <ul className='sidebar-list'>

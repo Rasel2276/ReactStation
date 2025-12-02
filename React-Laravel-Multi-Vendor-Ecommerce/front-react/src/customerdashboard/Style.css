@@ -62,13 +62,19 @@ body {
 
 /* Sidebar  */
 /* 🔵 Sidebar gradient (Image exact match) */
-#sidebar {
+#sidebar_customer {
   grid-area: sidebar;
   height: 100%;
   overflow-y: auto;
   transition: all 0.5s;
   background: linear-gradient(180deg, #0A2A6A 0%, #051937 100%);
   color: #fff;
+}
+.sidebar-role p{
+  font-size: 12px;
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
 }
 #side-icon{
   color: white;
